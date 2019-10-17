@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="background-layer"></div>
+  <p class="welcome animated fadeInDown">推手</p>
+  <p class="sub-text animated fadeInDown">为你，千千万万遍</p>
+  <div class="loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <div class="row footer">
+    <button bindgetuserinfo="onLogin" open-type="getUserInfo" class="start">
+      开启小程序
+    </button>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<!--index.wxml-->
+<view class="container">
+  <!--<view class="banner">
+    <swiper autoplay="true" indicator-dots="true" interval="5000" duration="1000" circular="true">
+      <block wx:for="{{banner_arr}}" wx:key="{{banner_id}}">
+        <swiper-item>
+          <image src="{{item.carousel_img}}" class="slide-image" mode="aspectFill" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>-->
+
+  <view class="main-core">
+    <view class="main-core-item" bindtap='findTask'>
+      <image class="core-item-icon" src="/images/task/find.png"></image>
+      <text class="core-item-name">找任务</text>
+    </view>
+
+    <navigator class="main-core-item" url="/pages/task/create">
+      <image class="core-item-icon" src="/images/task/create.png"></image>
+      <text class="core-item-name">找推手</text>
+    </navigator>
+
+    <navigator class="main-core-item  disabled" url="/pages/task/place">
+      <image class="core-item-icon" src="/images/task/place.png"></image>
+      <text class="core-item-name">找推点</text>
+    </navigator>
+  </view>
+
+  <!--<text class="task-list-title">任务列表</text>-->
+  <view wx:if="{{!list}}" class="page-empty">
+    <image class="page-empty__img" mode="aspectFit" src="/images/index/no_data.png"></image>
+    <view class="page-empty__text">还没有发布或领取任务哦</view>
+  </view>
+  <view wx:else class="page-list">
+    <block wx:for="{{list}}" wx:key="task_id">
+      <view class="process review-process">
+        <view class="process-hd">
+          <image class="review-process-icon" wx:if="{{item.task_type == '我发布的'}}" src="/images/index/task1.png"></image>
+          <image class="review-process-icon" wx:else src="/images/index/task2.png"></image>
+          <view class="order-number-name">
+            <text>{{item.task_name}}</text>
+          </view>
+          <view class="process-state">
+            <text class="process-state-name process-state-waited" wx:if="{{item.task_type == 'my_create'}}">我发布的</text>
+            <text class="process-state-name process-state-accepted" wx:else>我参与的</text>
+          </view>
+        </view>
+        <view class="process-bd">
+          <view class="process-item">
+            <view class="process-item-bd">
+              <text class="process-item-name">采集规范</text>
+            </view>
+            <view class="process-item-ft">
+              <text class="process-item-info">{{item.rule}}</text>
+            </view>
+          </view>
+          <view class="process-item">
+            <view class="process-item-bd">
+              <text class="process-item-name">每单佣金</text>
+            </view>
+            <view class="process-item-ft">
+              <text class="process-item-info">￥{{item.salary}}</text>
+            </view>
+          </view>
+          <view class="process-item">
+            <view class="process-item-bd">
+              <text class="process-item-name">结束时间</text>
+            </view>
+            <view class="process-item-ft">
+              <text class="process-item-info">{{item.end_date}}</text>
+            </view>
+          </view>
+        </view>
+        <navigator url="/pages/task/detail?callback=callback&&id={{item.task_id}}" wx:if="{{item.task_type == 'my_create'}}">
+          <view class="service-detail-open">
+            <text>任务管理</text>
+          </view>
+        </navigator>
+        <navigator url="/pages/collect/upload?callback=callback&&id={{item.task_id}}" wx:else>
+          <view class="service-detail-open">
+            <text>数据采集</text>
+          </view>
+        </navigator>
+      </view>
+    </block>
+
+  </view>
+  <view class='bottom-bg'>
+    <image src='/images/index/bg.png'></image>
+  </view>
+
+
+</view>

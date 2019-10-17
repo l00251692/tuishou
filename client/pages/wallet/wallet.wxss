@@ -1,0 +1,143 @@
+.header {
+  width: 100%;
+  height: 260rpx;
+  background: #1e8cd4;
+}
+
+.header button {
+  background-color: #1e8cd4;
+}
+
+.money {
+  padding: 20rpx 0 32rpx;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+
+.money-b {
+  padding-right: 10rpx;
+  font-size: 64rpx;
+  font-weight: normal;
+}
+
+.withdraw{
+  padding-top:10rpx;
+  color:#ffcb63;
+  width:100%;
+  text-align: center;
+  font-size: 12pt;
+}
+
+.recharge-btn {
+  width: 200rpx;
+  border: #fff solid 1rpx;
+  line-height: 64rpx;
+  font-size: 32rpx;
+  color: #fff;
+}
+
+.wrapper {
+  position: absolute;
+  top: 135px;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.process{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20rpx;
+}
+.process-hd{
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    font-size: 11pt;
+    margin-left: 30rpx;
+    border-bottom: 1px solid #eee;
+}
+.review-process-icon{
+    flex-shrink: 0;
+    width: 45rpx;
+    height: 45rpx;
+    margin-right: 15rpx;
+}
+.order-number-name{
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.process-state{
+    flex: 0 0 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 30rpx;
+    font-weight: bold;
+}
+
+/* 取消订单 */
+.process-state-0{
+    color: #999;
+}
+/* 待支付 */
+.process-state-1{
+    color: #e78ab0;
+}
+/* 待配送 */
+.process-state-2{
+    color: #ffcb63;
+}
+/* 已配送 */
+.process-state-3{
+    color: #73b4ef;
+}
+/* 被大会 */
+.process-state-4{
+    color: #ff0000;
+}
+
+.process-state-9{
+    color: #999;
+}
+
+.process-bd{
+    padding: 10rpx 30rpx;
+}
+.process-item{
+    display: flex;
+    justify-content: space-between;
+    margin: 16rpx 5rpx;
+}
+.process-item-bd{
+    display:flex;
+}
+
+.process-item-name{
+  font:11pt;
+  opacity: .5;
+}
+
+.process-item-info{
+  font:11pt;
+  opacity: .5;
+}
+.process-item-ft{
+    display: flex;
+}
+.service-detail-open{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 25rpx;
+    border-top: 1px solid #eee;
+    color: #7acfa6;
+}

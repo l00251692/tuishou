@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changyu.foryou.mapper.UsersMapper">
+	<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true" />
+	<resultMap id="BaseResultMap" type="com.changyu.foryou.model.Users">
+		<id column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="last_login_date" property="lastLoginDate"
+			jdbcType="DATE" />
+		<result column="sex" property="sex" jdbcType="SMALLINT" />
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="district" property="district" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="balance" property="balance" jdbcType="FLOAT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id,phone, type, nickname, img_url,
+		last_login_date,sex,latitude,longitude,province,city,district,address,balance
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String" flushCache="true" useCache="false">
+		select
+		*
+		FROM
+		users
+		WHERE
+		users.user_id = #{user_id,jdbcType=VARCHAR}
+		LIMIT 1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from users
+		where user_id = #{user_id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insertSelective" parameterType="com.changyu.foryou.model.Users">
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="nickname != null">
+				nickname,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="lastLoginDate != null">
+				last_login_date,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="district != null">
+				district,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="balance != null">
+				balance,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=SMALLINT},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=SMALLINT},
+			</if>
+			<if test="nickname != null">
+				#{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginDate != null">
+				#{lastLoginDate, jdbcType=DATE},
+			</if>
+			<if test="latitude != null">
+				#{latitude, jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude, jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province, jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				#{district,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address, jdbcType=VARCHAR},
+			</if>
+			<if test="balance != null">
+				#{balance, jdbcType=FLOAT},
+			</if>
+		</trim>
+	</insert>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.changyu.foryou.model.Users">
+		update users
+		<set>
+			<if test="sex !=null">
+				sex=#{sex,jdbcType=SMALLINT},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=SMALLINT},
+			</if>
+			<if test="nickname != null">
+				nickname = #{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginDate != null">
+				last_login_date = #{lastLoginDate,jdbcType=DATE},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="balance != null">
+				balance = #{balance,jdbcType=FLOAT},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="bindPhone" parameterType="com.changyu.foryou.model.Users">
+		update users
+		<set>
+			<if test="phone !=null">
+				phone=#{phone,jdbcType=VARCHAR} 
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateLocation" parameterType="com.changyu.foryou.model.Users">
+		update users
+		<set>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateBalance" parameterType="com.changyu.foryou.model.Users">
+		update users
+		<set>
+			<if test="balance !=null">
+				balance=#{balance,jdbcType=FLOAT} 
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 登录检查接口 -->
+	<select id="checkLogin" resultMap="BaseResultMap">
+		select * from users where
+		user_id=#{user_id,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="follow"  parameterType="com.changyu.foryou.model.Follow">
+	   insert IGNORE into follow(follower_id, project_id)
+	   values
+	   (#{followerId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="unfollow" parameterType="com.changyu.foryou.model.Follow">
+	   delete 
+	   from follow
+	   where  follower_id=#{followerId,jdbcType=VARCHAR} 
+	   and project_id=#{projectId,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="checkFollow" resultType="com.changyu.foryou.model.Follow" flushCache="true" useCache="false">
+	   select 
+	   distinct follower_id,project_id 
+	   from follow
+	   where  follower_id=#{followerId,jdbcType=VARCHAR} 
+	   and project_id=#{projectId,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<insert id="createWithDraw"  parameterType="com.changyu.foryou.model.WithDraw">
+	   insert into withdraw
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="applyUserId != null">
+				apply_user_id,
+			</if>
+			<if test="money != null">
+				money,
+			</if>
+			<if test="applyTime != null">
+				apply_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="applyUserId != null">
+				#{applyUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=FLOAT},
+			</if>
+			<if test="applyTime != null">
+				#{applyTime,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="getUserWithDraw" resultType="com.changyu.foryou.model.WithDraw" flushCache="true" useCache="false">
+	   select 
+	   * 
+	   from withdraw
+	   where  apply_user_id=#{applyUserId,jdbcType=VARCHAR} 
+	   and status = 1
+	</select>
+	
+	
+	<insert id="postFeedBack"  parameterType="com.changyu.foryou.model.FeedBack">
+	   insert into feedback
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="imgs != null">
+				imgs,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="imgs != null">
+				#{imgs,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	
+</mapper>

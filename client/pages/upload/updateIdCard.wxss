@@ -1,0 +1,72 @@
+/* pages/mine/Authentication.wxss */
+.title-hd{
+    display: flex;
+    padding:30rpx;
+    height: 80rpx;
+    flex-direction: column;
+    justify-content: space-between;
+    line-height: 80rpx;
+}
+.idCard-box{
+    display: flex;
+    padding: 40rpx 30rpx;
+    flex-direction: column;
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+.cardBox-bd {
+     display: flex;
+     flex-direction: row;
+     align-items: center; 
+     padding-top: 20rpx;
+}
+.cardBox-bd .img1{
+    width: 360rpx;
+    height: 200rpx;
+    margin: 0rpx 40rpx;
+}
+.cardBox-bd .img2{
+    width: 200rpx;
+    height:130rpx;
+}
+
+.cardBox-bd .shili{
+  font-size: 20rpx;
+  opacity: 0.8;
+  padding-left: 10rpx;
+  color: #999;
+}
+.ft-title{
+    padding:20rpx 30rpx 0;
+}
+
+.font-color-999{
+  color: #999;
+}
+
+.submit-upload{
+  position: fixed;
+  bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80rpx;
+    border-radius: 3px;
+    text-align: center;
+    background-color: #6495ed;
+    color: #fff;
+    font-size: 12pt;
+}
+.submit-upload-button::after{
+  border: none;
+}
+.submit-upload:active{
+    opacity: .8;
+}
+
+.submit-upload button{
+  background-color: #6495ed;
+  width: 100%;
+  color: #fff;
+}

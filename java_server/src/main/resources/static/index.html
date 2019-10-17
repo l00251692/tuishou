@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang='en'>
+<meta charset='utf-8'>
+
+<head>
+    <title>订单管理平台</title>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
+    <link rel='stylesheet' type='text/css' href='css/style.css'>
+    <link rel="shortcut icon" href="img/icon.png">
+    <script type='text/javascript' src="js/jquery-1.7.2.min.js"></script>
+    <script type='text/javascript' src="js/bootstrap.min.js"></script>
+    <script type='text/javascript' src="js/main.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <style>
+    a:hover {
+        text-decoration: none
+    }
+
+    .left {
+        width: 120px;
+        float: left;
+        margin-left: -22px;
+        margin-top: 20px;
+    }
+
+    .right {
+        float: left;
+        margin-top: 42px;
+    }
+
+    #campusDropdown {
+        visibility: hidden
+    }
+
+    .sideBar ul {
+        border-right: 1px solid #eee;
+    }
+
+    .subSide-li {
+        text-align: right;
+    }
+    </style>
+</head>
+
+<body>
+    <header class='navbar blue blue2 navbar-fixed-top'>
+        <div class='navbar-inner'>
+            <div class='container-fluid'>
+                <a class='brand pull-left'><img src="img/icon.png" width="20px" height="auto">&nbsp;订单管理平台</a>
+                <ul class='nav pull-right'>
+                    <li>
+                        <div class="dropdown" id="campusDropdown">
+                            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+                                账号类型 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="dropdown-campus">
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="../login.html" rel='tooltip' title='退出'><i class='icon-white icon-off'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <section class='container-fluid pad20'>
+        <section class='row-fluid'>
+            <div class="sideBar left">
+                <br />
+                <ul>
+                    <li class="active">
+                        <figure>
+                            <i class='icon-home'></i>
+                            <a href="pages/welcome.html" target="content">主页</a>
+                        </figure>
+                        <hr />
+                    </li>
+                    <li  id="li-order-total">
+                        <figure>
+                            <i class='icon-calendar'></i>
+                            <a href="pages/order_total.html" target="content">订单汇总</a>
+                        </figure>
+                        <hr />
+                    </li>
+                    <li  id="li-order-normal">
+                        <figure>
+                            <i class='icon-briefcase'></i>
+                            <a href="pages/order_normal.html" target="content">订单管理</a>
+                        </figure>
+                        <hr />
+                    </li>
+                    <li id="li-order-manage" class='dropper'>
+                        <figure>
+                            <i class='icon-list'></i>
+                            <span>订单管理</span>
+                        </figure>
+                        <hr/>
+                        <ul class='subSide'>
+                            <li class="subSide-li"><a href="pages/order_delivered.html" target="content"><i
+									class='icon-ok-sign'></i>已发货&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                <hr/>
+                            </li>
+                            <li class="subSide-li"><a href="pages/order_reject.html" target="content"><i
+									class='icon-asterisk'></i>被打回&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                <hr/>
+                            </li>
+                            <li class="subSide-li"><a href="pages/order_wait_deliver.html" target="content"><i
+									class='icon-bell'></i>待发货&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                <hr/>
+                            </li>
+                            <li class="subSide-li"><a href="pages/order_wait_pay.html" target="content"><i
+									class='icon-th-large'></i>待支付&nbsp;&nbsp;&nbsp;&nbsp; </a>
+                                <hr/>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="li-account">
+                        <figure>
+                            <a href="pages/account.html" target="content">
+								<i class="icon-wrench"></i>
+								账号管理
+							</a>
+                        </figure>
+                        <hr/>
+                    </li>
+                    <li id="li-hospital">
+                        <figure>
+                            <a href="pages/hospital.html" target="content"><i
+                                class='icon-leaf'></i> 医院管理 </a>
+                        </figure>
+                        <hr/>
+                    </li>
+                    <li>
+                        <figure>
+                            <a href="pages/modifypassword.html" target="content"><i
+								class='icon-cog'></i> 修改密码 </a>
+                        </figure>
+                        <hr/>
+                    </li>
+                    </li>
+                    <li>
+                        <figure>
+                            <a href="pages/help.html" target="content"><i
+								class='icon-question-sign'></i> 帮助 </a>
+                        </figure>
+                        <hr/>
+                    </li>
+                    <li>
+                </ul>
+            </div>
+            <div class='right' id="right" style="border-left:1px solid #eee;">
+                <iframe id="content" name="content" src="pages/welcome.html" style="height:720px;width:100%" scroling="yes" frameborder="0" border="0" marginwidth="0" marginheight="0"></iframe>
+            </div>
+        </section>
+    </section>
+    <script>
+    //定义全局变量
+    var type = getCookie("type"); //当前登录账号类型（总管理员、校区管理员）
+    var phone = getCookie("phone"); //校区状态
+
+    var winWidth = document.body.scrollWidth - 12; // 取窗口宽度
+    var winHeight = document.body.scrollHeight - 24; // 取窗口高度
+
+    var myDiv = document.getElementById('right') // 设置宽度
+    myDiv.style.width = (winWidth - 130) + 'px' // 设置高度
+    </script>
+    <script>
+    if (getCookie("phone") == "") {
+        window.location.href = "login.html?";
+    }
+
+    $(function() {
+
+        //根据管理员类型判断是否显示校区下拉菜单
+        //如果是校区管理员，使用他管理的校区Button替换校区下拉菜单，且隐藏校区管理和校区管理员管理
+        if (getCookie("type") == 0) { //系统管理员
+            $("#campusDropdown").css("visibility", "visible");
+            $("#dropdownMenu1").html("系统管理员" + '<span class="caret"></span>');
+            $("#li-order-normal").hide();
+
+
+        } else {
+            //普通商户
+            $("#campusDropdown").css("visibility", "visible");
+            $("#dropdownMenu1").html("普通用户" + '<span class="caret"></span>');
+            $("#li-order-total").hide();
+            $("#li-order-manage").hide();
+            $("#li-account").hide();
+            $("#li-hospital").hide();
+        }
+
+        $("#dropdown-campus").empty(); //移除子元素
+        $("#dropdown-campus").append("<li role='presentation'><a class='campus-item' role='menuitem' tabindex='-1' href='#'>" + getCookie("phone") + "</a></li>");
+
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+
+.container{
+  padding-bottom: 0;
+  background-color: #f0eff5;
+  background-repeat: no-repeat;
+  background-size: 100% auto; 
+  background-position: bottom center;
+  /*background-image: url('/images/index/tri.png');*/
+  /*微信暂不支持静态bgimg文件，改用服务器url*/
+  /*background-image: url('https://we.cqu.pt/app/images/index/tri.png');*/
+  display:block;
+}
+
+.topbar {
+  display: flex;
+  padding: 16rpx;
+  background-color: #1e8cd4;
+}
+
+.address {
+  position: relative;
+  min-width: 400rpx;
+  max-width: 90%;
+  font-size: 12pt;
+  color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display:flex;
+}
+
+.address_title{
+  padding-left:10rpx;
+  line-height: 48rpx;
+}
+
+.location_icon {
+  padding-left:10rpx;
+  width: 48rpx;
+  height: 48rpx;
+}
+
+
+.right_icon {
+  padding-left:10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+
+.hot_panel{
+  width:100%;
+  height:200rpx;
+  padding-bottom:10rpx;
+  background:#fff;
+}
+.hot-task-title{
+    width: 100%;
+    height: 80rpx;
+    background:#fff;
+    border-bottom: 1px solid #eee;
+}
+.hot-task-title-text{
+    font-size: 34rpx;
+    font-weight: bold;
+    color: #1e8cd4;
+    line-height:80rpx;
+    padding-left:20rpx;
+}
+
+.hot-task-icon{
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 15rpx;
+    margin-left: 15rpx;
+    padding-top:10rpx;
+    padding-bottom:10rpx;
+}
+
+
+.hot_task{
+  width: 100%;
+  background:#fff;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.hot_label{ 
+  padding:6rpx 20rpx;
+  border-radius:10rpx;
+  border:1px solid #1e8cd4;
+  margin-left: 20rpx;
+  margin-top:10rpx;
+  color: #888;
+  font-size: 10pt;
+}
+
+.page-empty{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.page-empty__img {
+  width: 360rpx;
+}
+
+.page-empty__text {
+  margin-bottom: 36rpx;
+  font-size: 34rpx;
+  color: #888;
+  margin-top:36rpx;
+}
+
+.list_wrap{   
+    background:#e8e8e8;
+    width: 100%;
+    margin-top:20rpx;
+    margin-bottom:200rpx;
+}
+.list_wrap .detail{
+    display:block;
+    padding-left:20rpx;
+    line-height: 40rpx;
+    position:relative;
+    color: #888;
+    font-size: 12pt;
+    padding-top:20rpx;
+    padding-bottom:20rpx;
+    padding-right:20rpx;
+}
+
+.list_wrap .title:before{
+    content:'';
+    display:block;
+    width:8rpx;
+    height:40rpx;
+    background:#1e8cd4;
+    position:absolute;
+    margin-top:20rpx;
+    left:8rpx;
+    transform:translateY(-50%);
+} 
+
+.list {
+    display: flex;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20rpx;
+}
+
+.list .item{
+    margin-top:20rpx;
+    width: 100%;
+}
+
+.list .item .top{
+     display:flex;
+     flex-direction:row;
+     justify-content:space-between;
+     padding-left:20rpx;
+     padding-top:2rpx;
+     padding-bottom:2rpx;
+     border-bottom: 1px solid #eee;
+}
+
+.list .item .top .left{
+    width:80%;
+    box-sizing:border-box;
+    padding-left:60rpx;
+    position:relative;
+} 
+.list .item .top .left image{
+    display:block;
+    width:40rpx;
+    height:40rpx;
+    border-radius:50%;
+    position:absolute;
+    left:5rpx;
+}
+.list .item .top .left .user{
+    line-height: 40rpx;
+    color: #888;
+    font-size: 10pt;
+}
+
+.list .item .top .right{
+    width:60%;
+    box-sizing:border-box;
+    position:relative;
+    text-align:right;
+    padding-right:20rpx;
+
+} 
+
+.list .item .top .right .univ{
+     line-height: 40rpx;
+     color: red;
+     font-size: 12pt;
+} 
+
+.top_title{
+  font-size: 14pt;
+  font-weight:bold;
+  line-height: 50rpx;
+  color:#888;
+  padding-left:20rpx;
+  padding-right:20rpx;
+}
+
+.list .item .item_info{
+     overflow:hidden;
+     position:relative;
+     justify-content:center;
+     margin-top:6rpx;
+}
+
+.list .item .item_info .pro_img{
+     width:100%;
+     min-height:200rpx; 
+     max-height:260rpx;
+}
+
+.list .item .item_info .num{
+    position:absolute;
+    right:20rpx;
+    top:0;
+    background:#1e8cd4;
+    color:#ffffff;
+    font-size:10pt;
+    padding:6rpx 20rpx;
+}
+
+
+.item_detail {
+    line-height: 50rpx;
+    color:#888;
+    display: -webkit-box;
+    text-overflow:ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.list .item .item_info .tip{
+    flex:1;
+    display: -webkit-box;
+    text-overflow:ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    padding-right:6rpx;
+    margin-bottom:10rpx;
+    overflow: hidden;
+}
+
+.list .item .foot{
+     display:flex;
+     flex-direction:row;
+     justify-content:space-between;
+     padding-top:10rpx;
+     padding-bottom:10rpx;
+     border-top:2rpx solid #f2f2f2;
+     height:60rpx;
+}
+
+.list .item .foot .left{
+    width:60%;
+    box-sizing:border-box;
+    padding-left:10rpx;
+    position:relative;
+    display:flex;
+    flex-direction: row;
+} 
+
+.list .item .foot .left .focus{
+    width:120rpx;
+    display:flex;
+} 
+
+.list .item .foot .left .comment{
+    width:120rpx;
+    display:flex;
+} 
+
+.list .item .foot .left .focus image{
+    width:50rpx;
+    height:50rpx;
+    position:relative;
+}
+
+.list .item .foot .left .comment image{
+    width:50rpx;
+    height:50rpx;
+    position:relative;
+}
+
+
+.list .item .foot .left .text{
+     font:30rpx/50rpx '微软雅黑';
+     color:#010101;
+     position:relative;
+     display:block;
+     padding-left:4rpx;
+} 
+
+.list .item .foot .left .time{
+     font:30rpx/50rpx '微软雅黑';
+     color:#010101;
+} 
+.list .item .foot .left .activity_title{
+    display:block;
+    font:30rpx/50rpx '微软雅黑';
+    color:#010101;
+}
+.list .item .foot .left .distance{
+    display:block;
+    font:16rpx/32rpx '微软雅黑';
+    color:#9d9d9d;
+}
+.list .item .foot .right{
+    width:30%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    text-align:right;
+}
+
+.separate {
+  color: #888;
+  width: 100%;
+  height: 6rpx;
+}
+
+.bottom-bg{
+  bottom:0;
+  display:flex;
+  position:fixed;
+  width:100%;
+
+}
+.bottom-bg image{
+  width:100%;
+  height: 200rpx;
+}

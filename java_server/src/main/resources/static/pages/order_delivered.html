@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>订单管理</title>
+    <link rel="stylesheet" href="../assets/bootstrap-table/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap-table/bootstrap-editable.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style type="text/css">
+    .modal-dialog {
+        z-index: 2000;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+
+    .pull-right {
+        padding-top:20px;
+    }
+    </style>
+</head>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.4.0/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-export.min.js"></script>
+<script src="../js/tableExport.js"></script>
+<script src="../js/jquery.base64.js"></script>
+<script src="../js/bootstrap-table-editable.min.js"></script>
+<script src="//cdn.bootcss.com/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <![endif]-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.4.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/util.js"></script>
+
+<body>
+    <div class="container">
+        <div>
+            <div class="page-header">
+                <h1>
+                已发货订单
+            </h1>
+            </div>
+            <table id="table" data-id-field="order_id" data-pagination="true" data-side-pagination="server" data-search="true" data-height="80%" data-show-refresh="true" data-show-columns="true" data-show-toggle="true" data-toolbar-align="right" data-page-list="[10, 20, 50, 100, 1000]" data-smart-display="false" data-show-export="true">
+                <thead>
+                    <tr>
+                        <th data-align="left" data-field="order_id" data-sortable="true">订单号</th>
+                        <th data-align="left" data-field="create_time">创建时间</th>
+                        <th data-align="left" data-field="nick_name" data-sortable="true" data-visible="false">用户昵称</th>
+                        <th data-align="left" data-field="name" data-sortable="true">患者姓名</th>
+                        <th data-align="left" data-field="idcard">身份证号</th>
+                        <th data-align="left" data-field="sex" data-visible="false">性别</th>
+                        <th data-align="left" data-field="hospital">医院</th>
+                        <th data-align="left" data-field="hospitalArea">病区</th>
+                        <th data-align="left" data-field="department">科室</th>
+                        <th data-align="left" data-field="bedNo" >床位号</th>
+                        <th data-align="left" data-field="mrNo" data-visible="false">住院号</th>
+                        <th data-align="left" data-field="doctor">主治医生</th>
+                        <th data-align="left" data-field="diseases" data-visible="false">所患疾病</th>
+                        <th data-align="left" data-field="date">出院日期</th>
+                        <th data-align="left" data-field="addr" data-visible="false">邮寄地址</th>
+                        <th data-align="left" data-field="phone" data-visible="false">手机号</th>
+                        <th data-align="left" data-field="concatName" data-visible="false">主要联系人</th>
+                        <th data-align="left" data-field="concatPhone" data-visible="false">联系人电话</th>
+                        <th data-align="center" data-field="front_img" data-formatter="ImageFormatter" data-visible="false">身份证（正面）</th>
+                        <th data-align="center" data-field="back_img" data-formatter="ImageFormatter" data-visible="false">身份证（背面）</th>
+                        <th data-align="center" data-field="summary_img" data-formatter="ImageFormatter" data-visible="false">出院小结</th>
+                        <th data-align="left" data-field="deliveryNo">快递单号</th>
+                        <th data-field="action" data-width="40" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+$(function() {
+    $("#table").bootstrapTable({
+        url: "../order/getOrderList?server=56846a8a2fee49d14901d39cc48b8b2a&status=3"
+    });
+});
+</script>
+<script>
+function ImageFormatter(value, row, index) {
+    if (value == "" || !value) {
+        return "暂无图片";
+    }
+    return "<img height='50' width='100' alt='图片加载中' src=" + value + ">";
+}
+
+function actionFormatter(value, row, index) {
+    return [
+        '<a class="common" href="javascript:void(0)" title="保存">',
+        '&nbsp;<i class="glyphicon glyphicon-save"></i>&nbsp;',
+        '</a>'
+    ].join('');
+}
+
+window.actionEvents = {
+    'click .common': function(e, value, row, index) {
+
+        /*$.post("../order/download", {
+            order_id : row.order_id,
+            server:"56846a8a2fee49d14901d39cc48b8b2a"
+        }, function(data) {
+
+        });*/
+
+        httpPost("../order/download",{order_id:row.order_id})
+    }
+};
+
+function httpPost(URL, PARAMS) {
+    var temp = document.createElement("form");
+    temp.action = URL;
+    temp.method = "post";
+    temp.style.display = "none";
+
+    for (var x in PARAMS) {
+        var opt = document.createElement("textarea");
+        opt.name = x;
+        opt.value = PARAMS[x];
+        temp.appendChild(opt);
+    }
+
+    document.body.appendChild(temp);
+    temp.submit();
+
+    return temp;
+}
+
+</script>
+
+</html>

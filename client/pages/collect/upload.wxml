@@ -1,0 +1,38 @@
+<view class="parent">
+  <view class="reporter-detail">
+    <view class="reporter-user reporter-detail-item">
+      <text class="reporter-detail-name" decode="{{true}}">用户姓名&emsp;</text>
+      <view class="reporter-detail-input">
+        <input type="text" value="{{name}}" name="name" maxlength="12" bindinput="listenerName" />
+      </view>
+    </view>
+    <view class="reporter-user reporter-detail-item">
+      <text class="reporter-detail-name" decode="{{true}}">联系电话&emsp;</text>
+      <view class="reporter-detail-input">
+        <input type="number" value="{{phone}}" name="phone" maxlength="11" bindinput="listenerPhone" />
+      </view>
+    </view>
+    <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" auto-focus="true" value="{{content}}" />
+    <view class="reporter-img-name">
+      <text>上传照片</text>
+    </view>
+
+    <view class="weui-uploader__files" id="uploaderFiles">
+      <block wx:for="{{files}}" wx:key="{{index}}">
+        <view class="weui-uploader__file" bindlongtap="previewImage" id="{{item}}">
+          <icon type="clear" class="icon-del" size="20" color="red" style="display:block" bindtap="deleteImg" data-index="{{index}}" />
+          <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+        </view>
+      </block>
+      <view class="weui-uploader__input-box" wx:if="{{ files.length < 5 }}">
+        <view class="weui-uploader__input" bindtap="chooseImage"></view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="submit-declare" bindtap="onUpload">
+    <text>提交数据</text>
+  </view>
+
+</view>

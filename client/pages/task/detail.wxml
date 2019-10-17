@@ -1,0 +1,115 @@
+<import src="/templates/load-more.wxml" />
+<!--pages/shop/show.wxml-->
+<view class="parent">
+  <view class="banner">
+    <view class="banner-img">
+      <image src="{{info.task_head || '/images/task/default-task-head.png'}}" />
+    </view>
+    <text class="banner-title">{{info.task_name}}</text>
+  </view>
+
+  <view class="content">
+    <view class="repair-detail">
+      <view class="user-jy" wx:if="{{info.my_create}}">
+            <view class="user-jy-item user-jy-num">
+                <text class="user-jy-hd">参与人数</text>
+                <view class="user-jy-bd">
+                    <text class="user-jy-value">{{info.followers}}</text>
+                    <text class="user-jy-text">人</text>
+                </view>
+            </view>
+            <view class="user-jy-item user-jy-history" bindtap="jyHistory">
+                <text class="user-jy-hd">任务记录 ->管理</text>
+                <view class="user-jy-bd">
+                    <text class="user-jy-value">{{info.collects}}</text>
+                    <text class="user-jy-text">条</text>
+                </view>
+            </view>
+            <!-- 
+            <view class="user-jy-item user-jy-dbet">
+                <text class="user-jy-hd">欠费</text>
+                <view class="user-jy-bd">
+                    <text class="user-jy-value">3</text>
+                    <text class="user-jy-text">元</text>
+                </view>
+            </view>
+            -->
+        </view>
+      
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">任务类型</text>
+          <view class="repair-detail-item-ft">
+            <view class="repair-detail-picker">
+              <view class="repair-detail-content">
+                <text class="repair-detail-info">推广任务</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">开始时间</text>
+          <view class="repair-detail-item-ft">
+
+            <view class="repair-detail-picker">
+              <view class="picker">
+                {{info.start_date}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">结束时间</text>
+          <view class="repair-detail-item-ft">
+            <view class="repair-detail-picker">
+              <view class="picker">
+                {{info.end_date}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="reporter-detail">
+        <view class="reporter-user reporter-detail-item">
+          <text class="reporter-detail-name">验收规范</text>
+          <view class="reporter-detail-input">
+            {{info.rule}}
+          </view>
+        </view>
+        <view class="reporter-tel reporter-detail-item">
+          <text class="reporter-detail-name">每单佣金</text>
+          <view class="reporter-detail-input">
+            ￥{{info.salary}}
+          </view>
+        </view>
+        <view class="reporter-address reporter-detail-item">
+          <text class="reporter-detail-name">任务区域</text>
+          <view class="reporter-detail-input">
+            {{info.region}}
+          </view>
+        </view>
+      </view>
+
+      <view class="declare-context">
+        <view class="declare-context-panel">
+          <view class="declare-context-textarea"> {{info.detail}}</view>
+        </view>
+      </view>
+
+      <view class="submit-declare" bindtap="onDelete" wx:if="{{info.my_create}}">
+        <text>删除任务</text>
+      </view>
+      <view class="submit-declare" bindtap="onFollow" wx:else>
+        <text wx:if="{{info.follow}}">取消参与</text>
+        <text wx:else>参与任务</text>
+      </view>
+    </view>
+  </view>
+</view>

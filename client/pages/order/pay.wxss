@@ -1,0 +1,257 @@
+
+.form_info{
+  padding-bottom: 100rpx;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.aggrement_title{
+  text-align: center;
+  font-size: 40rpx;
+  line-height: 60rpx;
+  height: 60rpx;
+  margin-top: 40rpx;
+}
+
+.aggrement_line{
+  margin-top: 20rpx;
+  padding-left: 30rpx;
+  display: flex;
+}
+.partyA{
+  border-bottom: 1px #000 solid; 
+  width: 400rpx;
+  text-align: center;
+}
+
+.partyB{
+  border-bottom: 1px #000 solid; 
+  width: 400rpx;
+  text-align: center;
+}
+
+.content{
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  line-height: 60rpx;
+  font-size: 32rpx;
+}
+
+.text_underline{
+  text-decoration:underline; 
+}
+
+.reporter-img{
+  display: flex;
+  background-color: #fff;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding-left: 30rpx;
+}
+
+.reporter-img-name{
+  font-size: 11pt;
+}
+
+.reporter-img-idcard-front{
+  position: relative;
+  width: 200rpx;
+  height: 170rpx;
+  margin-left: 30rpx;
+  margin-right: 20rpx;
+  
+}
+
+.reporter-img-idcard-front image{
+  width: 100%;
+  height: 100%;
+  border-radius: 30rpx;
+}
+
+.reporter-img-idcard-back{
+  position: relative;
+  width: 200rpx;
+  height: 170rpx;
+  margin-left: 30rpx;
+}
+
+.reporter-img-idcard-back image{
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+
+.aggrement_foot{
+  padding-right: 30rpx;
+  display: flex;
+  float: right;
+  line-height: 100rpx;
+  font-size: 32rpx;
+}
+
+.sign_name{
+  border-bottom: 1px #000 solid; 
+  width: 400rpx;
+  height: 100rpx;
+  text-align: center;
+}
+
+.hand_wrinting_img{
+  width: 200rpx;
+  height: 400rpx;
+  transform: rotate(270deg); 
+  margin-top:-150rpx;
+}
+
+.checkbox{
+  display: flex;
+  flex-direction: column;
+  margin-left: 30rpx;
+  height: 80rpx;
+  width: 100%;
+  line-height: 80rpx;
+  margin-top:20rpx;
+}
+
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx; /* 背景的宽 */
+   height: 40rpx; /* 背景的高 */
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: #6495ed;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 40rpx;
+   text-align: center;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}
+
+.xieyi{
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-left:10rpx;
+}
+
+.remind{
+  display: flex;
+  flex-direction: column;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  text-align: center;
+  font-size: 32rpx;
+  width: 100%;
+  color: #6495ed;
+  font-style: initial;
+}
+
+.help-img {
+  width: 11pt;
+  height: 11pt;
+  margin: 0 7rpx;
+}
+
+.submit-declare{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom:0;
+    height: 80rpx;
+    width: 100%;
+    border-radius: 3px;
+    text-align: center;
+    background-color: #6495ed;
+    color: #fff;
+    font-size: 12pt;
+}
+.submit-declare-button::after{
+  border: none;
+}
+.submit-declare:active{
+  opacity: .8;
+}
+
+.submit-declare button{
+  background-color: #6495ed;
+  width: 100%;
+  color: #fff;
+}
+
+.help {
+  position: fixed;
+  z-index: 100;
+  top: 300rpx;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 80%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(22,22,22,.35);
+  transform: translate3d(0,-400rpx,0);
+}
+.box-hd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100rpx;
+  border-bottom: 1px solid #eee;
+}
+.box-title {
+  font-size: 13pt;
+}
+.box-close {
+  position: absolute;
+  right: 20rpx;
+  width: 35rpx;
+  height: 35rpx;
+  padding: 15rpx;
+}
+.box-bd {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 15rpx 40rpx 30rpx;
+}
+.help-q {
+  color: #999;
+  font-size: 11pt;
+  line-height: 200%;
+  margin-top: 5rpx;
+}
+.help-a {
+  text-indent: 1em;
+  line-height: 160%;
+  display: flex;
+  flex-direction: column;
+}
+.help-a text{
+  word-break: break-all;
+}
+

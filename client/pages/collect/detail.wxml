@@ -1,0 +1,100 @@
+<!--bx_detail.wxml-->
+<view class="container">
+  <scroll-view scroll-y class='scroll-view-info'>
+    <view class="repair-state-panel">
+      <text class="repair-state-title">处理详情</text>
+      <view class="repair-state">
+        <block wx:for="{{state}}" wx:key="name">
+          <view class="repair-state-item">
+            <view class="repair-state-icon {{index===0?'repair-state-icon-'+item.type:''}}"></view>
+            <view class="repair-state-info {{item.name=='创建'?'repair-state-info-last':''}}">
+              <view class="repair-info-item">
+                <text class="repair-info-bd repair-state-name">{{item.name}}</text>
+              </view>
+              <view class="repair-info-item">
+                <text class="repair-info-bd">时间</text>
+                <view class="repair-info-ft">
+                  <text>{{item.time}}</text>
+                </view>
+              </view>
+              <view class="repair-info-item" wx:if="{{item.reason}}">
+                <text class="repair-info-bd">原因</text>
+                <view class="repair-info-ft">
+                  <text>{{item.reason}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <view class="work-sheet-panel">
+
+      <text class="work-sheet-title">提交人</text>
+      <view class="work-sheet">
+        <view class="work-sheet-item">
+          <text class="work-sheet-bd">昵称</text>
+          <view class="work-sheet-ft">
+            <text>{{info.name}}</text>
+          </view>
+        </view>
+      </view>
+      <text class="work-sheet-title">采集数据</text>
+      <view class="work-sheet">
+        <view class="work-sheet-item">
+          <text class="work-sheet-bd">姓名</text>
+          <view class="work-sheet-ft">
+            <text>{{info.name}}</text>
+          </view>
+        </view>
+        <view class="work-sheet-item">
+          <text class="work-sheet-bd">手机号</text>
+          <view class="work-sheet-ft">
+            <text>{{info.phone}}</text>
+          </view>
+        </view>
+        <view class="work-sheet-item">
+          <text class="work-sheet-bd">其他信息</text>
+          <view class="work-sheet-ft">
+            <text>{{info.content}}</text>
+          </view>
+        </view>
+
+        <view class="work-sheet-item">
+          <text class="work-sheet-bd">采集图片</text>
+        </view>
+        <view class="weui-uploader__files" id="uploaderFiles">
+          <block wx:for="{{info.files}}" wx:key="{{index}}">
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}">
+              <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{info.status == 1 && info.type == 0}}" class="submit-two">
+    <view class="submit-declare" style="background-color: #888;" bindtap="onReject">
+      <text>打回</text>
+    </view>
+    <view class="submit-declare" bindtap="onPass">
+      <text>审核通过</text>
+    </view>
+    
+  </view>
+
+  <view class="submit-declare " wx:elif="{{info.status==1 && info.type==1 }} " bindtap="onCancel ">
+    <text>取消提交</text>
+  </view>
+
+  <!-- 
+  <view class="submit-declare " wx:elif="{{info.status==2 " >
+    <button class="submit-declare-button " bindtap="updateIdCard ">重新上传照片</button>
+  </view>
+  <view class="submit-declare " wx:elif="{{info.status==4 && info.reason==2 }} " >
+    <button class="submit-declare-button " bindtap="repayService " disabled='{{!canClick}}'>补缴服务费(￥50.00)</button>
+  </view>
+  -->
+</view>

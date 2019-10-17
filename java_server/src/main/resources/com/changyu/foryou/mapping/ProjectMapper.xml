@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changyu.foryou.mapper.ProjectMapper">
+	<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true" />
+	<resultMap id="BaseResultMap" type="com.changyu.foryou.model.Project">
+		<id column="project_id" property="projectId" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="region" property="region" jdbcType="VARCHAR" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="salary" property="salary" jdbcType="VARCHAR" />
+		<result column="rule" property="rule" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_userid" property="createUserId" jdbcType="VARCHAR" />
+		<result column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<result column="follow" property="follow" jdbcType="INTEGER" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="deadline_time" property="deadLineTime" jdbcType="TIMESTAMP" />
+		<result column="region" property="region" jdbcType="VARCHAR" />
+		<result column="add_imgs" property="addImgs" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap> 
+	
+	<resultMap id="BannerResultMap" type="com.changyu.foryou.model.Banner">
+		<id column="banner_id" property="bannerId" jdbcType="INTEGER" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="FollowerResultMap" type="com.changyu.foryou.model.Follow">
+		<id column="follower_id" property="followerId" jdbcType="VARCHAR" />
+		<result column="project_id" property="projectId" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="salary" property="salary" jdbcType="VARCHAR" />
+		<result column="rule" property="rule" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_userid" property="createUserid" jdbcType="VARCHAR" />
+		<result column="deadline_time" property="deadlineTime" jdbcType="TIMESTAMP" />
+		<result column="region" property="region" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="CollectResultMap" type="com.changyu.foryou.model.Collect">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="project_id" property="projectId" jdbcType="VARCHAR" />
+		<result column="up_user_id" property="upUserId" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="files" property="files" jdbcType="VARCHAR" />
+		<result column="record" property="record" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 
+	<resultMap id="UniversityResultMap" type="com.changyu.foryou.model.University">
+		<id column="provice_id" property="proviceId" jdbcType="INTEGER" />
+		<result column="provice" property="provice" jdbcType="VARCHAR" />
+		<result column="univ_id" property="univId" jdbcType="INTEGER" />
+		<result column="university" property="university" jdbcType="VARCHAR" />
+		<result column="choose_flag" property="chooseFlag" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="CommentResultMap" type="com.changyu.foryou.model.ProjectComment">
+		<id column="project_id" property="projectId" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+		<result column="user_head" property="userHead" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="is_read" property="isRead" jdbcType="BOOLEAN" />
+		<result column="project_title" property="projectTitle" jdbcType="VARCHAR" />
+	</resultMap> 
+	-->
+
+	<select id="getBannerInfo" resultMap="BannerResultMap">
+		select
+		*
+		from
+		banner_info
+	</select>
+	
+	<select id="getProjectList" resultMap="BaseResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		project
+		where status > 0
+		order by
+		create_time DESC
+		<if test="limit !=null and offset !=null">
+			LIMIT #{limit,jdbcType=INTEGER} OFFSET
+			#{offset,jdbcType=INTEGER}
+		</if> 
+	</select>
+	
+	<select id="getMyProjectList" resultMap="FollowerResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		follower_project
+		where follower_id = #{followerId,jdbcType=VARCHAR} 
+		order by
+		deadline_time ASC
+		<if test="limit !=null and offset !=null">
+			LIMIT #{limit,jdbcType=INTEGER} OFFSET
+			#{offset,jdbcType=INTEGER}
+		</if> 
+	</select>
+	
+	<select id="getProjectInfo" resultMap="BaseResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		project
+		 where project_id = #{projectId,jdbcType=VARCHAR} 
+	</select>
+	
+	<insert id="insertSelective" parameterType="com.changyu.foryou.model.Project">
+		insert into project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="projectId != null">
+				project_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="detail != null">
+				detail,
+			</if>
+			<if test="salary != null">
+				salary,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUserId != null">
+				create_userid,
+			</if>
+			<if test="headImg != null">
+				head_img,
+			</if>
+			<if test="follow != null">
+				follow,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="deadLineTime != null">
+				deadline_time,
+			</if>
+			<if test="rule != null">
+				rule,
+			</if>
+			<if test="region != null">
+				region,
+			</if>
+			<if test="addImgs != null">
+				add_imgs,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="projectId != null">
+				#{projectId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="detail != null">
+				#{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="salary != null">
+				#{salary,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="headImg != null">
+				#{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="follow != null">
+				#{follow,jdbcType=INTEGER},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deadLineTime != null">
+				#{deadLineTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="rule != null">
+				#{rule,jdbcType=VARCHAR},
+			</if>
+			<if test="region != null">
+				#{region,jdbcType=VARCHAR},
+			</if>
+			<if test="addImgs != null">
+				#{addImgs,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateProjectHeadImg">
+		update project
+		set
+		head_img = #{headImg,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="updateProjectAddImgs">
+		update project
+		set
+		add_imgs = #{addImgs,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="deleteProject">
+		update project
+		set
+		status = #{status,jdbcType=INTEGER} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+		and create_userid = #{createUserId,jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="addCollect" parameterType="com.changyu.foryou.model.Collect">
+		insert into collect
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    <if test="id != null">
+				id,
+			</if>
+			<if test="projectId != null">
+				project_id,
+			</if>
+			<if test="upUserId != null">
+				up_user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="files != null">
+				files,
+			</if>
+			<if test="record != null">
+				record,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		   <if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="projectId != null">
+				#{projectId,jdbcType=VARCHAR},
+			</if>
+			<if test="upUserId != null">
+				#{upUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="files != null">
+				#{files,jdbcType=VARCHAR},
+			</if>
+			<if test="record != null">
+				#{record,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateCollectFiles">
+		update collect
+		set
+		files = #{files,jdbcType=VARCHAR} 
+		where id = #{id,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="updateCollectStatus">
+		update collect
+		set
+		<if test="status != null">
+			status=#{status, jdbcType=INTEGER}
+		</if>
+		<if test="record != null">
+			,record=#{record, jdbcType=VARCHAR}
+		</if>
+		where id = #{id,jdbcType=VARCHAR} 
+	</update>
+	
+	<select id="getCollect" resultMap="CollectResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		collect
+		 where id = #{id,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="getCollectList" resultMap="CollectResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		collect
+		where up_user_id = #{upUserId,jdbcType=VARCHAR} 
+		order by
+		create_time DESC
+		<if test="limit !=null and offset !=null">
+			LIMIT #{limit,jdbcType=INTEGER} OFFSET
+			#{offset,jdbcType=INTEGER}
+		</if> 
+	</select>
+	
+	<select id="getTaskCollectList" resultMap="CollectResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		collect
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+		order by
+		create_time DESC
+		<if test="limit !=null and offset !=null">
+			LIMIT #{limit,jdbcType=INTEGER} OFFSET
+			#{offset,jdbcType=INTEGER}
+		</if> 
+	</select>
+	
+	<select id="getCollectCounts" resultType="java.lang.Integer" flushCache="true" useCache="false">
+		select
+		count(*)
+		from
+		collect
+		<where>
+		project_id = #{projectId,jdbcType=VARCHAR} 
+		</where> 
+	</select>
+	
+	<select id="getFollowerCounts" resultType="java.lang.Integer" flushCache="true" useCache="false">
+		select
+		count(*)
+		from
+		follow
+		<where>
+		project_id = #{projectId,jdbcType=VARCHAR} 
+		</where> 
+	</select>
+	
+	<!--  
+	<insert id="commitComment" parameterType="com.changyu.foryou.model.ProjectComment">
+		insert into project_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="projectId != null">
+				project_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+			<if test="commentTime != null">
+				comment_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="projectId != null">
+				#{projectId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="commentTime != null">
+				#{commentTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="getCommentList" resultMap="CommentResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		project_comment_user
+		<where>
+		project_id = #{projectId,jdbcType=VARCHAR} 
+		</where> 
+		order by
+		comment_time DESC
+		<if test="limit !=null and offset !=null">
+			LIMIT #{limit,jdbcType=INTEGER} OFFSET
+			#{offset,jdbcType=INTEGER}
+		</if> 
+	</select>
+	
+	<select id="getCommentCount" resultType="java.lang.Integer" flushCache="true" useCache="false">
+		select
+		count(*)
+		from
+		project_comment_user
+		<where>
+		project_id = #{projectId,jdbcType=VARCHAR} 
+		</where> 
+	</select>
+	
+	
+	<select id="getProjectCommentMsg" parameterType="String" resultMap="CommentResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		project_comment_user 
+		where
+		owner_id=#{userId,jdbcType=VARCHAR} 
+		and user_id != owner_id
+		order by
+		comment_time DESC
+		LIMIT 10
+	</select>
+	
+	
+	<select id="getCommentUnreadMsgCount" parameterType="String" resultType="java.lang.Integer" flushCache="true" useCache="false">
+		select
+		count(*)
+		from
+		project_comment_user 
+		where
+		owner_id=#{userId,jdbcType=VARCHAR} 
+		and user_id != owner_id
+		and is_read = 0
+	</select>
+	
+	
+	<update id="setProjectCommentRead">
+		update project_comment
+		set
+		is_read = 1
+		where project_id = #{projectId,jdbcType=VARCHAR}
+	</update>
+	-->
+
+	<!-- 
+	<select id="getProviceList"  resultMap="UniversityResultMap" flushCache="true" useCache="false">
+		select
+		distinct provice_id, provice
+		from
+		university 	
+	</select>
+	 
+	<select id="getUnivList" resultMap="UniversityResultMap" flushCache="true" useCache="false">
+		select
+		*
+		from
+		university 
+		where provice_id = #{proviceId,jdbcType=VARCHAR}
+		<if test="chooseFlag ==1">
+			and choose_flag = 1
+		</if> 		
+	</select>
+	-->
+</mapper>
+

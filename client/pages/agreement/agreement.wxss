@@ -1,0 +1,30 @@
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.title{
+  line-height: 80rpx;
+  position: relative;
+  margin-top:40rpx;
+  margin-bottom: 40rpx;
+  text-align: center;
+  font-size: 40rpx;
+}
+
+.content{
+  padding-left: 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 50rpx;
+  text-align: left;
+}
+
+
+
+.foot{
+  float:right;
+  margin-right: 20rpx;
+  margin-bottom: 40rpx;
+}

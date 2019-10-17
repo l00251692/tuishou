@@ -1,0 +1,87 @@
+<scroll-view class="form_info" scroll-y>
+  <view class='aggrement_title'>委托服务合同</view>
+  <view class='aggrement_line'> 甲方（委托方）：
+    <text class='partyA'>{{name}}</text> </view>
+  <view class='aggrement_line'> 乙方（受托方）：
+    <text class='partyB'>上海明静食品有限公司</text> </view>
+  <view class="content">
+    <text decode="{{true}}">
+    乙方为甲方提供<text class='text_underline'> 病历资料复印并邮寄</text> 服务。上述各方经平等自愿协商，签订本合同以共同遵守。 
+     一、双方权利及义务。
+1、甲方委托乙方工作人员办理病历资料复印并邮寄资料的提取、邮寄等一系列服务。
+2、甲方有义务按照协议内容向乙方如实提供有必备的资料，如实填写相关资料，以备乙方顺利工作。因甲方未能及时提供真实有效的材料而导致任何损失，乙方不负责任。
+3、甲方有义务按照协议内容中相关费用标准和支付方式支付乙方服务费用。
+4、乙方有权按照协议内容要求甲方对自身提供的服务支付费用。
+5、乙方有权依据协议内容要求甲方按时提供服务内容中所必备的资料。
+6、乙方有义务严格遵守服务行业标准和职业标准，严守甲方的资料机密。
+7、乙方有义务只以甲方的名义进行协议所规定的服务工作，未经甲方允许，不以甲方名义进行其他活动。
+二、服务时间及服务费用等事宜：
+1、服务时间：在患者出院三周后   
+2、服务费用：病史资料50页内收费200元，病史资料超过50页收费250元。邮寄使用顺丰快递到付服务。
+3、服务方式：<text class='text_underline'>  打印并邮寄甲方病史资料</text>       
+4、甲方无故中途终止协议，服务费不予退还。
+5、乙方中途终止合同，全额退还甲方已交服务费。
+6、如因甲方提供资料虚假，服务费用不退还。
+7、如遇不可知原因造成乙方无法打印并邮寄病历资料，乙方全额退还甲方已交服务费。
+三、保密
+1、保密信息指甲方病史资料的信息。
+2、乙方应在本协议终止前或终止后的任何时候对其在本协议签署前或签署后可能取得或已经取得的有关信息进行保密。
+3、除非经甲方事先书面同意，乙方不得向任何第三方透露甲方信息。
+四、协议的生效修改和终止
+1、本协议在微信小程序上甲方付款后即生效。生效后未经协议各方一致同意，任何一方不得单方面变更、修改或解除本协议的任何条款。
+2、如由于新的法律、规定的颁布导致本协议的履行收到影响，则各方应互相协商，对本协议的相关条款做出调整。若本协议的某条款被宣布无效，应不影响本协议其他条款的效力。
+3、按照本协议规定期满或终止对乙方的委托，不论出于何种原因，均不妨碍协议各方的权利和义务。
+五、附则
+    </text>
+  </view>
+
+  <view class="reporter-img">
+    <text class="reporter-img-name">患者身份证</text>
+    <view class="reporter-img-idcard-front">
+      <image src="{{idCardFrontPath}}" data-src="{{idCardFrontPath}}" mode='aspectFit' bindtap="previewImage"></image>
+    </view>
+    <view class="reporter-img-idcard-back">
+      <image src="{{idCardBackPath}}" data-src="{{idCardBackPath}}" mode='aspectFit' bindtap="previewImage"></image>
+    </view>
+  </view>
+
+  <checkbox-group class="checkbox" bindchange="toAgree">
+      <label>
+        <checkbox checked="{{agree}}"/>
+        <text class="xieyi">接受上述委托服务合同协议</text>
+      </label>
+  </checkbox-group>
+  <view class='aggrement_foot'> 甲方：
+    <view class='sign_name' bindtap='onSign'>
+      <image wx:if="{{sign}}" src="{{sign}}" class="hand_wrinting_img" mode="aspectFit"></image>
+      <text wx:else>请点击此处签名</text>
+    </view> 
+  </view>
+  <view class='aggrement_foot'> 乙方：
+    <view class='sign_name'><text>上海明静食品有限公司</text>
+    </view> 
+  </view>
+  <view class='remind'>
+    <text >重要：提交前请预览确保患者身份证照片清晰</text> 
+  </view>
+
+</scroll-view>
+
+<view class="submit-declare">
+  <button class="submit-declare-button" bindtap='formSubmit' disabled='{{!canClick}}'>提交支付(￥200.00)</button>
+</view>
+
+<view class="help" id="help" wx:if="{{help_status}}" bindtap="tapHelp">
+  <view class="box">
+    <view class="box-hd">
+      <text class="box-title">帮助</text>
+      <image class="box-close" src="../../images/index/close.png" bindtap="hideHelp"></image>
+    </view>
+    <view class="box-bd">
+      <view class="help-q">医院科室信息填写规则？</view>
+      <view class="help-a">
+        <text>请参考如下示例填写科室，如：骨科，内科，外科等</text>
+      </view>
+    </view>
+  </view>
+</view>

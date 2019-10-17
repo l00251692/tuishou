@@ -1,0 +1,6 @@
+{
+    "navigationBarBackgroundColor": "#1e8cd4",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "采集数据",
+    "enablePullDownRefresh": true
+}

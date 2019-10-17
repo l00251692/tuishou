@@ -1,0 +1,222 @@
+@import './iconfont.wxss';
+
+.parent{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+    background-color:#f8f8f8;
+
+}
+
+.banner {
+  position: relative;
+  height: 200px;
+}
+.banner .banner-img image {
+  width: 100%;
+  max-width: 100%;
+  filter: brightness(70%);
+  height: 200px;
+}
+.banner .banner-title {
+  position: absolute;
+  bottom: 1rem;
+  color: #fff;
+  padding: .5rem;
+}
+
+.banner .banner-img--license {
+  position: absolute;
+  bottom: .8rem;
+  right: .5rem;
+  color: #ddd;
+  font-size: .4rem;
+}
+
+/*content  */
+.content{
+    padding:0 0 0 0;
+    height:auto;
+    overflow:hidden;
+}
+
+.user-jy {
+    display: flex;
+    background: #fefefe;
+    border-bottom: 1rpx solid #eee;
+}
+.user-jy-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 11pt;
+    line-height: 150%;
+    height: 150rpx;
+    padding: 20rpx;
+    border-right: 1rpx solid #eee;
+}
+.user-jy-dbet {
+    border: none;
+}
+.user-jy-hd {
+    color: #777;
+}
+.user-jy-bd {
+    display: flex;
+    justify-content: center;
+}
+.user-jy-value {
+    font-size: 28pt;
+    color: #73b4ef;
+    font-weight: bold;
+    line-height: 150%;
+    padding: 0 20rpx 0 30rpx;
+}
+.user-jy-text {
+    color: #999;
+    font-size: 10pt;
+    line-height: 200%;
+    align-self: flex-end;
+}
+
+.repair-detail{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    margin-top: 30rpx;
+    overflow: hidden;
+}
+.repair-detail-item{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #ddd;
+}
+.repair-detail-item-hd{
+    display: flex;
+    align-items: center;
+    height: 88rpx;
+    font-size: 11pt;
+    margin-left: 30rpx;
+}
+.repair-detail-item-ft{
+    font-size: 10pt;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-right: 30rpx;
+}
+.repair-detail-picker {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.repair-detail-content{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20rpx 0;
+}
+
+.more-icon{
+    width: 18rpx;
+    height: 27rpx;
+    margin-left: 30rpx;
+}
+
+
+
+.reporter-detail{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-top: 25rpx;
+    overflow: hidden;
+}
+.reporter-detail-item{
+    display: flex;
+    align-items: center;
+    height: 88rpx;
+    border-bottom: 1px solid #e5e5e5;
+    margin-left: 30rpx;
+}
+.reporter-detail-item.reporter-address {
+    border: none;
+}
+.reporter-user .reporter-detail-input{
+    color: #999;
+}
+.reporter-detail-name{
+    font-size: 11pt;
+}
+.service-cells-items{
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+}
+.servcie-cell-item{
+    height: 70rpx;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+}
+.reporter-detail-input{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 30rpx;
+    padding-left: 45rpx;
+}
+.reporter-detail-input input{
+    font-size: 10pt;
+    width: 100%;
+}
+.input-placeholder {
+    font-size: 10pt;
+}
+.declare-context{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15rpx;
+    overflow: hidden;
+}
+.declare-context-panel{
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+.declare-context-title{
+    color: #888;
+    margin: 5rpx 0 10rpx 30rpx;
+}
+.declare-context-input {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    height: 88rpx;
+    padding: 0 30rpx;
+}
+.declare-context-textarea{
+    padding: 30rpx;
+    width: 100%;
+}
+.submit-declare{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40rpx 3%;
+    height: 80rpx;
+    border-radius: 3px;
+    text-align: center;
+    background-color: #1e8cd4;
+    color: #fff;
+    font-size: 12pt;
+}
+.submit-declare:active{
+    opacity: .8;
+}

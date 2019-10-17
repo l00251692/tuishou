@@ -1,0 +1,52 @@
+<import src="/templates/load-more.wxml" />
+
+<view class="wrapper">
+   <view class="tap">
+			<text class="item">采集数据记录</text>
+	</view>
+  <block wx:for="{{list}}" wx:key="{{order_id}}">
+  <view class="process review-process">
+    <view class="process-hd">
+      <image class="review-process-icon" src="../../images/order/order_{{item.status}}.png"></image>
+      <view class="order-number-name">
+        <text>数据编码:{{item.id}}</text>
+      </view>
+      <view class="process-state">
+        <text class="process-state-name process-state-{{item.status}}">{{ORDER_STATES[item.status]}}</text>
+      </view>
+    </view>
+    <view class="process-bd">
+      <view class="process-item">
+        <view class="process-item-bd">
+          <text class="process-item-name">任务名称</text>
+        </view>
+        <view class="process-item-ft">
+          <text class="process-item-info">{{item.task_name}}</text>
+        </view>
+      </view>
+      <view class="process-item">
+        <view class="process-item-bd">
+          <text class="process-item-name">提交时间</text>
+        </view>
+        <view class="process-item-ft">
+          <text class="process-item-info">{{item.create_time}}</text>
+        </view>
+      </view>
+      <view class="process-item">
+        <view class="process-item-bd">
+          <text class="process-item-name">每单收益</text>
+        </view>
+        <view class="process-item-ft">
+          <text class="process-item-info">{{item.salary}}</text>
+        </view>
+      </view>
+    </view>
+    <navigator url="/pages/collect/detail?callback=callback&&id={{item.id}}">
+      <view class="service-detail-open">
+        <text>详情</text>
+      </view>
+    </navigator>
+  </view>
+</block>
+  <template is="load-more" data="{{hasMore: hasMore, loading: loading}}"></template>
+</view>

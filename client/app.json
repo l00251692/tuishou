@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/start/start",
+    "pages/index/index",
+    "pages/task/task",
+    "pages/task/detail",
+    "pages/task/create",
+    "pages/task/collects",
+    "pages/collect/upload",
+    "pages/collect/detail",
+    "pages/mine/mine",
+    "pages/mine/mytask",
+    "pages/wallet/wallet",
+    "pages/wallet/withdraw",
+    "pages/feedback/feedback",
+    "pages/about/about",
+    "pages/upload/takePhoto",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundColor": "#1e8cd4",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1e8cd4",
+    "navigationBarTitleText": "推手",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#1e8cd4",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tabBar/Tabbar_Home_Empty.png",
+        "selectedIconPath": "images/tabBar/Tabbar_Home_Full.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "iconPath": "images/tabBar/Tabbar_Task_Empty.png",
+        "selectedIconPath": "images/tabBar/Tabbar_Task_Full.png",
+        "text": "任务"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "images/tabBar/Tabbar_My_Empty.png",
+        "selectedIconPath": "images/tabBar/Tabbar_My_Full.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示" 
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

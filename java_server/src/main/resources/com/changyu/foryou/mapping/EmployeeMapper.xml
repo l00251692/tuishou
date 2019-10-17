@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changyu.foryou.mapper.EmployeeMapper">
+	<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true" />
+	<resultMap id="BaseResultMap" type="com.changyu.foryou.model.Employee">
+		<id column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="authority" property="authority" jdbcType="VARCHAR" />
+		<result column="last_login_date" property="lastLoginDate" jdbcType="DATE" />
+	</resultMap>
+	
+	<resultMap id="BaseResultMap2" type="com.changyu.foryou.model.Hospital">
+		<id column="hospital" property="hospital" jdbcType="VARCHAR" />
+		<id column="address" property="address" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		phone, password, type, authority,
+		last_login_date,
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String" flushCache="true" useCache="false">
+		select
+		*
+		FROM
+		oa_employee
+		WHERE
+		phone = #{phone,jdbcType=VARCHAR}
+		LIMIT 1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from oa_employee
+		where phone = #{phone,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insertSelective" >
+		insert into oa_employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="authority != null">
+				authority,
+			</if>
+			<if test="lastLoginDate != null">
+				last_login_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=SMALLINT},
+			</if>
+			<if test="authority != null">
+				#{authority,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginDate != null">
+				#{lastLoginDate,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 登录检查接口 -->
+	<select id="checkLogin" resultMap="BaseResultMap">
+		select * from oa_employee where
+		phone=#{phone,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateLastLoginTime">
+		update oa_employee
+		<set>
+			<if test="lastLoginDate != null">
+				last_login_date = #{lastLoginDate,jdbcType=DATE},
+			</if>
+		</set>
+		where phone = #{phone,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateEmployee" >
+		update oa_employee
+		set
+		password = #{password,jdbcType=VARCHAR},
+		type =#{type,jdbcType=SMALLINT},
+		authority = #{authority,jdbcType=VARCHAR}
+		where phone = #{phone,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="delEmployee" >
+		delete from oa_employee
+		where phone = #{phone,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="getAllEmployee" resultMap="BaseResultMap" useCache="false">
+		select
+		*
+		from oa_employee
+		<where>
+			1=1
+			<if test="search != null and search !='' ">
+				and (phone like #{search,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				order by ${sort}
+			</if>
+			<if test="offset != null and limit != null">
+				limit #{offset,jdbcType=INTEGER} ,
+				#{limit,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPhoneAndPassword" resultMap="BaseResultMap"  flushCache="true" useCache="false">
+		select
+		*
+		FROM
+		oa_employee
+		WHERE
+			phone = #{phone,jdbcType=VARCHAR}
+		and 
+			password = #{password,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updatePassword" >
+		update oa_employee
+		set
+		password = #{password,jdbcType=VARCHAR}
+		where phone = #{phone,jdbcType=VARCHAR}
+	</update>
+	
+	
+	<select id="getProvinceList"  resultType="String" flushCache="true" useCache="false">
+		select
+			distinct(province) 
+		from 
+			hospital
+	</select>
+	
+	<select id="getHospitalList"  resultMap="BaseResultMap2" flushCache="true" useCache="false">
+		select
+			*
+		from 
+			hospital
+		where 
+			province = #{province,jdbcType=VARCHAR} 
+		order by convert(hospital using gb2312) asc
+	</select>
+	
+	<select id="getAllHospital"  resultMap="BaseResultMap2" flushCache="true" useCache="false">
+		select
+			*
+		from 
+			hospital
+		order by convert(province using gb2312),convert(hospital using gb2312) asc
+	</select>
+	
+	<insert id="addHospital" >
+		insert into hospital
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="province != null">
+				province,
+			</if>
+			<if test="hospital != null">
+				hospital,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="hospital != null">
+				#{hospital,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="delHospital" >
+		delete from hospital
+		where 
+			province = #{province,jdbcType=VARCHAR}
+		and
+			hospital = #{hospital,jdbcType=VARCHAR}
+		and
+			address = #{address,jdbcType=VARCHAR}
+	</delete>
+	
+	
+</mapper>

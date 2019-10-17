@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html" />
+    <meta name="title" content="foryou" />
+    <meta name="language" content="zh" />
+    <title>订单汇总</title>
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-editable.css">
+    <link rel="stylesheet" href="../css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="../css/bootstrap-datepicker3.standalone.css">
+    <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
+    <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon" />
+    <style type="text/css">
+    .list_panel input.datepicker {
+        width: 116px;
+    }
+
+    #select {
+        background: #FF4500;
+        color: #fff;
+        border: 1px solid #ff4500;
+        margin-left: 10px;
+        width: 60px;
+    }
+
+    div.head-color {
+        background-color: #FAFAFA;
+    }
+
+    #order_center_filter {
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+
+    .ml10 {
+        font-size: large;
+    }
+
+    .datepicker {
+        width: 100px;
+        margin-right: 20px;
+    }
+
+    .datepicker.dropdown-menu {
+        width: 200px;
+    }
+
+
+    .pull-right {
+        padding-top: 20px;
+    }
+
+    .container {
+        width: 95%;
+        padding-right: 30px;
+        padding-left: 30px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 name="counts">订单列表</h1>
+            <form id="order_center_filter">
+                <span class="ml10">选择日期：</span>
+                <span class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control" name="start" id="qBeginTime" />
+                    <span class=""> 至 </span>
+                <input type="text" class="input-sm form-control" name="end" id="qEndTime" />
+                </span>
+                <input type="button" id="select" value="查询" class="submit" />
+            </form>
+        </div>
+        <div>
+            <div id="toolbar" class="btn-group">
+                <button id="delete" type="button" class="btn btn-default">
+                    <i class="icon icon-minus"></i>
+                </button>
+            </div>
+            <table id="table" data-toolbar="#toolbar" data-pagination="true" data-id-field="order_id" data-striped="true" data-height="80%" data-show-refresh="true" data-search="true" data-show-columns="true" data-show-toggle="true" data-toolbar-align="right" data-click-to-select="true" data-page-list="[10, 20, 50, 100, 1000]" data-smart-display="false" data-show-export="true">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-align="left" data-field="order_id" data-sortable="true">订单号</th>
+                        <th data-align="left" data-field="create_time" data-sortable="true">创建时间</th>
+                        <th data-align="left" data-field="status" data-sortable="true">状态</th>
+                        <th data-align="left" data-field="nick_name" data-sortable="true" data-visible="false">用户昵称</th>
+                        <th data-align="left" data-field="name" data-sortable="true">患者姓名</th>
+                        <th data-align="left" data-field="idcard">身份证号</th>
+                        <th data-align="left" data-field="sex" data-visible="false">性别</th>
+                        <th data-align="left" data-field="hospital">医院</th>
+                        <th data-align="left" data-field="hospitalArea">病区</th>
+                        <th data-align="left" data-field="department">科室</th>
+                        <th data-align="left" data-field="bedNo">床位号</th>
+                        <th data-align="left" data-field="mrNo" data-visible="false">住院号</th>
+                        <th data-align="left" data-field="doctor">主治医生</th>
+                        <th data-align="left" data-field="diseases" data-visible="false">所患疾病</th>
+                        <th data-align="left" data-field="date">出院日期</th>
+                        <th data-align="left" data-field="addr" data-visible="false">邮寄地址</th>
+                        <th data-align="left" data-field="phone" data-visible="false">手机号</th>
+                        <th data-align="left" data-field="concatName" data-visible="false">主要联系人</th>
+                        <th data-align="left" data-field="concatPhone" data-visible="false">联系人电话</th>
+                        <th data-align="center" data-field="front_img" data-formatter="ImageFormatter" data-visible="false">身份证（正面）</th>
+                        <th data-align="center" data-field="back_img" data-formatter="ImageFormatter" data-visible="false">身份证（背面）</th>
+                        <th data-align="center" data-field="summary_img" data-formatter="ImageFormatter" data-visible="false">出院小结</th>
+                        <th data-align="left" data-field="deliveryNo">快递单号</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.4.0/bootstrap-table.min.js"></script>-->
+    <script src="../js/bootstrap-table-export.min.js"></script>
+    <script src="../js/tableExport.js"></script>
+    <script src="../js/ga.js"></script>
+    <script src="../js/jquery.base64.js"></script>
+    <script src="../js/bootstrap-table-editable.min.js"></script>
+    <script src="../js/bootstrap-editable.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table-zh-CN.min.js"></script>
+    <script>
+    $('#qBeginTime').datepicker({
+        todayBtn: "linked",
+        language: "zh-CN",
+        autoclose: true,
+        todayHighlight: true,
+        endDate: new Date()
+    }).on('changeDate', function(e) {
+        var startTime = e.date;
+        $('#qEndTime').datepicker('setStartDate', startTime);
+    });
+    //结束时间：
+    $('#qEndTime').datepicker({
+        todayBtn: "linked",
+        language: "zh-CN",
+        autoclose: true,
+        todayHighlight: true,
+        endDate: new Date()
+    }).on('changeDate', function(e) {
+        var endTime = e.date;
+        $('#qBeginTime').datepicker('setEndDate', endTime);
+    });
+
+
+    var $deleteButton = $("#delete");
+
+    $deleteButton.click(function() {
+        var array = $('#table').bootstrapTable('getSelections'); //获取选中的所有记录
+        var orderIdString = "";
+        if (array.length == 0)
+            alert("请先选中要删除的记录！"); //选择记录不能为空
+        else {
+            for (var i = array.length - 1; i >= 0; i--) {
+                if (i == 0) {
+                    orderIdString += array[i].order_id; //连接最末不加，号
+                } else {
+                    orderIdString += array[i].order_id + ","; //id用逗号连接
+                }
+            };
+
+            if (confirm("是否确定要执行删除操作！")) {
+                //做删除的访问请求
+                $.post("../order/deleteOrders", {
+                    orderIds: orderIdString,
+                    userId: getCookie("phone"),
+                    userType: getCookie("type"),
+                    server: "56846a8a2fee49d14901d39cc48b8b2a"
+                }, function(text) {
+                    var json = eval(text);
+                    if (json.status == "success") {
+                        for (var i = array.length - 1; i >= 0; i--) {
+                            $('#table').bootstrapTable('remove', {
+                                field: 'order_id',
+                                values: [array[i].order_id]
+                            });
+                        };
+                    } else {
+                        alert(json.message);
+                    }
+                });
+            }
+        }
+
+    });
+
+    $(function() {
+        $('#qBeginTime').val(time());
+        $('#qEndTime').val(time());
+
+        getTotalDate(null, null);
+
+        $("#select").on("click", function() {
+            $("#list_items").text("");
+            getTotalDate($("#qBeginTime").val(), $("#qEndTime").val());
+        });
+    });
+
+    /*$(function() {
+        $('#toolbar').find('select').change(function() {
+            $('#table').bootstrapTable('destroy').bootstrapTable({
+                exportDataType: $(this).val()
+            });
+        });
+    })*/
+
+
+    function getTotalDate(start, end) {
+
+        $.post("../order/getOrdersByDate", {
+            date_start: start,
+            date_end: end,
+            server: "56846a8a2fee49d14901d39cc48b8b2a"
+        }, function(text) {
+            var data1 = eval(text);
+            console.log("getTotalDate:" + JSON.stringify(data1));
+            $("#table").bootstrapTable("load", data1.orderList);
+
+            $(function() {
+                $("#table").bootstrapTable({ data: data1.orderList });
+            });
+
+        });
+
+    }
+
+    function time() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var date = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (date < 10)
+            date = "0" + date;
+        //写入相应id
+
+        return year + "年" + (month) + "月" + date + "日";
+    }
+
+    function ImageFormatter(value, row, index) {
+        if (value == "" || !value) {
+            return "暂无图片";
+        }
+        return "<img height='50' width='100' alt='图片加载中' src=" + value + ">";
+    }
+    </script>
+</body>
+
+</html>

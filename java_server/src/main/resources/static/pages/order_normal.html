@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>订单管理</title>
+    <link rel="stylesheet" href="../assets/bootstrap-table/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap-table/bootstrap-editable.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style type="text/css">
+    #select {
+        background: #FF4500;
+        color: #fff;
+        border: 1px solid #ff4500;
+        margin-left: 10px;
+        width: 60px;
+    }
+
+
+    div.head-color {
+        background-color: #FAFAFA;
+    }
+
+    #order_center_filter {
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+
+    .input-name {
+        width: 100px;
+    }
+
+    .input-idcard {
+        width: 200px;
+    }
+
+
+    .ml10 {
+        font-size: medium;
+    }
+
+    .ml20 {
+        font-size: medium;
+        margin-left: 30px;
+    }
+
+    .pull-right {
+        padding-top: 20px;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+
+    .modal-dialog {
+        z-index: 2000;
+    }
+    </style>
+</head>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.4.0/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-export.min.js"></script>
+<script src="../js/tableExport.js"></script>
+<script src="../js/jquery.base64.js"></script>
+<script src="../js/bootstrap-table-editable.min.js"></script>
+<script src="//cdn.bootcss.com/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <![endif]-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.4.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/util.js"></script>
+
+<body>
+    <div class="container">
+        <div>
+            <div class="page-header">
+                <h1 name="counts">订单查询</h1>
+                <form id="order_center_filter">
+                    <span class="ml10">患者姓名：
+                        <input type="text" class="input-name" name="name" id="name" /></span>
+                    <span class="ml20">身份证号：
+                        <input type="text" class="input-idcard" name="idcard" id="idcard"/>
+                    </span>
+                    <input type="button" id="select" value="查询" class="submit" />
+                </form>
+            </div>
+            <table id="table" data-id-field="order_id" data-pagination="true" data-side-pagination="server" data-search="true" data-height="80%" data-show-refresh="true" data-show-columns="true" data-show-toggle="true" data-toolbar-align="right" data-page-list="[10, 20, 50, 100, 1000]" data-smart-display="false" data-show-export="true">
+                <thead>
+                    <tr>
+                        <th data-align="left" data-field="order_id" data-sortable="true">订单号</th>
+                        <th data-align="left" data-field="create_time">创建时间</th>
+                        <th data-align="left" data-field="status">订单状态</th>
+                        <th data-align="left" data-field="nick_name" data-sortable="true" data-visible="false">用户昵称</th>
+                        <th data-align="left" data-field="name" data-sortable="true">患者姓名</th>
+                        <th data-align="left" data-field="idcard">身份证号</th>
+                        <th data-align="left" data-field="sex" data-visible="false">性别</th>
+                        <th data-align="left" data-field="hospital">医院</th>
+                        <th data-align="left" data-field="hospitalArea">病区</th>
+                        <th data-align="left" data-field="department">科室</th>
+                        <th data-align="left" data-field="bedNo">床位号</th>
+                        <th data-align="left" data-field="mrNo" data-visible="false">住院号</th>
+                        <th data-align="left" data-field="doctor">主治医生</th>
+                        <th data-align="left" data-field="diseases" data-visible="false">所患疾病</th>
+                        <th data-align="left" data-field="date">出院日期</th>
+                        <th data-align="left" data-field="addr" data-visible="false">邮寄地址</th>
+                        <th data-align="left" data-field="phone" data-visible="false">手机号</th>
+                        <th data-align="left" data-field="concatName" data-visible="false">主要联系人</th>
+                        <th data-align="left" data-field="concatPhone" data-visible="false">联系人电话</th>
+                        <th data-align="center" data-field="front_img" data-formatter="ImageFormatter" data-visible="false">身份证（正面）</th>
+                        <th data-align="center" data-field="back_img" data-formatter="ImageFormatter" data-visible="false">身份证（背面）</th>
+                        <th data-align="center" data-field="summary_img" data-formatter="ImageFormatter" data-visible="false">出院小结</th>
+                        <th data-align="left" data-field="deliveryNo">快递单号</th>
+                        <th data-field="action" data-width="100" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="modal-title" id="myModalLabel">更新物流信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit_form" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="edit_order_id" class="col-sm-2 control-label">订单号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_order_id" name="order_id" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_name" class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_name" name="name" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_phone" class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_phone" name="phone" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_deliveryNo" class="col-sm-2 control-label">快递单号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_deliveryNo" name="deliveryNo" placeholder="快递单号">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick="submitUpdateDeliveryNo();" class="btn btn-primary">提交更改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="modal-title" id="myModalLabel">打回订单用户处理</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit_form" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="edit_order_id" class="col-sm-2 control-label">订单号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_order_id2" name="order_id2" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_name" class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_name2" name="name2" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_phone" class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_phone2" name="phone2" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="status">返回原因</label>
+                                <div class="col-sm-10">
+                                    <input type="radio" name="optionsRadios" id="edit_status" value="1" checked="true"> 照片模糊
+                                    <input type="radio" name="optionsRadios" id="edit_status2" value="2"> 需补缴服务费
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_content" class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_content2" name="content2" placeholder="(选填)备注信息">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick="submitUpdateOrder();" class="btn btn-primary">确定提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+var usertype = getCookie("type");
+var phone=getCookie('phone');
+var patient = "";
+var idcard = "";
+
+$('#table').bootstrapTable({ showExport: true, pagination: true });
+
+$(function() {
+
+    $("#select").on("click", function() {
+
+        patient = $("#name").val().trim();
+        idcard = $("#idcard").val().trim();
+
+        if (patient == null || patient.length == 0) {
+            alert("请填写患者姓名")
+            return
+        } else if (idcard == null || idcard.length == 0) {
+            alert("请填写患者身份证号")
+            return
+        }
+
+        getOrdersByNameAndIdcard(patient, idcard);
+    });
+});
+
+function getOrdersByNameAndIdcard(name, idcard) {
+
+    $.post("../order/getOrdersByNameAndIdcard", {
+        name,
+        idcard,
+        server: "56846a8a2fee49d14901d39cc48b8b2a"
+    }, function(text) {
+        var data = eval(text);
+
+        $(function() {
+            $("#table").bootstrapTable("load", data.orderList);
+            $("#table").bootstrapTable({ data: data.orderList });
+        });
+
+    });
+
+}
+
+function actionFormatter(value, row, index) {
+    if (row.status == "待发货") {
+        return [
+            '<a class="admin" href="javascript:void(0)" title="更新物流">',
+            '&nbsp;<i class="glyphicon glyphicon-plane"></i>&nbsp;',
+            '</a>',
+            '<a class="reject" href="javascript:void(0)" title="打回订单">',
+            '&nbsp;<i class="glyphicon glyphicon-hand-left"></i>&nbsp;',
+            '</a>',
+            '<a class="common" href="javascript:void(0)" title="下载打印">',
+            '&nbsp;<i class="glyphicon glyphicon-floppy-save"></i>&nbsp;',
+            '</a>'
+        ].join('');
+    } else if (row.status == "已发货") {
+        return [
+            '<a class="common" href="javascript:void(0)" title="下载打印">',
+            '&nbsp;<i class="glyphicon glyphicon-floppy-save"></i>&nbsp;',
+            '</a>'
+        ].join('');
+    }
+}
+
+function ImageFormatter(value, row, index) {
+    if (value == "" || !value) {
+        return "暂无图片";
+    }
+    return "<img height='50' width='100' alt='图片加载中' src=" + value + ">";
+}
+
+
+function submitUpdateDeliveryNo() {
+    var order_id = $("#edit_order_id").val();
+    var deliveryNo = $("#edit_deliveryNo").val().trim();
+    $.post("../order/updateDeliveryNo", {
+        order_id,
+        deliveryNo,
+    }, function(data) {
+        alert(data.message);
+        if (data.status = 'success') {
+            $("#editModal").modal('hide');
+
+            name = $("#name").val().trim();
+            idcard = $("#idcard").val().trim();
+            getOrdersByNameAndIdcard(name, idcard);
+        }
+    }, "json");
+}
+
+function submitUpdateOrder() {
+    var order_id = $("#edit_order_id2").val();
+    var content = $("#edit_content2").val().trim();
+    var reason = $("input:radio[name='optionsRadios']:checked").val();
+
+    $.post("../order/updateOrderByEmployee", {
+        phone: phone,
+        order_id,
+        reason,
+        content,
+    }, function(data) {
+        alert(data.message);
+        if (data.status = 'success') {
+            $("#editModal2").modal('hide');
+
+            name = $("#name").val().trim();
+            idcard = $("#idcard").val().trim();
+            getOrdersByNameAndIdcard(name, idcard);
+        }
+    }, "json");
+}
+
+window.actionEvents = {
+    'click .admin': function(e, value, row, index) {
+
+        $("#edit_order_id").val(row.order_id);
+        $("#edit_name").val(row.name);
+        $("#edit_phone").val(row.phone);
+        $("#edit_deliveryNo").val('');
+        $("#editModal").modal('show');
+
+    },
+    'click .reject': function(e, value, row, index) {
+
+        $("#edit_order_id2").val(row.order_id);
+        $("#edit_name2").val(row.name);
+        $("#edit_phone2").val(row.phone);
+        $("#edit_content2").val('');
+
+        $("#editModal2").modal('show');
+
+
+    },
+    'click .common': function(e, value, row, index) {
+        httpPost("../order/download", { order_id: row.order_id })
+    }
+};
+
+function httpPost(URL, PARAMS) {
+    var temp = document.createElement("form");
+    temp.action = URL;
+    temp.method = "post";
+    temp.style.display = "none";
+
+    for (var x in PARAMS) {
+        var opt = document.createElement("textarea");
+        opt.name = x;
+        opt.value = PARAMS[x];
+        temp.appendChild(opt);
+    }
+
+    document.body.appendChild(temp);
+    temp.submit();
+
+    return temp;
+}
+</script>
+
+</html>

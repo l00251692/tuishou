@@ -1,0 +1,125 @@
+<view class="parent">
+  <view class="top">
+    <image src="{{tempFilePaths || '/images/task/default-task-head.png'}}"></image>
+    <view class="add_poster" bindtap='chooseImage'>
+      <image src="/images/task/camera.png"></image>
+      上传封面
+    </view>
+  </view>
+  <!--内容  -->
+  <view class="content">
+    <view class="repair-detail">
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">任务类型</text>
+          <view class="repair-detail-item-ft">
+            <picker class="repair-detail-picker" bindchange="listenerServiceType" value="{{serviceTypeValue}}" range="{{serviceTypeRange}}">
+              <view class="repair-detail-content">
+                <text wx:if="{{serviceTypeValue === false}}" class="repair-detail-info">请选择任务类型</text>
+                <text wx:else class="repair-detail-info">{{serviceTypeRange[serviceTypeValue]}}</text>
+                <image class="more-icon" src="/images/task/enter.png"></image>
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">开始时间</text>
+          <view class="repair-detail-item-ft">
+          <!-- 
+            <picker class="repair-detail-picker" bindchange="listenerServiceObject" value="{{serviceObjectValue}}" range="{{serviceObjectRange}}">
+              <view class="repair-detail-content">
+                <text wx:if="{{serviceObjectValue === false}}" class="repair-detail-info">请选择服务项目</text>
+                <text wx:else class="repair-detail-info">{{serviceObjectRange[serviceObjectValue]}}</text>
+                <image class="more-icon" src="/images/task/enter.png"></image>
+              </view>
+            </picker>-->
+            <picker class="repair-detail-picker" mode="date" value="{{start_date}}" start="{{start_date}}" end="2030-12-31" bindchange="bindStartDateChange">
+              <view class="picker">
+                {{start_date}}
+              </view>
+            </picker>
+            <image class="more-icon" src="/images/task/enter.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="repair-detail-item">
+        <view class="repair-detail-item-hd">
+          <text class="repair-detail-name">结束时间</text>
+          <view class="repair-detail-item-ft">
+            <picker class="repair-detail-picker" mode="date" value="{{end_date}}" start="{{end_date}}" end="2030-12-31" bindchange="bindEndDateChange">
+              <view class="picker">
+                {{end_date}}
+              </view>
+            </picker>
+            <image class="more-icon" src="/images/task/enter.png"></image>
+          </view>
+        </view>
+      </view>
+      <!-- 
+            <view class="repair-detail-item">
+                <view class="repair-detail-item-hd">
+                    <text class="repair-detail-name">服务项目</text>
+                    <view class="repair-detail-item-ft">
+                        <picker class="repair-detail-picker" bindchange="listenerServiceObject" value="{{serviceObjectValue}}" range="{{serviceObjectRange}}">  
+                            <view class="repair-detail-content">
+                                <text wx:if="{{serviceObjectValue === false}}" class="repair-detail-info">请选择服务项目</text>
+                                <text wx:else class="repair-detail-info">{{serviceObjectRange[serviceObjectValue]}}</text>   
+                                <image class="more-icon" src="/images/more/enter.png"></image>
+                            </view>
+                        </picker>
+                    </view>
+                </view>
+            </view>
+            <view class="repair-detail-item">
+                <view class="repair-detail-item-hd">
+                    <text class="repair-detail-name">服务区域</text>
+                    <view class="repair-detail-item-ft">
+                        <picker class="repair-detail-picker" bindchange="listenerServiceArea" value="{{serviceAreaValue}}" range="{{serviceAreaRange}}">  
+                            <view class="repair-detail-content">
+                                <text wx:if="{{serviceAreaValue === false}}" class="repair-detail-info">请选择服务区域</text>
+                                <text wx:else class="repair-detail-info">{{serviceAreaRange[serviceAreaValue]}}</text>   
+                                <image class="more-icon" src="/images/more/enter.png"></image>
+                            </view>
+                        </picker>
+                    </view>
+                </view>
+            </view>-->
+    </view>
+
+    <view class="reporter-detail">
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name">验收规范</text>
+        <view class="reporter-detail-input">
+          <input type="text" placeholder="请简要输入验收规范" bindinput="listenerRule" />
+        </view>
+      </view>
+      <view class="reporter-tel reporter-detail-item">
+        <text class="reporter-detail-name">每单佣金</text>
+        <view class="reporter-detail-input">
+          <input type="digit"  placeholder="请输入验收通过后每单的佣金" bindinput="listenerSalary" />
+        </view>
+      </view>
+      <view class="reporter-address reporter-detail-item">
+        <text class="reporter-detail-name">任务区域</text>
+        <view class="reporter-detail-input">
+          <input type="text" placeholder="请输入任务区域，如:全国" bindinput="listenerAddress" />
+        </view>
+      </view>
+    </view>
+
+    <view class="declare-context">
+      <text class="declare-context-title">任务内容</text>
+      <view class="declare-context-panel">
+        <input class="declare-context-input" placeholder="请输入任务标题" bindinput="listenerTitle" />
+        <textarea class="declare-context-textarea" placeholder="请输入具体内容" bindblur="listenerDetail" auto-height></textarea>
+      </view>
+    </view>
+
+    <view class="submit-declare" bindtap="onSubmit">
+      <text>发布任务</text>
+    </view>
+  </view>
+
+</view>

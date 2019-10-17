@@ -1,0 +1,12 @@
+<view class="container">
+  <image class="avatar" src="../../images/index/logo.png"></image>
+  <view class="title">欢迎使用小程序</view>
+</view>
+
+<view class="scrope">
+  <button bindgetuserinfo="onLogin" open-type="getUserInfo" class="start" bindtap='onLogin2'>
+    授权登录小程序
+  </button>
+
+  <view class="copyright">Copyright ©上海明静 All rights Reserved.</view>
+</view>

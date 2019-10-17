@@ -1,0 +1,43 @@
+<view class="container">
+
+  <view class="head_container">
+    <view class="font-color-999">拍摄时注意光线和焦距,务必保持照片清晰</view>
+    <view class="font-color-999">可以点击照片重新拍摄</view>
+  </view>
+
+  <view class="idCard-box">
+    <view class="cardBox-hd font-color-666">身份证照片(正面)</view>
+    <view class="cardBox-bd">
+      <image class="img1" wx:if="{{idCardFrontPath != null}}" src="{{idCardFrontPath}}" bindtap='onChooseFront'></image>
+      <image wx:else class="img1" src="../../images/upload/Click_shooting.png" bindtap='onChooseFront'></image>
+
+      <image class="img2" src="../../images/upload/IDcard_front.png"></image>
+      <text class="shili">示例</text>
+    </view>
+  </view>
+  <view class="idCard-box">
+    <view class="cardBox-hd font-color-666">身份证照片(背面)</view>
+    <view class="cardBox-bd">
+      <image class="img1" wx:if="{{idCardBackPath != null}}" src="{{idCardBackPath}}" bindtap='onChooseBack'></image>
+      <image class="img1" wx:else src="../../images/upload/Click_shooting.png" bindtap='onChooseBack'></image>
+      <image class="img2" src="../../images/upload/IDcard_back.png"></image>
+      <text class="shili">示例</text>
+    </view>
+  </view>
+
+  <view class="idCard-box">
+    <view class="cardBox-hd font-color-666">出院小结(拍摄第一页)</view>
+    <view class="cardBox-bd">
+      <image class="img3" wx:if="{{outSummaryPath != null}}" src="{{outSummaryPath}}" bindtap='onPhoto'></image>
+      <image class="img3" wx:else src="../../images/upload/Click_shooting2.png" bindtap='onPhoto'></image>
+      <image class="img4" src="../../images/upload/out_summary.png"></image>
+      <text class="shili">示例</text>
+    </view>
+  </view>
+
+  <view class='foot'></view>
+
+  <view class="submit-upload" bindtap="uploadIdCard">
+    <button class="submit-upload-button">下一步</button>
+  </view>
+</view>

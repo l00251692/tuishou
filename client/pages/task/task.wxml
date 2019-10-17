@@ -1,0 +1,63 @@
+<view class="container">
+  <!--功能导航-->
+  <view class="topbar" >
+  <view  class="address" bindtap="onChooseLocation">
+        <image class="location_icon" src="/images/task/location.png"></image>
+        <text class="address_title">当前城市：{{addr_titile}}</text>
+  </view>
+  </view>
+  
+
+  <view class="hot_panel">
+    <view class=" hot-task-title">
+      <!--<image class="hot-task-icon" src="/images/task/create.png"></image>-->
+      <text class="hot-task-title-text">  热门任务 </text>
+    </view>
+    <view class="hot_task">
+      <text class="hot_label">ETC推广</text>
+      <text class="hot_label">小程序推广</text>
+      <text class="hot_label">APP推广</text>
+    </view>
+    <view class="hot_task">
+      <text class="hot_label">企业业务</text>
+      <text class="hot_label">商家业务</text>
+    </view>
+  </view>
+
+
+  <view wx:if="{{!task_list}}" class="page-empty">
+    <image class="page-empty__img" mode="aspectFit" src="/images/task/no_data.png"></image>
+    <view class="page-empty__text">没找到数据...</view>
+  </view>
+  <view class="list_wrap" wx:else>
+    <view class="list" wx:for="{{task_list}}" wx:key="{{task_id}}">
+      <navigator class="item" url="/pages/task/detail?callback=callback&&id={{item.task_id}}">
+        <view class="top">
+          <view class="left">
+            <image class="img" src="{{item.task_auth}}"></image>
+            <text class="user">{{item.create_time}}</text>
+          </view>
+          <view class="right">
+            <text class="univ">￥{{item.salary}}</text>
+          </view>
+        </view>
+        <view class="top_title">{{item.task_name}}</view>
+        <view class="item_info">
+          <!-- <text class="tip">{{item.subtitle}}</text> -->
+          <image class="pro_img" src="{{item.task_head || '/images/index/default-task-head.png'}}" mode="aspectFill"></image>
+          <text class="num" wx:if="{{item.remain_days > 0}}">进行中</text>
+          <text class="num" wx:elif="{{item.remain_days < 0}}" style="background:#888" >未开始</text>
+          <text class="num" wx:else>已结束</text>
+        </view>
+        <view class="detail">
+          <text class="item_detail">{{item.detail}}</text>
+        </view>
+        <!-- <view class="line"></view> -->
+      </navigator>
+    </view>
+  </view>
+
+  <view class='bottom-bg'>
+    <image src='/images/index/bg.png'></image>
+  </view>
+</view>

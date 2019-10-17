@@ -1,0 +1,141 @@
+<form class="parent" catchsubmit="formSubmit">
+  <scroll-view class="form_info" scroll-y>
+    <view class="reporter-detail">
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">姓名&emsp;&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{name}}" name="name" maxlength="12" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">身份证号&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{idcard}}" name="idcard" maxlength="18" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">性别&emsp;&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{sex}}" name="sex"  disabled='true' />
+        </view>
+      </view>
+    </view>
+    <view class="reporter-detail">
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">医院&emsp;&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{hospital}}" name="hospital" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">病区&emsp;&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{hospitalArea}}" name="hospitalArea" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <view bindtap="showHelp">
+          <text class="reporter-detail-name" decode="{{true}}">科室&ensp;&emsp;</text>
+          <image class="help-img" src="../../images/index/help.png"></image>
+        </view>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{department}}" name="department" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">床位号&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{bedNo}}" name="bedNo" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">住院号&emsp;&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{mrNo}}" name="mrNo" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name"  decode="{{true}}">主治医生&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{doctor}}" name="doctor" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name"  decode="{{true}}">所患疾病&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{diseases}}" name="diseases" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name"  decode="{{true}}">出院日期&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{date}}" name="date" disabled='true' />
+        </view>
+      </view>
+      
+    </view>
+    <view class="reporter-detail">
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">邮寄地址&emsp;</text>
+        <view class="reporter-detail-input">
+          <text class='location'>{{addressStr}}</text>
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name" decode="{{true}}">联系电话&emsp;</text>
+        <view class="reporter-detail-input">
+          <input type="number" value="{{phone}}" name="phone" maxlength="11" disabled='true' />
+        </view>
+      </view>
+    </view>
+
+     <view class="reporter-detail">
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name">主要联系人</text>
+        <view class="reporter-detail-input">
+          <input type="text" value="{{concatName}}" name="concatName" disabled='true' />
+        </view>
+      </view>
+      <view class="reporter-user reporter-detail-item">
+        <text class="reporter-detail-name">联系人电话</text>
+        <view class="reporter-detail-input">
+          <input type="number" value="{{concatPhone}}" name="concatPhone"  disabled='true' />
+        </view>
+      </view>
+    </view>
+
+    <view class="reporter-img">
+      <text class="reporter-img-name">身份证照片</text>
+      <view class="reporter-img-idcard-front">
+        <image src="{{idCardFrontPath}}" data-src="{{idCardFrontPath}}" mode='aspectFit' bindtap="previewImage"></image>
+      </view>
+      <view class="reporter-img-idcard-back">
+        <image src="{{idCardBackPath}}" data-src="{{idCardBackPath}}" mode='aspectFit' bindtap="previewImage"></image>
+      </view>
+    </view>
+
+    <view class='remind'>
+      重要：请点击照片预览确保照片清晰再提交
+    </view>
+
+  </scroll-view>
+
+  <view class="submit-declare">
+    <button class="submit-declare-button" formType="submit" disabled='{{!canClick}}'>提交支付(￥200.00)</button>
+  </view>
+
+  <view class="help" id="help" wx:if="{{help_status}}" bindtap="tapHelp">
+    <view class="box">
+      <view class="box-hd">
+        <text class="box-title">帮助</text>
+        <image class="box-close" src="../../images/index/close.png" bindtap="hideHelp"></image>
+      </view>
+      <view class="box-bd">
+        <view class="help-q">医院科室信息填写规则？</view>
+        <view class="help-a">
+          <text>请参考如下示例填写科室，如：骨科，内科，外科等</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</form>
