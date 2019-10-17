@@ -26,9 +26,12 @@
       <text class="core-item-name">找推点</text>
     </navigator>
   </view>
-
+  <view wx:if="{{loading == true}}" class="remind-box">
+    <image class="remind-img" src="/images/index/loading.gif"></image>
+    <text class="remind-text">加载中...</text>
+  </view>
   <!--<text class="task-list-title">任务列表</text>-->
-  <view wx:if="{{!list}}" class="page-empty">
+  <view wx:elif="{{!list}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/index/no_data.png"></image>
     <view class="page-empty__text">还没有发布或领取任务哦</view>
   </view>
@@ -86,9 +89,10 @@
     </block>
 
   </view>
+  <!-- 
   <view class='bottom-bg'>
     <image src='/images/index/bg.png'></image>
   </view>
-
+  -->
 
 </view>

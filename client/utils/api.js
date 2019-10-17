@@ -344,7 +344,7 @@ export function createProject(options) {
 
 export function getMyProjectList(options) {
   var {
-    page, type, success
+    page, type, success,error
   } = options
 
   var { user_id, user_token } = wx.getStorageSync("userInfo")
@@ -355,7 +355,8 @@ export function getMyProjectList(options) {
       type,
       page
     },
-    success
+    success,
+    error
   })
 
 }
@@ -363,7 +364,7 @@ export function getMyProjectList(options) {
 //获取发布的项目列表
 export function getProjectList(options) {
   var {
-    page, success
+    page, success, error
   } = options
 
   fetch({
@@ -371,7 +372,8 @@ export function getProjectList(options) {
     data: {
       page
     },
-    success
+    success,
+    error
   })
 
 }

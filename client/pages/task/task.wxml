@@ -1,16 +1,24 @@
 <view class="container">
-  <!--功能导航-->
+  <!--功能导航
   <view class="topbar" >
   <view  class="address" bindtap="onChooseLocation">
         <image class="location_icon" src="/images/task/location.png"></image>
         <text class="address_title">当前城市：{{addr_titile}}</text>
   </view>
+  </view>-->
+  <view class="banner">
+    <swiper autoplay="true" indicator-dots="true" interval="5000" duration="1000" circular="true">
+      <block wx:for="{{banner_arr}}" wx:key="{{banner_id}}">
+        <swiper-item>
+          <image src="{{item.carousel_img}}" class="slide-image" mode="aspectFill" />
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
-  
-
+<!-- 
   <view class="hot_panel">
     <view class=" hot-task-title">
-      <!--<image class="hot-task-icon" src="/images/task/create.png"></image>-->
+      <image class="hot-task-icon" src="/images/task/create.png"></image>
       <text class="hot-task-title-text">  热门任务 </text>
     </view>
     <view class="hot_task">
@@ -23,9 +31,14 @@
       <text class="hot_label">商家业务</text>
     </view>
   </view>
+  -->
+<view wx:if="{{loading == true}}" class="remind-box">
+    <image  class="remind-img" src="/images/index/loading.gif"></image>
+    <text class="remind-text">加载中...</text>
+  </view>
+  
 
-
-  <view wx:if="{{!task_list}}" class="page-empty">
+  <view wx:elif="{{!task_list}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/task/no_data.png"></image>
     <view class="page-empty__text">没找到数据...</view>
   </view>
@@ -55,9 +68,5 @@
         <!-- <view class="line"></view> -->
       </navigator>
     </view>
-  </view>
-
-  <view class='bottom-bg'>
-    <image src='/images/index/bg.png'></image>
   </view>
 </view>

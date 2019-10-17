@@ -163,6 +163,14 @@ public class ProjectController {
 	@RequestMapping("/getMyProjectListWx")
     public @ResponseBody Map<String,Object> getMyProjectListWx(@RequestParam String user_id, @RequestParam Integer type, @RequestParam Integer page) {
 		
+		Map<String,Object> data = new HashMap<String, Object>();
+		if(user_id == null || user_id.length() == 0)
+		{
+			data.put("State", "Success");
+			data.put("data", "");				
+			return data;
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("offset", page * 10);
 		paramMap.put("limit", 10);
@@ -228,7 +236,7 @@ public class ProjectController {
 			jsonarray.add(node);
 		}
 		rtn.put("list", jsonarray);
-		Map<String,Object> data = new HashMap<String, Object>();
+
 		data.put("State", "Success");
 		data.put("data", rtn);				
 		return data;

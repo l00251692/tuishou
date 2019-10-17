@@ -59,6 +59,9 @@ Page({
     }
 
     if (e.detail.errMsg == 'getUserInfo:ok') {
+      wx.showToast({
+        title: '登录中...',
+      })
 
       getApp().getLoginInfo(loginInfo => {
        console.log("login success")

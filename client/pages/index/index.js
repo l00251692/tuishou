@@ -9,11 +9,19 @@ Page({
     page: 0,
     hasMore: true,
     loading: false,
-    type:0,
-    banner_arr:[
-      { banner_id: 1, carousel_img: '/images/tmp/banner1.png'},
-      { banner_id: 2, carousel_img: '/images/tmp/banner2.png'},
-      { banner_id: 3, carousel_img: '/images/tmp/banner3.png'}
+    type: 0,
+    banner_arr: [{
+        banner_id: 1,
+        carousel_img: '/images/tmp/banner1.png'
+      },
+      {
+        banner_id: 2,
+        carousel_img: '/images/tmp/banner2.png'
+      },
+      {
+        banner_id: 3,
+        carousel_img: '/images/tmp/banner3.png'
+      }
     ],
     list: null
     /*
@@ -25,23 +33,23 @@ Page({
     ]*/
   },
   //下拉更新
-  onPullDownRefresh: function(){
-    
+  onPullDownRefresh: function() {
+
   },
 
-  onShow: function(){
+  onShow: function() {
     console.log("index on show")
     this.initData()
     this.getMyTask(0)
   },
-  onLoad: function(){
+  onLoad: function() {
     if (wx.getStorageSync('haslogin') == true) {
       let userInfo = wx.getStorageSync('userInfo');
       this.setData({
         userInfo: userInfo,
         haslogin: true
       });
-      
+
     }
   },
 
@@ -54,43 +62,42 @@ Page({
     })
   },
 
-  getMyTask:function(type){
+  getMyTask: function(type) {
     console.log("getMyTask:" + JSON.stringify(this.data.haslogin))
-     if (this.data.haslogin == true)
-     {
-       if (this.data.loading) {
-         return;
-       }
-       var that = this;
-       var { page } = this.data
 
-       this.setData({
-         loading: true
-       })
+    if (this.data.loading) {
+      return;
+    }
+    var that = this;
+    var { page } = this.data
 
-       getMyProjectList({
-         page,
-         type,
-         success(data){
-           var tmp = data.list
-           var { list } = that.data
-           that.setData({
-             list: list ? list.concat(tmp) : tmp,
-             page: page + 1,
-             hasMore: data.count == 10, //一次最多10个，如果这次取到10个说明还有
-             loading: false
-           })
-         }
-       })
-     }
-     else{
-       wx.showToast({
-         title: '用户未登录，请先登录',
-       })
-     }
+    this.setData({
+      loading: true
+    })
+
+    getMyProjectList({
+      page,
+      type,
+      success(data) {
+        var tmp = data.list
+        var {  list } = that.data
+        that.setData({
+          list: list ? list.concat(tmp) : tmp,
+          page: page + 1,
+          hasMore: data.count == 10, //一次最多10个，如果这次取到10个说明还有
+          loading: false
+        })
+      },
+      error(res){
+        that.setData({
+          load:false
+        })
+      }
+    })
+
   },
 
-  findTask:function(){
+  findTask: function() {
     wx.switchTab({
       url: '/pages/task/task',
     })
@@ -100,5 +107,5 @@ Page({
     this.initData()
     this.getMyTask()
   }
-  
+
 });

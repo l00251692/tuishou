@@ -18,6 +18,11 @@ Page({
     addr_titile: '定位中...',
     auth: false,
     task_list: null,
+    banner_arr: [
+      { banner_id: 1, carousel_img: '/images/tmp/banner1.png' },
+      { banner_id: 2, carousel_img: '/images/tmp/banner2.png' },
+      { banner_id: 3, carousel_img: '/images/tmp/banner3.png' }
+    ],
     /*
     task_list:[
       { task_id: 1, task_auth: '/images/tmp/user.png', task_name: 'ETC推广服务', region: '全国', task_head: '/images/tmp/task1.jpg', task_detail: 'ETC推广，方便，给用户最大实惠', remain_days: 5},
@@ -31,7 +36,10 @@ Page({
   onLoad: function(options) {
     
     var that = this
+    that.initData()
+    that.getProjectList()
 
+    /*
     wx.getLocation({
       type: 'gcj02',
       success(res) {
@@ -80,7 +88,7 @@ Page({
         }
 
       }
-    })
+    })*/
   },
 
   /**
@@ -149,6 +157,11 @@ Page({
           loading: false
         })
         cb && cb()
+      },
+      error(res) {
+        that.setData({
+          load: false
+        })
       }
     })
   },
