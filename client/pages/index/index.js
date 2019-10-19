@@ -2,6 +2,10 @@
 import {
   getMyProjectList
 } from '../../utils/api'
+
+import {
+  alert
+} from '../../utils/util'
 //获取应用实例
 var app = getApp();
 Page({
@@ -100,6 +104,18 @@ Page({
   findTask: function() {
     wx.switchTab({
       url: '/pages/task/task',
+    })
+  },
+
+  createTask: function () {
+    var userInfo = wx.getStorageSync("userInfo")
+
+    if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length ==0) {
+      return alert("创建任务请先在我的页面完善信息")
+    }
+
+    wx.navigateTo({
+      url: '/pages/task/create',
     })
   },
 

@@ -16,10 +16,10 @@
       <text class="core-item-name">找任务</text>
     </view>
 
-    <navigator class="main-core-item" url="/pages/task/create">
+    <view class="main-core-item"  bindtap='createTask'>
       <image class="core-item-icon" src="/images/task/create.png"></image>
       <text class="core-item-name">找推手</text>
-    </navigator>
+    </view>
 
     <navigator class="main-core-item  disabled" url="/pages/task/place">
       <image class="core-item-icon" src="/images/task/place.png"></image>
@@ -38,7 +38,7 @@
   <view wx:else class="page-list">
     <block wx:for="{{list}}" wx:key="task_id">
       <view class="process review-process">
-        <view class="process-hd">
+        <navigator url="/pages/task/detail?callback=callback&&id={{item.task_id}}" class="process-hd">
           <image class="review-process-icon" wx:if="{{item.task_type == '我发布的'}}" src="/images/index/task1.png"></image>
           <image class="review-process-icon" wx:else src="/images/index/task2.png"></image>
           <view class="order-number-name">
@@ -48,7 +48,7 @@
             <text class="process-state-name process-state-waited" wx:if="{{item.task_type == 'my_create'}}">我发布的</text>
             <text class="process-state-name process-state-accepted" wx:else>我参与的</text>
           </view>
-        </view>
+        </navigator>
         <view class="process-bd">
           <view class="process-item">
             <view class="process-item-bd">

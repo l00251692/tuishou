@@ -174,7 +174,20 @@ public class UserController {
 		
 		JSONObject obj = new JSONObject();
 		obj.put("phone", users.getPhone());
-		obj.put("addr", users.getCity() + users.getDistrict());
+		
+		JSONObject location = new JSONObject();
+		location.put("province", users.getProvince());
+		location.put("name", users.getAddress());
+		location.put("city", users.getCity());
+		location.put("district", users.getDistrict());
+		
+		JSONObject weidu = new JSONObject();
+		weidu.put("longitude", users.getLongitude());
+		weidu.put("latitude", users.getLatitude());
+		
+		location.put("location", weidu);
+		
+		obj.put("location", location);
 			
 		map.put("State", "Success"); 
 		map.put("data", obj); 

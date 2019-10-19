@@ -1,5 +1,5 @@
 import {
-  getRegisterInfo, updateLocation
+  getRegisterInfo, updateLocation, bindPhone
 } from '../../utils/api'
 
 import {
@@ -28,7 +28,8 @@ Page({
       success(data){
         that.setData({
           phone: data.phone,
-          addr_string:data.addr
+          location:data.location,
+          addr_string: data.location.city + data.location.district
         })
       },
       error(res){
@@ -58,14 +59,14 @@ Page({
         session_key,
         success(data) {
           wx.showToast({
-            title: '绑定手机号成功',
+            title: '获取手机号成功',
           })
           that.setData({
             phone: data.phone
           })
         },
         error(res) {
-          alert("绑定手机号失败")
+          alert("获取手机号失败")
         }
       })
     })
@@ -140,6 +141,13 @@ Page({
       name:location.name,
       success(data) {
         console.log("update location success")
+        var userInfo = wx.getStorageSync("userInfo")
+        console.log("userinf1:" +JSON.stringify(userInfo))
+        userInfo.phone = phone
+        userInfo.city = location.city
+        userInfo.province = location.province
+        console.log("userinf2:" + JSON.stringify(userInfo))
+        wx.setStorageSync("userInfo", userInfo)
         wx.showToast({
           title: '保存成功',
         })

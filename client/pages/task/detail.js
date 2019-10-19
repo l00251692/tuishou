@@ -112,6 +112,12 @@ Page({
     var{  info:{follow} } = this.data
     var that = this
 
+    var userInfo = wx.getStorageSync("userInfo")
+
+    if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length == 0) {
+      return alert("创建任务请先在我的页面完善信息")
+    }
+
     setProjectFollowStatus({
       status: !follow,
       project_id : that.id,
