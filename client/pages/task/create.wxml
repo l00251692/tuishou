@@ -96,9 +96,15 @@
         </view>
       </view>
       <view class="reporter-tel reporter-detail-item">
-        <text class="reporter-detail-name">每单佣金</text>
+        <text class="reporter-detail-name">佣金结算</text>
         <view class="reporter-detail-input">
-          <input type="digit"  placeholder="请输入验收通过后每单的佣金" bindinput="listenerSalary" />
+          <input type="text"  placeholder="请输入佣金结算规则" bindinput="listenerSalary" />
+        </view>
+      </view>
+      <view class="reporter-tel reporter-detail-item">
+        <text class="reporter-detail-name">联系微信</text>
+        <view class="reporter-detail-input">
+          <input type="text"  placeholder="请输入佣金结算联系微信号" bindinput="listenerContact" />
         </view>
       </view>
       <view class="reporter-address reporter-detail-item">

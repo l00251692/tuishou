@@ -9,6 +9,7 @@
 		<result column="region" property="region" jdbcType="VARCHAR" />
 		<result column="detail" property="detail" jdbcType="VARCHAR" />
 		<result column="salary" property="salary" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
 		<result column="rule" property="rule" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="create_userid" property="createUserId" jdbcType="VARCHAR" />
@@ -135,6 +136,9 @@
 			<if test="salary != null">
 				salary,
 			</if>
+			<if test="contact != null">
+				contact,
+			</if>
 			<if test="createTime != null">
 				create_time,
 			</if>
@@ -182,6 +186,9 @@
 			</if>
 			<if test="salary != null">
 				#{salary,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				#{contact,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				#{createTime,jdbcType=TIMESTAMP},

@@ -204,7 +204,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 40rpx 3%;
     height: 80rpx;
     border-radius: 3px;
     text-align: center;
@@ -213,6 +212,7 @@
     font-size: 12pt;
     width:100%;
     position:relative;
+    bottom:0;
 }
 .submit-declare:active{
     opacity: .8;

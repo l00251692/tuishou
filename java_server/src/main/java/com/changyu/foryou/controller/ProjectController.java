@@ -263,6 +263,7 @@ public class ProjectController {
 		node.put("task_name", project.getTitle());
 		node.put("detail", project.getDetail());
 		node.put("salary", project.getSalary());
+		node.put("contact", project.getContact());
 		DateFormat formattmp = new SimpleDateFormat("yyyy-MM-dd");  
 		node.put("start_date", formattmp.format(project.getCreateTime()));
 		node.put("end_date", formattmp.format(project.getDeadLineTime()));
@@ -328,8 +329,8 @@ public class ProjectController {
 	
 	@RequestMapping("/createProjectWx")
     public @ResponseBody Map<String,Object> createProjectWx(@RequestParam String user_id,@RequestParam String type,@RequestParam String title,
-    		@RequestParam String start_date, @RequestParam String end_date, @RequestParam String rule, @RequestParam String salary, @RequestParam String region,
-    		@RequestParam String detail) {
+    		@RequestParam String start_date, @RequestParam String end_date, @RequestParam String rule, @RequestParam String salary, @RequestParam String contact, 
+    		@RequestParam String region, @RequestParam String detail) {
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -342,6 +343,7 @@ public class ProjectController {
 		paramMap.put("type", "推手任务");
 		paramMap.put("title", title);
 		paramMap.put("salary", salary);
+		paramMap.put("contact", contact);
 		paramMap.put("detail", detail);
 		paramMap.put("createTime", new Date());
 		paramMap.put("createUserId", user_id);
@@ -653,7 +655,7 @@ public class ProjectController {
 		Map<String, Object> params = new HashMap<>();
         //params.put("scene", "test");
         //params.put("page", "pages/index/index");
-		params.put("path", "pages/project/detail?id=" + project_id);
+		params.put("path", "pages/task/detail?id=" + project_id);
         params.put("width", 160);
         String body = JSON.toJSONString(params);
            

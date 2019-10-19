@@ -49,16 +49,16 @@
   <view class="weui-cells">
     <navigator url="/pages/wallet/wallet?balance={{balance}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <image class="btn-icon" src="/images/user/coupon.png"></image>
-      <view class="weui-cell__bd">奖励结算</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access">余额:{{balance}}</view>
+      <view class="weui-cell__bd">任务记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      <!-- 
+      <view class="weui-cell__ft weui-cell__ft_in-access">余额:{{balance}}</view>-->
     </navigator>
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <button open-type="getPhoneNumber" class="contact" bindgetphonenumber="bindPhoneNumber">
+    <navigator url="/pages/mine/append" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <image class="btn-icon" src="/images/user/mobile.png"></image>
-        <view class="weui-cell__bd kefu">绑定手机</view>
-      </button>
-      <view class="weui-cell__ft phone">{{phone}}</view>
-    </view>
+        <view class="weui-cell__bd kefu">完善信息</view>
+      <view class="weui-cell__ft phone weui-cell__ft_in-access"></view>
+    </navigator>
 
 
     <navigator url="/pages/feedback/feedback" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -66,6 +66,7 @@
       <view class="weui-cell__bd">意见反馈</view>
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
+
     <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <button class="contact" open-type="contact">
         <image class="btn-icon" src="/images/user/customer.png"></image>

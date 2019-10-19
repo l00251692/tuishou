@@ -1,15 +1,17 @@
 <import src="/templates/load-more.wxml" />
-
+<!-- 
 <view class="header">
   <view class="money">
     <text class="money-b">{{balance}}</text>
     <text>元</text>
   </view>
+  
   <view class="withdraw" wx:if="{{withdraw == true}}">
     <text>提现申请处理中</text>
   </view>
   <button class="recharge-btn" wx:else bindtap='onBalanceBack'>提现</button>
 </view>
+-->
 <view class="wrapper">
   <!-- <view class="tap">
 		<view class="tap-header">

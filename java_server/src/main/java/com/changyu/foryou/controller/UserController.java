@@ -160,8 +160,8 @@ public class UserController {
 	 * @param phone 用户id
 	 * @return
 	 */
-	@RequestMapping(value="getMineInfoWx")
-	public @ResponseBody Map<String, Object> getMineInfoWx(@RequestParam String user_id){
+	@RequestMapping(value="getRegisterInfoWx")
+	public @ResponseBody Map<String, Object> getRegisterInfoWx(@RequestParam String user_id){
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		Users users=userService.selectByUserId(user_id);
@@ -174,9 +174,7 @@ public class UserController {
 		
 		JSONObject obj = new JSONObject();
 		obj.put("phone", users.getPhone());
-		obj.put("balance", users.getBalance());
-		obj.put("registType", users.getType());
-	
+		obj.put("addr", users.getCity() + users.getDistrict());
 			
 		map.put("State", "Success"); 
 		map.put("data", obj); 
@@ -258,12 +256,10 @@ public class UserController {
 	 */
 	@RequestMapping(value="updateLocationWx")
 	public @ResponseBody Map<String, Object> updateLocationWx(@RequestParam String user_id, @RequestParam String longitude, 
-			@RequestParam String latitude, @RequestParam String province, @RequestParam String city, @RequestParam String district){
+			@RequestParam String latitude, @RequestParam String province, @RequestParam String city, 
+			@RequestParam String district, @RequestParam String name){
 		Map<String, Object> map = new HashMap<String, Object>();
 	
-		
-		
-		
 		Users users=userService.selectByUserId(user_id);
 		if(users == null)
 		{
@@ -272,19 +268,16 @@ public class UserController {
 			return map; 
 		}
 		
-			
-		if(users.getCity() == null || !users.getCity().equals(city))
-		{
-			Map<String, Object> paramMap=new HashMap<String, Object>();
-			paramMap.put("userId",user_id);
-			paramMap.put("longitude",longitude);
-			paramMap.put("latitude",latitude);
-			paramMap.put("province",province);
-			paramMap.put("city",city);
-			paramMap.put("district",district);
-			
-			userService.updateLocation(paramMap);
-		}
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		paramMap.put("userId",user_id);
+		paramMap.put("longitude",longitude);
+		paramMap.put("latitude",latitude);
+		paramMap.put("province",province);
+		paramMap.put("city",city);
+		paramMap.put("district",district);
+		paramMap.put("address",name);
+		
+		userService.updateLocation(paramMap);
 		
 			
 		map.put("State", "Success"); 

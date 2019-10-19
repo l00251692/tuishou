@@ -41,7 +41,7 @@
 
 .wrapper {
   position: absolute;
-  top: 135px;
+  /*top: 135px;*/
   width: 100%;
   height: auto;
   overflow: hidden;

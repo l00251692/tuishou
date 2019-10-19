@@ -113,6 +113,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom:200rpx;
 }
 .page-empty__img {
   width: 360rpx;
@@ -209,7 +210,7 @@
 
 .list .item .top .right .univ{
      line-height: 40rpx;
-     color: red;
+     color: #ffcb63;
      font-size: 12pt;
 } 
 

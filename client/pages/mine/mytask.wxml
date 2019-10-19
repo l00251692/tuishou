@@ -61,9 +61,5 @@
     </block>
 
   </view>
-  <view class='bottom-bg'>
-    <image src='/images/index/bg.png'></image>
-  </view>
-
 
 </view>

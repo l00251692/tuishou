@@ -137,6 +137,13 @@ Page({
 
   },
 
+  listenerContact: function (e) {
+    this.setData({
+      contact: e.detail.value
+    });
+
+  },
+
   listenerAddress: function (e) {
     this.setData({
       region: e.detail.value
@@ -157,7 +164,7 @@ Page({
     onSubmit: function () {
       var that = this
       var {
-        tempFilePaths, title, start_date, end_date, rule, salary, region, detail , uploadimgs
+        tempFilePaths, title, start_date, end_date, rule, salary, contact, region, detail , uploadimgs
       } = this.data
       var type = '推广任务'
       if (title == null) {
@@ -169,7 +176,11 @@ Page({
       }
 
       if (salary == null) {
-        return alert('请输入每单佣金')
+        return alert('请输入佣金结算规则')
+      }
+
+      if (contact == null) {
+        return alert('请输入佣联系微信')
       }
 
       if (region == null) {
@@ -186,7 +197,7 @@ Page({
       })
 
       createProject({
-        type, title, start_date, end_date, rule, salary, region, detail,
+        type, title, start_date, end_date, rule, salary, contact, region, detail,
         success(data)
         {
           //获取上传七牛云的token

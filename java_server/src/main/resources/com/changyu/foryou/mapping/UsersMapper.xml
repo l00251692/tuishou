@@ -206,6 +206,9 @@
 			<if test="district != null">
 				district = #{district,jdbcType=VARCHAR},
 			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where user_id = #{userId,jdbcType=VARCHAR}
 	</update>

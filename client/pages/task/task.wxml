@@ -38,7 +38,7 @@
   </view>
   
 
-  <view wx:elif="{{!task_list}}" class="page-empty">
+  <view wx:elif="{{!task_list || task_list.length == 0}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/task/no_data.png"></image>
     <view class="page-empty__text">没找到数据...</view>
   </view>
@@ -51,7 +51,7 @@
             <text class="user">{{item.create_time}}</text>
           </view>
           <view class="right">
-            <text class="univ">￥{{item.salary}}</text>
+            <text class="univ">{{item.region}}</text>
           </view>
         </view>
         <view class="top_title">{{item.task_name}}</view>

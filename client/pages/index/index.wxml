@@ -31,7 +31,7 @@
     <text class="remind-text">加载中...</text>
   </view>
   <!--<text class="task-list-title">任务列表</text>-->
-  <view wx:elif="{{!list}}" class="page-empty">
+  <view wx:elif="{{!list || list.length == 0}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/index/no_data.png"></image>
     <view class="page-empty__text">还没有发布或领取任务哦</view>
   </view>
@@ -60,10 +60,10 @@
           </view>
           <view class="process-item">
             <view class="process-item-bd">
-              <text class="process-item-name">每单佣金</text>
+              <text class="process-item-name">佣金结算</text>
             </view>
             <view class="process-item-ft">
-              <text class="process-item-info">￥{{item.salary}}</text>
+              <text class="process-item-info">{{item.salary}}</text>
             </view>
           </view>
           <view class="process-item">

@@ -10,6 +10,7 @@
     "pages/collect/detail",
     "pages/mine/mine",
     "pages/mine/mytask",
+    "pages/mine/append",
     "pages/wallet/wallet",
     "pages/wallet/withdraw",
     "pages/feedback/feedback",

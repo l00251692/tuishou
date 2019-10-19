@@ -5,8 +5,6 @@
     display:flex;
     flex-direction:column;
     box-sizing:border-box;
-    background-color:#f8f8f8;
-
 }
 
 .banner {
@@ -84,7 +82,6 @@
 .repair-detail{
     display: flex;
     flex-direction: column;
-    background-color: #fff;
     border-top: 1px solid #eee;
     margin-top: 30rpx;
     overflow: hidden;
@@ -93,6 +90,7 @@
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #ddd;
+    background:#fff;
 }
 .repair-detail-item-hd{
     display: flex;
@@ -190,6 +188,7 @@
     background-color: #fff;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    min-height:200rpx;
 }
 .declare-context-title{
     color: #888;
@@ -219,4 +218,52 @@
 }
 .submit-declare:active{
     opacity: .8;
+}
+
+.share{
+  position:absolute;
+  right:0;
+  top:0;
+  margin-top: 40rpx;
+  margin-right: 40rpx;
+}
+
+.share image{
+  width:60rpx;
+  height: 60rpx;
+}
+.share-cavas{
+  z-index: 600;
+}
+
+canvas{
+  position: fixed;
+  top: 0;
+  left: 999px;
+  width:600px;
+  height:800px;
+}
+
+.preview {
+  background: rgba(0,0,0,.9);
+  position:fixed;
+  width: 100%;
+  height:100%;
+  top:0;
+  left:0;
+}
+.preview image{
+  width: 80%;
+  position: absolute;
+  top: 100rpx;
+  left: 10%;
+  z-index: 600;
+  border: 2px dashed #1e8cd4;
+}
+.preview button{
+  width: 80%;
+  position: absolute;
+  bottom: 150rpx;
+  left: 10%;
+  z-index: 600;
 }

@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  height:100%;
+  margin-bottom:200rpx;
 }
 .page-empty__img {
   width: 360rpx;

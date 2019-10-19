@@ -12,7 +12,9 @@ public class Project {
 	
 	private String detail; //内容
 	
-	private String salary;  //联系方式
+	private String salary;  
+	
+	private String contact;  
 	
 	private Date createTime;
 	
@@ -152,6 +154,14 @@ public class Project {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 	
 }

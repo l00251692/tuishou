@@ -20,6 +20,19 @@ export function getCode(options) {
   })
 }
 
+export function getShareQr(options) {
+  var { project_id, success } = options
+
+  fetch({
+    url: 'project/getShareQrWx',
+    data: {
+      project_id
+    },
+    success
+  })
+
+}
+
 // 登录
 export function bindPhone(options) {
   const {
@@ -319,7 +332,7 @@ export function paySuccess(options) {
 //获取发布的项目列表
 export function createProject(options) {
   var {
-    type, title, start_date, end_date, rule, salary, region, detail, success, error
+    type, title, start_date, end_date, rule, salary, contact, region, detail, success, error
   } = options
   console.log(JSON.stringify(getApp().globalData.loginInfo))
   var { user_id, user_token } = wx.getStorageSync("userInfo")
@@ -333,6 +346,7 @@ export function createProject(options) {
       end_date,
       rule,
       salary,
+      contact,
       region,
       detail
     },
@@ -461,7 +475,7 @@ export function uploadCollectFile(options) {
 }
 
 export function updateLocation(options) {
-  var { longitude, latitude, province, city, district, success, error } = options
+  var { longitude, latitude, province, city, district, name, success, error } = options
 
   var { user_id, user_token } = wx.getStorageSync("userInfo")
   fetch({
@@ -472,7 +486,22 @@ export function updateLocation(options) {
       latitude,
       province,
       city,
-      district
+      district,
+      name
+    },
+    success,
+    error
+  })
+}
+
+export function getRegisterInfo(options) {
+  var {  success, error } = options
+
+  var { user_id, user_token } = wx.getStorageSync("userInfo")
+  fetch({
+    url: 'user/getRegisterInfoWx',
+    data: {
+      user_id,
     },
     success,
     error
