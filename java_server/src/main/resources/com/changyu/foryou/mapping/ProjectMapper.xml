@@ -53,6 +53,14 @@
 		<result column="files" property="files" jdbcType="VARCHAR" />
 		<result column="record" property="record" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<resultMap id="FollowersResultMap" type="com.changyu.foryou.model.Followers">
+		<id column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="nickname" property="nickName" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<result column="latest_up" property="latesUp" jdbcType="VARCHAR" />
+	</resultMap>
 	<!-- 
 	<resultMap id="UniversityResultMap" type="com.changyu.foryou.model.University">
 		<id column="provice_id" property="proviceId" jdbcType="INTEGER" />
@@ -362,6 +370,10 @@
 		from
 		collect
 		where project_id = #{projectId,jdbcType=VARCHAR} 
+		<if test="upUserId !=null">
+			and
+			up_user_id = #{upUserId,jdbcType=VARCHAR} 
+		</if> 
 		order by
 		create_time DESC
 		<if test="limit !=null and offset !=null">
@@ -388,6 +400,38 @@
 		<where>
 		project_id = #{projectId,jdbcType=VARCHAR} 
 		</where> 
+	</select>
+	
+	<select id="getFollowers" resultMap="FollowersResultMap" useCache="false">
+		SELECT
+			collect.up_user_id as user_id,
+			users.img_url as head_img,
+			users.nickname as nickname,
+			count(*) AS count
+		FROM
+			collect
+			LEFT JOIN users ON collect.up_user_id = users.user_id
+		<where>
+			collect.project_id=#{projectId,jdbcType=VARCHAR}
+			<!--<if test="search != null and search !='' ">
+				and food.food_id =
+				#{search,jdbcType=INTEGER}
+			</if>-->
+			<if test="startDate !=null">
+			  and
+			  DATE_FORMAT(collect.create_time,"%Y-%m-%d")&gt;=#{startDate,jdbcType=DATE}
+			</if>
+			<if test="endDate !=null">
+			  and
+			  DATE_FORMAT(collect.create_time,"%Y-%m-%d")&lt;=#{endDate,jdbcType=DATE}
+			</if>
+		</where>
+		group by up_user_id 
+		order by count DESC
+		<if test="offset != null and limit != null">
+			limit #{offset,jdbcType=INTEGER} ,
+			#{limit,jdbcType=INTEGER}
+		</if>
 	</select>
 	
 	<!--  

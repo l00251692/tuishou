@@ -43,9 +43,7 @@ Page({
       var that = this
       var project_id = this.id
       console.log("task collect loadData:" + project_id)
-      var {
-        loading, page
-      } = this.data
+      var { loading, page} = this.data
 
       if (loading) {
         return
@@ -60,11 +58,11 @@ Page({
         project_id,
         success(data) {
           var list_old = that.data.list
-          var { list, count, page } = data
+          var { list, count } = data
           console.log("myorderlist:" + JSON.stringify(data))
           that.setData({
             loading: false,
-            list: list_old ? list_old.concat(lis2) : list,
+            list: list_old ? list_old.concat(list) : list,
             hasMore: count == 5,
             page: page + 1
           })

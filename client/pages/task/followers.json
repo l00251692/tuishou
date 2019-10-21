@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "用户上传记录",
+  "usingComponents": {
+    "my-calendar": "../../My-calendar/my-calendar"
+  }
+}

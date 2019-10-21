@@ -163,8 +163,8 @@
 }
 .declare-context-textarea{
     padding: 30rpx;
-    width: 100%;
     min-height: 200rpx;
+    width:92%;
 }
 .submit-declare{
     display: flex;

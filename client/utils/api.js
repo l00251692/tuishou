@@ -394,7 +394,7 @@ export function getProjectList(options) {
 //获得项目详情
 export function getProjectInfo(options) {
   var {
-    project_id, success
+    project_id, success, error
   } = options
 
   var { user_id, user_token } = wx.getStorageSync("userInfo")
@@ -404,7 +404,8 @@ export function getProjectInfo(options) {
       user_id,
       project_id,
     },
-    success
+    success,
+    error
   })
 
 }
@@ -423,6 +424,26 @@ export function setProjectFollowStatus(options) {
     success
   })
   
+
+}
+
+export function getFollowers(options) {
+  var { project_id, start_date, end_date, page,  success, error } = options
+
+  var { user_id, user_token } = wx.getStorageSync("userInfo")
+  fetch({
+    url: 'project/getFollowersWx',
+    data: {
+      project_id,
+      start_date,
+      end_date,
+      page,
+      user_id
+    },
+    success,
+    error
+  })
+
 
 }
 
@@ -515,6 +536,21 @@ export function getCollects(options) {
   fetch({
     url: 'project/getCollectsWx',
     data: {
+      user_id,
+      page,
+    },
+    success,
+    error
+  })
+}
+
+export function selectCollectsByuserId(options) {
+  var { project_id, user_id, page, success, error } = options
+
+  fetch({
+    url: 'project/selectCollectsByuserIdWx',
+    data: {
+      project_id,
       user_id,
       page,
     },

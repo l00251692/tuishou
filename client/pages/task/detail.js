@@ -70,21 +70,15 @@ Page({
     var that = this
     var id = this.id;
     console.log("loadData:" + id)
-    //var emojis = []
-    //var em = {}
-    //var emChar = that.data.emojiChar.split("-");
-    /*
-    that.data.emoji.forEach(function (v, i) {
-      em = {
-        char: emChar[i],
-        emoji: "0x1f" + v
-      };
-      emojis.push(em)
-    });
     
-    that.setData({
-      emojis: emojis
-    })*/
+    var loading = this.data.loading
+    if(loading){
+      return
+    }
+
+    this.setData({
+      loading:true
+    })
 
     getProjectInfo(
       {
@@ -92,7 +86,13 @@ Page({
         success(data) {
           console.log(JSON.stringify(data))
           that.setData({
-            info: data
+            info: data,
+            loading:false
+          })
+        },
+        error(res){
+          that.setData({
+            loading: false
           })
         }
       }
@@ -126,6 +126,7 @@ Page({
         that.setData({
           'info.follow': !follow 
         })
+        getPrevPage()[that.callback]()
         wx.showToast({
           title: !follow ? '参与成功' : '取消成功',
           icon: 'none',
@@ -147,6 +148,7 @@ Page({
           icon: 'none',
           duration: 1500
         });
+        getPrevPage()[that.callback]()
 
         wx.switchTab({
           url: '/pages/index/index',
@@ -156,7 +158,17 @@ Page({
     })
   },
 
-  jyHistory:function(){
+  followersManager: function () {
+
+    console.log("followersManager:" + this.id)
+    var { info } = this.data
+
+    wx.navigateTo({
+      url: '/pages/task/followers?id=' + this.id + '&&start_date=' + info.start_date,
+    })
+  },
+
+  collectManager:function(){
     
     console.log("jyHistory:" + this.id)
     
@@ -172,7 +184,7 @@ Page({
     wx.showToast({
       title: '图片生成中...',
       icon: 'loading',
-      duration: 4000
+      duration: 8000
     });
 
     getShareQr({
@@ -262,6 +274,7 @@ Page({
                 canvasId: 'shareCanvas',
                 success: function (res) {
                   console.log(res.tempFilePath);
+                  wx.hideToast()
                   that.setData({
                     shareImgSrc: res.tempFilePath,
                     hidden: false
@@ -286,6 +299,11 @@ Page({
     var that = this
     //4. 当用户点击分享到朋友圈时，将图片保存到相册
     console.log("saveSharePic:" + that.data.shareImgSrc)
+    wx.showToast({
+      title: '图片保存中中...',
+      icon: 'loading',
+      duration: 2000
+    });
     wx.saveImageToPhotosAlbum({
       filePath: that.data.shareImgSrc,
       success(res) {
@@ -304,6 +322,14 @@ Page({
             })
           }
         })
+      },
+      fail(res){
+        console.log("save fail:" + JSON.stringify(res))
+        wx.showToast({
+          title: '图片保存失败' + res,
+          icon: 'loading',
+          duration: 1000
+        });
       }
     })
   },

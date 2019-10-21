@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="datepick" style="dispplay" bindtap="onChooseDate">
+   <image mode="widthFix" src="/images/task/calendar.png"></image>
+    <text class="data_text">日期过滤 : </text>
+    <text class="data">{{start_date}} 至 {{end_date}}</text>
+  </view>
+  <view style="display:{{hidden ? 'none' : 'block'}}" class="picker">
+      <my-calendar title=" 选择时间段" useType="range" bind:cancel="cancel" bind:confirm="select" background="#1e8cd4" fontColor="#fff" rangeColor="#b3d8ff" rangeStartColor="#79bbff" rangeEndColor="#79bbff" />
+    </view>
+  <view wx:if="{{loading == true}}" class="remind-box">
+    <image class="remind-img" src="/images/index/loading.gif"></image>
+  </view>
+  <view wx:elif="{{followers_list == null || followers_list.size == 0 }}" class="remind-box">
+    <image class="remind-img" src="/images/index/no_data.png"></image>
+    <text class="remind-text">当前无记录</text>
+  </view>
+  <view wx:else class="book-list">
+    <text class="note">**只显示提交过采集数据的用户**</text>
+    <block wx:for="{{followers_list}}" wx:key="user_id" wx:for-item="itemName">
+      <navigator class="book-wraper" url="/pages/collect/user?id={{project_id}}&&user_id={{itemName.user_id}}">
+        <view class="book-info">
+          <image class="book-img" src="{{itemName.head_img}}"></image>
+          <text class="book-name">{{itemName.nickname}}</text>
+
+        </view>
+        <text class="book-count weui-cell__ft_in-access">{{itemName.count}}</text>
+
+      </navigator>
+    </block>
+  </view>
+</view>

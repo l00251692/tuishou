@@ -43,8 +43,6 @@ Page({
 
   onShow: function() {
     console.log("index on show")
-    this.initData()
-    this.getMyTask(0)
   },
   onLoad: function() {
     if (wx.getStorageSync('haslogin') == true) {
@@ -55,6 +53,8 @@ Page({
       });
 
     }
+    this.initData()
+    this.getMyTask(0)
   },
 
   initData() {
@@ -121,7 +121,7 @@ Page({
 
   callback() {
     this.initData()
-    this.getMyTask()
+    this.getMyTask(0)
   }
 
 });

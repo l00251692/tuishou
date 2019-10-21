@@ -37,6 +37,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.changyu.foryou.model.Banner;
 import com.changyu.foryou.model.Collect;
 import com.changyu.foryou.model.Follow;
+import com.changyu.foryou.model.Followers;
 import com.changyu.foryou.model.Order;
 import com.changyu.foryou.model.Project;
 import com.changyu.foryou.model.Users;
@@ -284,7 +285,7 @@ public class ProjectController {
 			//返回项目数据信息
 			int followers = projectService.getFollowerCounts(paramMap);
 			int collects = projectService.getCollectCounts(paramMap);
-			node.put("followers", followers);
+			node.put("followers", followers - 1);
 			node.put("collects", collects);
 		}
 		else
@@ -829,6 +830,54 @@ public class ProjectController {
 		
 	}
 	
+	@RequestMapping("/selectCollectsByuserIdWx")
+    public @ResponseBody Map<String,Object> selectCollectsByuserIdWx(@RequestParam String project_id, @RequestParam String user_id, @RequestParam Integer page) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("offset", page * 5);
+		paramMap.put("limit", 5);
+		paramMap.put("upUserId", user_id);
+		paramMap.put("projectId", project_id);
+        List<Collect> collectList = projectService.getTaskCollectList(paramMap);
+		JSONArray jsonarray = new JSONArray(); 
+		JSONObject rtn = new JSONObject();
+		rtn.put("count", collectList.size());
+				
+		for (Collect collect: collectList)
+		{
+			JSONObject node = new JSONObject();
+			node.put("id", collect.getId());
+			node.put("task_id", collect.getProjectId());
+			node.put("status", collect.getStatus());
+			
+			Map<String, Object> tmp = new HashMap<String, Object>();
+			tmp.put("projectId", collect.getProjectId());
+
+	        Project project = projectService.getProjectInfo(tmp);
+	        if(project == null)
+	        {
+	        	node.put("task_name", "");
+	        	node.put("salary", "--");
+	        }
+	        else
+	        {
+	        	node.put("task_name", project.getTitle());
+	        	node.put("salary", project.getSalary());
+	        }
+			
+			DateFormat formattmp = new SimpleDateFormat("yyyy-MM-dd");  
+			node.put("create_time", formattmp.format(collect.getCreateTime()));
+			
+			jsonarray.add(node);
+		}
+		rtn.put("list", jsonarray);
+		Map<String,Object> data = new HashMap<String, Object>();
+		data.put("State", "Success");
+		data.put("data", rtn);				
+		return data;
+		
+	}
+	
 	
 	@RequestMapping("/getTaskCollectsWx")
     public @ResponseBody Map<String,Object> getTaskCollectsWx(@RequestParam String project_id, @RequestParam Integer page) {
@@ -848,6 +897,12 @@ public class ProjectController {
 			node.put("id", collect.getId());
 			node.put("task_id", collect.getProjectId());
 			node.put("status", collect.getStatus());
+			
+			Users user = userService.selectByUserId(collect.getUpUserId());
+			if(user != null)
+			{
+				node.put("nickName", user.getNickname());
+			}
 			
 			Map<String, Object> tmp = new HashMap<String, Object>();
 			tmp.put("projectId", collect.getProjectId());
@@ -918,7 +973,6 @@ public class ProjectController {
 	        	obj.put("salary", project.getSalary());
 	        }
 		
-			
 			obj.put("id", collect.getId());
 			obj.put("status", collect.getStatus());
 			obj.put("create_time", collect.getCreateTime());
@@ -926,6 +980,11 @@ public class ProjectController {
 			obj.put("phone", collect.getPhone());
 			obj.put("content", collect.getContent());
 			
+			Users user = userService.selectByUserId(collect.getUpUserId());
+			if (user != null)
+			{
+				obj.put("up_user_name", user.getNickname());
+			}
 			if(collect.getFiles() != null && !collect.getFiles().isEmpty())
 			{
 				JSONArray files = JSON.parseArray(collect.getFiles());
@@ -1219,5 +1278,45 @@ public class ProjectController {
 		map.put("State", "False");
 		map.put("data", null);	
 		return map;
+	}
+	
+	@RequestMapping("/getFollowersWx")
+    public @ResponseBody Map<String,Object> getFollowersWx(@RequestParam String project_id, @RequestParam String start_date,
+    		@RequestParam String end_date, @RequestParam Integer page, @RequestParam String user_id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("offset", page * 10);
+		paramMap.put("limit", 10);
+		if (start_date != null && start_date.length() > 0){
+			paramMap.put("startDate", start_date);
+		}
+		
+		if (end_date != null && end_date.length() > 0){
+			paramMap.put("endDate", end_date);
+		}
+		paramMap.put("projectId", project_id);
+		
+        List<Followers> followerList = projectService.getFollowers(paramMap);
+        
+		JSONArray jsonarray = new JSONArray(); 
+		JSONObject rtn = new JSONObject();
+		rtn.put("count", followerList.size());
+				
+		for (Followers follower: followerList)
+		{
+			JSONObject node = new JSONObject(); 
+			node.put("user_id", follower.getUserId());
+			node.put("nickname", follower.getNickName());
+			node.put("count", follower.getCount());
+			node.put("head_img", follower.getHeadImg());
+			
+			jsonarray.add(node);
+		}
+		rtn.put("list", jsonarray);
+		Map<String,Object> data = new HashMap<String, Object>();
+		data.put("State", "Success");
+		data.put("data", rtn);				
+		return data;
+		
 	}
 }

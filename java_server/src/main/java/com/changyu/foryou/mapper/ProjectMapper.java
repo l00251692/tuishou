@@ -6,6 +6,7 @@ import java.util.Map;
 import com.changyu.foryou.model.Banner;
 import com.changyu.foryou.model.Collect;
 import com.changyu.foryou.model.Follow;
+import com.changyu.foryou.model.Followers;
 import com.changyu.foryou.model.Project;
 
 
@@ -50,5 +51,7 @@ public interface ProjectMapper {
 	public int getFollowerCounts(Map<String, Object> paramMap);
 	
 	public int getCollectCounts(Map<String, Object> paramMap);
+	
+	public List<Followers> getFollowers(Map<String, Object> paramMap);
 	
 }

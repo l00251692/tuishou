@@ -34,10 +34,10 @@
       </view>
       <view class="process-item">
         <view class="process-item-bd">
-          <text class="process-item-name">每单收益</text>
+          <text class="process-item-name">用户昵称</text>
         </view>
         <view class="process-item-ft">
-          <text class="process-item-info">{{item.salary}}</text>
+          <text class="process-item-info">{{item.nickName}}</text>
         </view>
       </view>
     </view>

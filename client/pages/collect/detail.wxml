@@ -36,7 +36,7 @@
         <view class="work-sheet-item">
           <text class="work-sheet-bd">昵称</text>
           <view class="work-sheet-ft">
-            <text>{{info.name}}</text>
+            <text>{{info.up_user_name}}</text>
           </view>
         </view>
       </view>

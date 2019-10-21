@@ -160,7 +160,7 @@ Page({
       },
       error(res) {
         that.setData({
-          load: false
+          loading: false
         })
       }
     })

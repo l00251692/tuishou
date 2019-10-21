@@ -10,6 +10,7 @@ import com.changyu.foryou.mapper.ProjectMapper;
 import com.changyu.foryou.model.Banner;
 import com.changyu.foryou.model.Collect;
 import com.changyu.foryou.model.Follow;
+import com.changyu.foryou.model.Followers;
 import com.changyu.foryou.model.Project;
 import com.changyu.foryou.service.ProjectService;
 
@@ -110,6 +111,10 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	public int getCollectCounts(Map<String, Object> paramMap){
 		return projectMapper.getCollectCounts(paramMap);
+	}
+	
+	public List<Followers> getFollowers(Map<String, Object> paramMap){
+		return projectMapper.getFollowers(paramMap);
 	}
 }
 
