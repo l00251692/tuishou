@@ -62,12 +62,12 @@
         </view>
 
         <view class="work-sheet-item">
-          <text class="work-sheet-bd">采集图片</text>
+          <text class="work-sheet-bd collect_img_title">采集图片(点击图片预览)</text>
         </view>
         <view class="weui-uploader__files" id="uploaderFiles">
           <block wx:for="{{info.files}}" wx:key="{{index}}">
-            <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}">
-              <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+              <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
             </view>
           </block>
         </view>

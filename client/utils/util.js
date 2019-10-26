@@ -223,7 +223,7 @@ export function fetch(options) {
   wx.request({
     url: `https://${host}/${options.url}`,
     data: Object.assign(options.data, {
-      'app_v': 'ailogic'
+      'app_v': 'tuishou'
     }),
     method: options.method || 'POST',
     header: {
@@ -238,6 +238,10 @@ export function fetch(options) {
         options.error && options.error(data.info)
       }
       options.complete && options.complete()
+    },
+    fail:function(res){
+      console.log("wx.request fail")
+      options.error && options.error()
     }
   })
 }

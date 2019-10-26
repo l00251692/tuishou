@@ -20,13 +20,13 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
-import ytx.org.apache.http.HttpEntity;
-import ytx.org.apache.http.HttpResponse;
-import ytx.org.apache.http.client.methods.HttpPost;
-import ytx.org.apache.http.entity.StringEntity;
-import ytx.org.apache.http.impl.client.DefaultHttpClient;
-import ytx.org.apache.http.message.BasicHeader;
-import ytx.org.apache.http.protocol.HTTP; 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP; 
  
 /** 
  * Created by lsh on 2017/6/22. 

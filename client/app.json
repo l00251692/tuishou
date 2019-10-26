@@ -24,7 +24,7 @@
     "backgroundColor": "#1e8cd4",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1e8cd4",
-    "navigationBarTitleText": "推手",
+    "navigationBarTitleText": "推手号",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

@@ -89,9 +89,10 @@ Page({
 
     bindStartDateChange: function (e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
+      console.log(new Date(e.detail.value) + "," + new Date())
       if (new Date(e.detail.value) < new Date())
       {
-        return alert("截止时间不能小于当前日期")
+        return alert("开始时间不能小于当前日期")
       }
       if (e.detail.value)
       this.setData({

@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.omg.CORBA.portable.InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,8 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	private UserService userService;
+	
+	private static final Logger logger = Logger.getLogger(ProjectController.class);
 
 	@Autowired
 	public void setProjectService(ProjectService projectService) {
@@ -98,6 +101,7 @@ public class ProjectController {
 	@RequestMapping("/getProjectListWx")
     public @ResponseBody Map<String,Object> getProjectListWx(@RequestParam Integer page) {
 		
+		logger.info("enter getProjectListWx");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("offset", page * 10);
 		paramMap.put("limit", 10);
@@ -120,8 +124,17 @@ public class ProjectController {
 			node.put("salary", project.getSalary());
 			
 			Users user = userService.selectByUserId(project.getCreateUserId());
-			node.put("create_userName", user.getNickname());
-			node.put("task_auth", user.getImgUrl());
+			if (user == null)
+			{
+				node.put("create_userName", "");
+				node.put("task_auth", "");
+			}
+			else
+			{
+				node.put("create_userName", user.getNickname());
+				node.put("task_auth", user.getImgUrl());
+			}
+			
 			
 			node.put("region", project.getRegion());
 			
@@ -763,10 +776,9 @@ public class ProjectController {
 			arr = new JSONArray();
 		}
 		
-		
-		JSONObject obj = new JSONObject();
-		obj.put("url","http://" + file);
-		arr.add(obj);
+		//JSONObject obj = new JSONObject();
+		//obj.put("url","http://" + file);
+		arr.add("http://" + file);
 		paramMap.put("files", arr.toJSONString());
         int flag = projectService.updateCollectFiles(paramMap);
         

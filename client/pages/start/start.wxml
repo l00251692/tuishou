@@ -1,7 +1,8 @@
 <div class="container">
   <div class="background-layer"></div>
-  <p class="welcome animated fadeInDown">推手</p>
-  <p class="sub-text animated fadeInDown">为你，千千万万遍</p>
+  <image mode="aspectFill" class="logo" src="/images/logo.png"></image>
+  <p class="welcome animated fadeInDown">推手号</p>
+  <p class="sub-text animated fadeInDown">上推手号，携手共同成长</p>
   <div class="loader">
     <div class="dot"></div>
     <div class="dot"></div>

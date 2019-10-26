@@ -1,5 +1,6 @@
 // pages/order/pay.js
 const qiniuUploader = require("../../utils/qiniuUploader")
+import dateFormat from '../../utils/dateformat'
 import {
   getQiniuToken,
   uploadCollectData,
@@ -21,7 +22,8 @@ Page({
     loading: false,
     canClick: true,
     content: '',
-    files: []
+    files: [],
+    fileTimes:[]
   },
 
   /**
@@ -30,6 +32,15 @@ Page({
   onLoad: function(options) {
     this.id = options.id
     this.callback = options.callback || 'callback'
+    if (wx.getStorageSync('haslogin') == true) {
+      let userInfo = wx.getStorageSync('userInfo');
+      this.setData({
+        userInfo: userInfo,
+        haslogin: true
+      });
+
+    }
+
   },
 
   listenerName: function(e) {
@@ -57,14 +68,63 @@ Page({
     }
 
     var that = this;
+    var nickName = this.data.userInfo.nickName
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
+      sourceType: ['camera'],
       success: function(res) {
-        that.setData({
-          files: that.data.files.concat(res.tempFilePaths)
-        });
+        console.log("chooseImage:" + JSON.stringify(res))
+        var time = dateFormat(new Date(), "yyyy-mm-dd HH:MM") 
+        var originPath = res.tempFilePaths[0]
+        //获取图片详细信息
+        wx.getImageInfo({
+          src: originPath,
+          success: (ress) => {
+            let ctx = wx.createCanvasContext('firstCanvas')
+
+            that.setData({
+              canvasHeight: ress.height,
+              canvasWidth: ress.width
+            })
+
+            //将图片src放到cancas内，宽高为图片大小
+            ctx.drawImage(originPath, 0, 0, ress.width, ress.height)
+            //将声明的时间放入canvas
+            ctx.setFontSize(15) //注意：设置文字大小必须放在填充文字之前，否则不生效
+            ctx.setFillStyle('blue')
+            ctx.fillText("推手号", 10, ress.height - 50)
+            ctx.strokeText("推手号", 10, ress.height - 50)
+            ctx.fillText(nickName, 10, ress.height - 30)
+            ctx.strokeText(nickName, 10, ress.height - 30)
+            ctx.fillText(time, 10, ress.height-10)
+            ctx.strokeText(time, 10, ress.height-10)
+
+            ctx.draw(false, function () {
+              wx.canvasToTempFilePath({
+                canvasId: 'firstCanvas',
+                success: (res) => {
+                  console.log("save cavas to temp path" + res.tempFilePath)
+                  that.setData({
+                    files: that.data.files.concat(res.tempFilePath),
+                    fileTimes: that.data.fileTimes.concat(time)
+                  });
+                },
+                fail: (e) => {
+                  console.log(e)
+                  that.setData({
+                    files: that.data.files.concat(originPath),
+                    fileTimes: that.data.fileTimes.concat(time)
+                  });
+                }
+              })
+            })
+          },
+          fail:(e) =>{
+            console.log(e)
+            alert("图片上传错误")
+          }
+        })
 
       }
     })
@@ -86,8 +146,8 @@ Page({
       loading: true
     })
 
-    if (name == null) {
-      return alert('请输入用户姓名')
+    if (phone == null) {
+      return alert('请输入联系电话')
     }
 
     if (files.length == 0) {
@@ -140,12 +200,16 @@ Page({
               })
 
               wx.showToast({
-                title: '提交数据成功',
-                duration: 2000,
+                title: '提交数据中...',
+                duration: 5000,
                 success: function(){
-                  wx.navigateTo({
-                    url: '/pages/collect/detail?id=' + collect_id,
-                  })
+                  setTimeout(function () {
+                    wx.hideToast()
+                    wx.navigateTo({
+                      url: '/pages/collect/detail?id=' + collect_id,
+                    })
+                  }, 4000)
+                  
                 } 
               })
             }
@@ -178,9 +242,12 @@ Page({
 
   deleteImg: function(e) {
     var imgs = this.data.files
+    var times = this.data.fileTimes
     imgs.splice(e.currentTarget.dataset.index, 1)
+    times.splice(e.currentTarget.dataset.index, 1)
     this.setData({
-      files: imgs
+      files: imgs,
+      fileTimes: times
     })
   },
 

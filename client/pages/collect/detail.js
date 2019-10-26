@@ -83,19 +83,6 @@ Page({
     })
   },
 
-  
-
-  previewImage: function (e) {
-    var { front_img, back_img } = this.data.info
-    var imgalist = [front_img, back_img]
-
-    var current = e.target.dataset.src;
-    wx.previewImage({
-      current: current, // 当前显示图片的http链接
-      urls: imgalist // 需要预览的图片http链接列表
-    })
-  },
-
   onPass: function (e) {
     var collect_id = this.id
     var that = this

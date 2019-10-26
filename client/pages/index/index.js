@@ -93,8 +93,9 @@ Page({
         })
       },
       error(res){
+        console.log("getMyProjectList fail")
         that.setData({
-          load:false
+          loading:false
         })
       }
     })
@@ -111,7 +112,7 @@ Page({
     var userInfo = wx.getStorageSync("userInfo")
 
     if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length ==0) {
-      return alert("创建任务请先在我的页面完善信息")
+      return alert("请前往“我的”--“完善信息”进行授权，以便平台更好为您服务")
     }
 
     wx.navigateTo({

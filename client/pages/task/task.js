@@ -19,9 +19,9 @@ Page({
     auth: false,
     task_list: null,
     banner_arr: [
-      { banner_id: 1, carousel_img: '/images/tmp/banner1.png' },
-      { banner_id: 2, carousel_img: '/images/tmp/banner2.png' },
-      { banner_id: 3, carousel_img: '/images/tmp/banner3.png' }
+      { banner_id: 1, carousel_img: '/images/task/banner1.jpg' },
+      { banner_id: 2, carousel_img: '/images/task/banner2.jpg' },
+      { banner_id: 3, carousel_img: '/images/task/banner3.jpg' }
     ],
     /*
     task_list:[
@@ -142,10 +142,11 @@ Page({
     this.setData({
       loading: true
     })
-
+    
     getProjectList({
       page,
       success(data) {
+        console.log("get proj list success")
         var list = data.list
         var {
           task_list
