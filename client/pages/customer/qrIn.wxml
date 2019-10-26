@@ -1,0 +1,60 @@
+<!--append.wxml-->
+<view class="container">
+  <view class="remind-box" wx:if="{{false}}">
+    <image class="remind-img" src="/images/index/loading.gif"></image>
+  </view>
+  <block wx:else>
+    <image class="title" src="/images/user/title.png"></image>
+    <view class="content">
+      <view class="hd" style="transform:rotateZ({{angle}}deg);">
+        <image class="logo" src="/images/user/logo.png"></image>
+        <image class="wave" src="/images/user/wave.png" mode="aspectFill"></image>
+        <image class="wave wave-bg" src="/images/user/wave.png" mode="aspectFill"></image>
+      </view>
+      <view class="bd">
+        <text class="append-title">填写信息</text>
+        <form class="append-form">
+          <view class="input-group {{room_focus ? 'active' : ''}}">
+            <text class="input-label">昵称</text>
+            <view class="weui-cell__bd">
+              <view class="weui-input">{{nickName}}</view>
+            </view>
+            <view class="weui-cell__ft">
+              <button open-type="getUserInfo" class="icon_phone" bindgetuserinfo="onLogin">
+                <view class="weui-cell__bd ">获取昵称</view>
+              </button>
+            </view>
+
+          </view>
+          <view class="input-group {{room_focus ? 'active' : ''}}">
+            <text class="input-label">手机</text>
+            <view class="weui-cell__bd">
+              <view class="weui-input">{{phone}}</view>
+            </view>
+            <view class="weui-cell__ft">
+              <button open-type="getPhoneNumber" class="icon_phone" bindgetphonenumber="bindPhoneNumber">
+                <view class="weui-cell__bd ">绑定</view>
+              </button>
+            </view>
+
+          </view>
+          <view class="input-group">
+            <text class="input-label">区域</text>
+            <view class="weui-cell__bd">
+              <view class="weui-input">{{addr_string}}</view>
+            </view>
+            <view class="weui-cell__ft">
+              <button class="icon_phone" bindtap="onChooseLocation">
+                <view class="weui-cell__bd ">获取位置</view>
+              </button>
+            </view>
+          </view>
+
+        </form>
+        <view class="confirm-btn" open-type="contact" bindtap="confirm">
+          <text>提交信息</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

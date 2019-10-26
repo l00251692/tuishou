@@ -43,6 +43,12 @@ Page({
 
   onShow: function() {
     console.log("index on show")
+    if (getApp().globalData.index_refresh == true)
+    {
+      this.initData()
+      this.getMyTask(0)
+      getApp().globalData.index_refresh == false
+    }
   },
   onLoad: function() {
     if (wx.getStorageSync('haslogin') == true) {

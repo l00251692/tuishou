@@ -37,6 +37,7 @@
 		<result column="rule" property="rule" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="create_userid" property="createUserid" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
 		<result column="deadline_time" property="deadlineTime" jdbcType="TIMESTAMP" />
 		<result column="region" property="region" jdbcType="VARCHAR" />
 	</resultMap>

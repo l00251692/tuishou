@@ -48,7 +48,7 @@
         <view class="top">
           <view class="left">
             <image class="img" src="{{item.task_auth}}"></image>
-            <text class="user">{{item.create_time}}</text>
+            <text class="user">创建于:{{item.create_time}}</text>
           </view>
           <view class="right">
             <text class="univ">{{item.region}}</text>

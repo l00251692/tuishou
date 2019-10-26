@@ -33,6 +33,21 @@ export function getShareQr(options) {
 
 }
 
+export function getTuiguangQr(options) {
+  var { project_id, success } = options
+  var { user_id } = wx.getStorageSync("userInfo")
+
+  fetch({
+    url: 'project/getTuiguangQrWx',
+    data: {
+      project_id,
+      user_id
+    },
+    success
+  })
+
+}
+
 // 登录
 export function bindPhone(options) {
   const {

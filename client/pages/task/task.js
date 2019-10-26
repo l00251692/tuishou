@@ -34,61 +34,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
     var that = this
     that.initData()
     that.getProjectList()
-
-    /*
-    wx.getLocation({
-      type: 'gcj02',
-      success(res) {
-
-        var {
-          longitude,
-          latitude
-        } = res
-        var location = {
-          longitude,
-          latitude
-        }
-
-        reverseGeocoder({
-          location,
-          success(data) {
-            that.setData({
-              weizhi: Object.assign({
-                location
-              }, data),
-              addr_titile: data.city,
-              auth:true
-            })
-            that.initData()
-            that.getProjectList()
-            that.updateLocation()
-          }
-        })
-
-      },
-      fail(res) {
-        console.log(res.errMsg)
-        if (res.errMsg == 'getLocation:fail auth deny') {
-
-          wx.showModal({
-            content: "未授权获位置信息将影响相关功能，请点击右上角设置按钮进行授权",
-            success(res) {
-              wx.switchTab({
-                url: '/pages/index/index',
-              })
-            }
-          })
-
-        } else {
-          alert('获取用户地址失败')
-        }
-
-      }
-    })*/
   },
 
   /**
@@ -102,8 +50,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if(this.data.auth){
-      console.log("auth ok")
+    if (getApp().globalData.task_refresh == true) {
+      this.initData()
+      this.getProjectList()
+      getApp().globalData.task_refresh == false
     }
   },
 

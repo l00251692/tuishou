@@ -17,6 +17,7 @@
     "pages/wallet/withdraw",
     "pages/feedback/feedback",
     "pages/about/about",
+    "pages/customer/qrIn",
     "pages/logs/logs"
   ],
   "window": {

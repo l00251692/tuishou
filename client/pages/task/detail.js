@@ -109,7 +109,7 @@ Page({
   },
 
   onFollow: function (e) {
-    var{  info:{follow} } = this.data
+    var{  info:{follow, start_date} } = this.data
     var that = this
 
     var userInfo = wx.getStorageSync("userInfo")
@@ -117,7 +117,7 @@ Page({
     if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length == 0) {
       return alert("请前往“我的”--“完善信息”进行授权，以便平台更好为您服务")
     }
-
+    
     setProjectFollowStatus({
       status: !follow,
       project_id : that.id,
@@ -126,7 +126,9 @@ Page({
         that.setData({
           'info.follow': !follow 
         })
-        getPrevPage()[that.callback]()
+        //getPrevPage()[that.callback]()
+        getApp().globalData.index_refresh == true
+        getApp().globalData.task_refresh == true
         wx.showToast({
           title: !follow ? '参与成功' : '取消成功',
           icon: 'none',
@@ -139,6 +141,12 @@ Page({
 
   onDelete: function (e) {
     var that = this
+    var  { followers, collects } = this.data.info
+    if(followers !=0 || collects !=0 )
+    {
+      alert("当前任务有用户参与或上传数据，请联系管理员确认删除")
+      return
+    }
 
     deleteProject({
       project_id: that.id,
@@ -148,7 +156,8 @@ Page({
           icon: 'none',
           duration: 1500
         });
-        getPrevPage()[that.callback]()
+        getApp().globalData.index_refresh == true
+        getApp().globalData.task_refresh == true
 
         wx.switchTab({
           url: '/pages/index/index',

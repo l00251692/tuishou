@@ -20,6 +20,8 @@ public class Follow {
 	
 	private String createUserid;
 	
+	private Date startTime;
+	
 	private Date deadlineTime;
 	
 	private String region;
@@ -102,5 +104,13 @@ public class Follow {
 
 	public void setRule(String rule) {
 		this.rule = rule;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 }

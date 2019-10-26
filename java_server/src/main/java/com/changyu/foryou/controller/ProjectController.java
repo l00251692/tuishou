@@ -214,6 +214,7 @@ public class ProjectController {
 
 			DateFormat formattmp = new SimpleDateFormat("yyyy-MM-dd");  
 			node.put("create_time", formattmp.format(project.getCreateTime()));
+			node.put("start_date", formattmp.format(project.getStartTime()));
 			node.put("end_date", formattmp.format(project.getDeadlineTime()));
 		
 			node.put("region", project.getRegion());
@@ -279,7 +280,8 @@ public class ProjectController {
 		node.put("salary", project.getSalary());
 		node.put("contact", project.getContact());
 		DateFormat formattmp = new SimpleDateFormat("yyyy-MM-dd");  
-		node.put("start_date", formattmp.format(project.getCreateTime()));
+		node.put("create_time", formattmp.format(project.getCreateTime()));
+		node.put("start_date", formattmp.format(project.getStartTime()));
 		node.put("end_date", formattmp.format(project.getDeadLineTime()));
 		node.put("task_head", project.getHeadImg());
 		
@@ -672,6 +674,50 @@ public class ProjectController {
 		params.put("path", "pages/task/detail?id=" + project_id);
         params.put("width", 160);
         String body = JSON.toJSONString(params);
+           
+        String resultstr = HttpRequest.httpPostWithJSONQr(url,body, project_id);
+        if(resultstr == null)
+        {
+        	data.put("State", "Fail");
+    		data.put("info", "生成二维码失败");				
+    		return data;
+        }
+        
+        JSONObject rtn = new JSONObject();
+        String putpath = Constants.QINIU_IP + resultstr;
+        rtn.put("path", putpath);
+        
+        
+		data.put("State", "Success");
+		data.put("data", rtn);				
+		return data;
+	}
+	
+	
+	@RequestMapping("/getTuiguangQrWx")
+    public @ResponseBody Map<String,Object> getTuiguangQrWx(@RequestParam String project_id, @RequestParam String user_id, HttpServletRequest request) throws Exception {
+		Map<String,Object> data = new HashMap<String, Object>();
+		
+		//https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/qr-code.html
+		//https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
+		//接口B：生成无限制但需要先发布的小程序
+		//String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
+		
+		//接口C：调试用
+		String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
+
+		String access_token = (String) PayUtil.getAccessToken().get("access_token");
+		//取access_token
+    
+		url = url + "?access_token=" + access_token;
+		
+		Map<String, Object> params = new HashMap<>();
+        //params.put("scene", "test");
+        //params.put("page", "pages/index/index");
+		params.put("path", "pages/customer/qrIn?id=" + project_id + "&from_user_id=" + user_id);
+        params.put("width", 160);
+        String body = JSON.toJSONString(params);
+        
            
         String resultstr = HttpRequest.httpPostWithJSONQr(url,body, project_id);
         if(resultstr == null)

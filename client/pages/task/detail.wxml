@@ -2,9 +2,9 @@
 <!--pages/shop/show.wxml-->
 
 <view wx:if="{{loading == true}}" class="remind-box">
-    <image class="remind-img" src="/images/index/loading.gif"></image>
-    <text class="remind-text">加载中...</text>
-  </view>
+  <image class="remind-img" src="/images/index/loading.gif"></image>
+  <text class="remind-text">加载中...</text>
+</view>
 <view wx:else class="parent">
   <view class="banner">
     <view class="banner-img">
@@ -34,15 +34,6 @@
             <text class="user-jy-text">条</text>
           </view>
         </view>
-        <!-- 
-            <view class="user-jy-item user-jy-dbet">
-                <text class="user-jy-hd">欠费</text>
-                <view class="user-jy-bd">
-                    <text class="user-jy-value">3</text>
-                    <text class="user-jy-text">元</text>
-                </view>
-            </view>
-            -->
       </view>
 
       <view class="repair-detail-item">
@@ -113,7 +104,7 @@
       </view>
 
       <view class="declare-context">
-      <text class="declare-context-title">任务内容</text>
+        <text class="declare-context-title">任务内容</text>
         <view class="declare-context-panel">
           <view class="declare-context-textarea"> {{info.detail}}</view>
         </view>
@@ -127,13 +118,13 @@
         <text wx:else>参与任务</text>
       </view>
     </view>
-    
+
   </view>
   <view class="share-cavas">
-      <canvas canvas-id="shareCanvas" ></canvas>
-      <view style="display:{{hidden ? 'none' : 'block'}}" class='preview'>
-        <image src='{{shareImgSrc}}' mode='widthFix'></image>
-        <button type='primary' bindtap='saveSharePic'>保存分享图</button>
-      </view>
+    <canvas canvas-id="shareCanvas"></canvas>
+    <view style="display:{{hidden ? 'none' : 'block'}}" class='preview'>
+      <image src='{{shareImgSrc}}' mode='widthFix'></image>
+      <button type='primary' bindtap='saveSharePic'>保存分享图</button>
     </view>
+  </view>
 </view>

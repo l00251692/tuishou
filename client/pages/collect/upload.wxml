@@ -1,5 +1,20 @@
-<view class="parent">
+<view wx:if="{{loading == true}}" class="remind-box">
+  <image class="remind-img" src="/images/index/loading.gif"></image>
+  <text class="remind-text">加载中...</text>
+</view>
+<view wx:else class="parent">
+  <view class="banner">
+    <view class="banner-img">
+      <image src="{{info.task_head || '/images/task/default-task-head.png'}}" />
+    </view>
+    <text class="banner-title">{{info.task_name}}</text>
+    <view class="share" bindtap='onShare'>
+      <image src='/images/task/qr.png'></image>
+    </view>
+  </view>
+  <view class=" tip"> 点击右上角生成专属推广二维码</view>
   <view class="reporter-detail">
+    
     <view class="reporter-user reporter-detail-item">
       <text class="reporter-detail-name" decode="{{true}}">用户姓名&emsp;</text>
       <view class="reporter-detail-input">
@@ -36,4 +51,10 @@
   </view>
 
 </view>
-<canvas class='canvas' style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;top:{{canvasHeight*2}}px;" canvas-id="firstCanvas"></canvas>
+<view class="share-cavas">
+    <canvas canvas-id="shareCanvas"></canvas>
+    <view style="display:{{hidden ? 'none' : 'block'}}" class='preview'>
+      <image src='{{shareImgSrc}}' mode='widthFix'></image>
+      <button type='primary' bindtap='saveSharePic'>保存分享图</button>
+    </view>
+  </view>

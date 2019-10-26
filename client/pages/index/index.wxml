@@ -80,7 +80,7 @@
             <text>任务管理</text>
           </view>
         </navigator>
-        <navigator url="/pages/collect/upload?callback=callback&&id={{item.task_id}}" wx:else>
+        <navigator url="/pages/collect/upload?callback=callback&&id={{item.task_id}}&start_date={{item.start_date}}" wx:else>
           <view class="service-detail-open">
             <text>数据采集</text>
           </view>
