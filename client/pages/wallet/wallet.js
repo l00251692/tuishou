@@ -1,6 +1,6 @@
 import {
   ORDER_STATES
-} from './../order/constant'
+} from './../task/constant'
 import {
   getCollects,
   getBalanceToWx,

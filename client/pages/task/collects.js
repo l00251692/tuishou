@@ -1,4 +1,4 @@
-import { ORDER_STATES } from './../order/constant'
+import { ORDER_STATES } from './../task/constant'
 import {
   getTaskCollects, getBalanceToWx
 } from '../../utils/api'
