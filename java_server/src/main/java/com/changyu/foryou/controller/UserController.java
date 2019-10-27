@@ -100,8 +100,7 @@ public class UserController {
 			userInfo.put("user_token", userInfoJSON.get("unionId"));
 			userInfo.put("session_key", session_key);
 
-			
-			
+
 			try {
 				
 				Users users = userService.checkLogin(userInfoJSON.get("openId").toString());

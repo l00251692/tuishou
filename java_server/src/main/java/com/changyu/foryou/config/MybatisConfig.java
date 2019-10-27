@@ -36,7 +36,7 @@ public class MybatisConfig {
         druidDataSource.setUsername(environment.getProperty("spring.datasource.username"));
         druidDataSource.setPassword(environment.getProperty("spring.datasource.password"));
         druidDataSource.setUrl(environment.getProperty("spring.datasource.url"));
-        druidDataSource.setValidationQuery(environment.getProperty("jdbc.validationQuery"));
+        //druidDataSource.setValidationQuery(environment.getProperty("jdbc.validationQuery"));
         //druidDataSource.setTestWhileIdle(Boolean.parseBoolean(environment.getProperty("jdbc.testWhileIdle")));
         druidSettings(druidDataSource);
         return druidDataSource;

@@ -19,36 +19,12 @@ Page({
     loading: false,
     page: 0,
     hidden:true, //控制分享生成的图片是否显示
-    isShow: false,//控制emoji表情是否显示
-    isLoad: true,//解决初试加载时emoji动画执行一次
-    content: "",//评论框的内容
-    //isLoading: true,//是否显示加载数据提示
-    disabled: true,
-    cfBg: false,
-    _index: 0,
-    emojiChar: "😃-😋-😌-😍-😏-😜-😝-😞-😔-😪-😭-😁-😂-😃-😅-😆-👿-😒-😓-😔-😏-😖-😘-😚-😒-😡-😢-😣-😤-😢-😨-😳-😵-😷-😸-😻-😼-😽-😾-😿-🙊-🙋-🙏-✈-🚇-🚃-🚌-🍄-🍅-🍆-🍇-🍈-🍉-🍑-🍒-🍓-🐔-🐶-🐷-👦-👧-👱-👩-👰-👨-👲-👳-💃-💄-💅-💆-💇-🌹-💑-💓-💘-🚲",
-    //0x1f---
-    emoji: [
-      "60a", "60b", "60c", "60d", "60f",
-      "61b", "61d", "61e", "61f",
-      "62a", "62c", "62e",
-      "602", "603", "605", "606", "608",
-      "612", "613", "614", "615", "616", "618", "619", "620", "621", "623", "624", "625", "627", "629", "633", "635", "637",
-      "63a", "63b", "63c", "63d", "63e", "63f",
-      "64a", "64b", "64f", "681",
-      "68a", "68b", "68c",
-      "344", "345", "346", "347", "348", "349", "351", "352", "353",
-      "414", "415", "416",
-      "466", "467", "468", "469", "470", "471", "472", "473",
-      "483", "484", "485", "486", "487", "490", "491", "493", "498", "6b4"
-    ],
-    emojis: [],//qq、微信原始表情
-    alipayEmoji: [],//支付宝表情
     title: ''//页面标题,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    this.id = options.id
+    var obj = wx.getLaunchOptionsSync()
+    this.id = options.id || obj.query.id
     this.callback = options.callback || 'callback'
     this.loadData()
     //this.loadReview()   
@@ -127,8 +103,7 @@ Page({
           'info.follow': !follow 
         })
         //getPrevPage()[that.callback]()
-        getApp().globalData.index_refresh == true
-        getApp().globalData.task_refresh == true
+        getApp().globalData.index_refresh = true
         wx.showToast({
           title: !follow ? '参与成功' : '取消成功',
           icon: 'none',
@@ -156,8 +131,8 @@ Page({
           icon: 'none',
           duration: 1500
         });
-        getApp().globalData.index_refresh == true
-        getApp().globalData.task_refresh == true
+        getApp().globalData.index_refresh = true
+        getApp().globalData.task_refresh = true
 
         wx.switchTab({
           url: '/pages/index/index',

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.changyu.foryou.model.Project;
 import com.changyu.foryou.service.ProjectService;
 import com.changyu.foryou.service.UserService;
 import com.changyu.foryou.tools.PayUtil;
@@ -175,15 +176,23 @@ public class Customer {
             return result.toString();
         }
         else if(msgType.equals("event")){
-        	JSONObject text = new JSONObject();
-            text.put("content", "欢迎使用小程序，请回复数字查看具体内容");
-            String sessionFrom = msg.get("SessionFrom").toString();
-            
-            if(sessionFrom != "" && sessionFrom.length() > 0){
-            	String projectId = sessionFrom;
-            }
-            
-            
+        	
+        	String sessionFrom = msg.get("SessionFrom").toString();
+        	logger.info("receive customer msg:" + sessionFrom);
+        	
+        	Map<String, Object> paramMap = new HashMap<String, Object>();
+    		paramMap.put("projectId", sessionFrom);
+    		Project project = projectService.getProjectInfo(paramMap);
+    		JSONObject text = new JSONObject();
+    		if(project != null && project.getLink()!= null && project.getLink().length()>0)
+    		{
+    			text.put("content", project.getLink());
+    		}
+    		else
+    		{
+    			text.put("content", "欢迎使用小程序，请回复数字查看具体内容");
+    		}
+             
             //https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
             JSONObject json = new JSONObject();
             json.put("touser", toUserName);

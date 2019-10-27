@@ -123,6 +123,8 @@ public class ProjectController {
 			node.put("task_head", project.getHeadImg());
 			node.put("salary", project.getSalary());
 			
+			
+			
 			Users user = userService.selectByUserId(project.getCreateUserId());
 			if (user == null)
 			{
@@ -138,30 +140,39 @@ public class ProjectController {
 			
 			node.put("region", project.getRegion());
 			
-			if (project.getDeadLineTime() != null)
+			
+			Calendar calendar1 = Calendar.getInstance();
+			calendar1.setTime(project.getDeadLineTime());
+			
+			Calendar calendar2 = Calendar.getInstance();
+			calendar2.setTime(project.getStartTime());
+			
+			Calendar  today = Calendar.getInstance();
+			
+
+			//0 ---未开始   1----进行中   2---已结束
+			if(calendar2.getTimeInMillis() > today.getTimeInMillis())
 			{
-				Calendar calendar1 = Calendar.getInstance();
-				calendar1.setTime(project.getDeadLineTime());
-				
-				Calendar calendar2 = Calendar.getInstance();
-				calendar2.setTime(project.getStartTime());
-				
-				Calendar  today = Calendar.getInstance();
-				
-				if(calendar2.getTimeInMillis() > today.getTimeInMillis())
-				{
-					node.put("remain_days", -1);
-				}
-				else
-				{
-					double days = ( calendar1.getTimeInMillis() - today.getTimeInMillis())/(1000 * 60 * 60 * 24);
-					node.put("remain_days", days);
-				}
-				
+				node.put("remain_days", -1);
+				node.put("state", 0); //未开始
 			}
 			else
 			{
-				node.put("remain_days", 0);
+				Map<String, Object> paramMap2 = new HashMap<String, Object>();
+				paramMap2.put("projectId", project.getProjectId());
+				int collectCount = projectService.getCollectCounts(paramMap2);
+				
+				double days = ( calendar1.getTimeInMillis() - today.getTimeInMillis())/(1000 * 60 * 60 * 24);
+				if(days < 0 || (project.getCount() >0 && collectCount >= project.getCount()))
+				{
+					node.put("state", 2); //已结束
+				}
+				else{
+					node.put("state", 1); //进行中
+				}
+				
+				
+				node.put("remain_days", days);
 			}
 			
 			jsonarray.add(node);
@@ -279,20 +290,48 @@ public class ProjectController {
 		node.put("detail", project.getDetail());
 		node.put("salary", project.getSalary());
 		node.put("contact", project.getContact());
+		node.put("rule", project.getRule());
 		DateFormat formattmp = new SimpleDateFormat("yyyy-MM-dd");  
 		node.put("create_time", formattmp.format(project.getCreateTime()));
 		node.put("start_date", formattmp.format(project.getStartTime()));
 		node.put("end_date", formattmp.format(project.getDeadLineTime()));
 		node.put("task_head", project.getHeadImg());
 		
-		Date  deadLineTime =  project.getDeadLineTime();	
 		Calendar calendar1 = Calendar.getInstance();
-		calendar1.setTime(deadLineTime);
+		calendar1.setTime(project.getDeadLineTime());
+		
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.setTime(project.getStartTime());
+		
 		Calendar  today = Calendar.getInstance();
-		double days = ( calendar1.getTimeInMillis() - today.getTimeInMillis())/(1000 * 60 * 60 * 24);
-		node.put("remain_days", days);
+		
+
+		//0 ---未开始   1----进行中   2---已结束
+		if(calendar2.getTimeInMillis() > today.getTimeInMillis())
+		{
+			node.put("remain_days", -1);
+			node.put("state", 0); //未开始
+		}
+		else
+		{
+			Map<String, Object> paramMap2 = new HashMap<String, Object>();
+			paramMap2.put("projectId", project.getProjectId());
+			int collectCount = projectService.getCollectCounts(paramMap2);
+			
+			double days = ( calendar1.getTimeInMillis() - today.getTimeInMillis())/(1000 * 60 * 60 * 24);
+			if(days < 0 || (project.getCount() >0 && collectCount >= project.getCount()))
+			{
+				node.put("state", 2); //已结束
+			}
+			else{
+				node.put("state", 1); //进行中
+			}
+			node.put("remain_days", days);
+		}
 		
 		node.put("region", project.getRegion());
+		node.put("count", project.getCount());
+		node.put("link", project.getLink());
 		if (project.getCreateUserId().equals(user_id))
 		{
 			node.put("my_create", true);
@@ -346,7 +385,7 @@ public class ProjectController {
 	@RequestMapping("/createProjectWx")
     public @ResponseBody Map<String,Object> createProjectWx(@RequestParam String user_id,@RequestParam String type,@RequestParam String title,
     		@RequestParam String start_date, @RequestParam String end_date, @RequestParam String rule, @RequestParam String salary, @RequestParam String contact, 
-    		@RequestParam String region, @RequestParam String detail) {
+    		@RequestParam String region, @RequestParam String detail, @RequestParam Integer count, @RequestParam String link) {
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -369,7 +408,15 @@ public class ProjectController {
 		paramMap.put("deadLineTime", end_date);
 		paramMap.put("rule", rule);
 		paramMap.put("region", region);
+		logger.info("create count:" + count);
+		if(count > 0)
+		{
+			paramMap.put("count", count);
+		}
+		paramMap.put("link", link);
+		
 		paramMap.put("addImgs", "");
+		//状态1--创建 , 2--结束  
 		paramMap.put("status", 1);
         int flag = projectService.createProject(paramMap);
         
@@ -888,6 +935,37 @@ public class ProjectController {
 		
 	}
 	
+	@RequestMapping("/getTaskCollectSummaryWx")
+    public @ResponseBody Map<String,Object> getTaskCollectSummaryWx(@RequestParam String project_id) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", project_id);
+        int all = projectService.getCollectCounts(paramMap);
+        
+        //3--被打回  2---审核通过  1---待审核
+        
+        paramMap.put("status", 1);
+        int toCheck = projectService.getCollectCountsByStatus(paramMap);
+        
+        paramMap.put("status", 2);
+        int pass = projectService.getCollectCountsByStatus(paramMap);
+        
+        paramMap.put("status", 3);
+        int reject = projectService.getCollectCountsByStatus(paramMap);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("all", all);
+		obj.put("toCheck", toCheck);
+		obj.put("pass", pass);
+		obj.put("reject", reject);
+		
+		Map<String,Object> data = new HashMap<String, Object>();
+		data.put("State", "Success");
+		data.put("data", obj);				
+		return data;
+		
+	}
+	
 	@RequestMapping("/selectCollectsByuserIdWx")
     public @ResponseBody Map<String,Object> selectCollectsByuserIdWx(@RequestParam String project_id, @RequestParam String user_id, @RequestParam Integer page) {
 		
@@ -938,12 +1016,22 @@ public class ProjectController {
 	
 	
 	@RequestMapping("/getTaskCollectsWx")
-    public @ResponseBody Map<String,Object> getTaskCollectsWx(@RequestParam String project_id, @RequestParam Integer page) {
+    public @ResponseBody Map<String,Object> getTaskCollectsWx(@RequestParam String project_id, @RequestParam Integer type, @RequestParam Integer page) {
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("offset", page * 5);
 		paramMap.put("limit", 5);
 		paramMap.put("projectId", project_id);
+		
+		if (type == 1){
+			paramMap.put("status", 1);//待审核
+		}
+		if (type == 2){
+			paramMap.put("status", 2);//审核通过
+		}
+		if (type == 3){
+			paramMap.put("status", 3);//被打回
+		}
         List<Collect> collectList = projectService.getTaskCollectList(paramMap);
 		JSONArray jsonarray = new JSONArray(); 
 		JSONObject rtn = new JSONObject();

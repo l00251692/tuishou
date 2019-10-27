@@ -13,9 +13,24 @@ Page({
     loading: false,
     phone:'',
     addr_string:'',
-    nickNmae:''
+    nickNmae:'',
+    disabled:true
   },
   onLoad: function(options) {
+    var obj = wx.getLaunchOptionsSync()
+    console.log('启动小程序的 query 参数:', JSON.stringify(obj.query))
+    if (obj.query)
+    {
+      this.setData({
+        project_id: obj.query.id,
+        from_user_id: obj.query.from_user_id
+      })
+    }
+    else{
+      this.setData({
+        project_id: ''
+      })
+    }
     
   },
   onReady: function() {
@@ -49,6 +64,8 @@ Page({
       alert("请先授权获取昵称信息")
     }
 
+    var addr_string = this.data.addr_string
+
     var ency = e.detail.encryptedData;
     var iv = e.detail.iv;
     getApp().getLoginInfo(loginInfo => {
@@ -67,6 +84,13 @@ Page({
           that.setData({
             phone: data.phone
           })
+
+          if (addr_string != "")
+          {
+            that.setData({
+              disabled: false
+            })
+          }
         },
         error(res) {
           alert("获取手机号失败")
@@ -84,6 +108,8 @@ Page({
     if (nickName == '') {
       alert("请先授权获取昵称信息")
     }
+
+    var phone = this.data.phone
 
     wx.authorize({
       scope: 'scope.userLocation',
@@ -114,6 +140,12 @@ Page({
                   }, data),
                   addr_string: data.city + data.district,
                 })
+
+                if (phone != "") {
+                  that.setData({
+                    disabled: false
+                  })
+                }
                 console.log(JSON.stringify(that.data.location))
               }
             })
@@ -131,17 +163,17 @@ Page({
     var { nickName, phone, addr_string, location} = this.data
 
     if (nickName == '') {
-      alert("请先授权获得昵称信息")
+      return alert("请先授权获得昵称信息")
     }
 
     if(phone == '')
     {
-      alert("请先授权绑定手机")
+      return alert("请先授权绑定手机")
     }
 
     if (addr_string == '')
     {
-      alert("请选择区域信息")
+      return alert("请选择区域信息")
     }
 
     updateLocation({

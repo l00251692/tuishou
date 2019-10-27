@@ -51,8 +51,10 @@
           </view>
 
         </form>
-        <view class="confirm-btn" open-type="contact" bindtap="confirm">
-          <text>提交信息</text>
+        <view class="contact" >
+          <button class="confirm-btn" disabled="{{disabled}}"open-type="contact" session-from="{{project_id}}" bindcontact="confirm">
+            <text>提交信息</text>
+          </button>
         </view>
       </view>
     </view>

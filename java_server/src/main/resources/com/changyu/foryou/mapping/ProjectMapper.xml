@@ -18,6 +18,8 @@
 		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
 		<result column="deadline_time" property="deadLineTime" jdbcType="TIMESTAMP" />
 		<result column="region" property="region" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="link" property="link" jdbcType="VARCHAR" />
 		<result column="add_imgs" property="addImgs" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="INTEGER" />
 	</resultMap> 
@@ -172,13 +174,18 @@
 			<if test="region != null">
 				region,
 			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="link != null">
+				link,
+			</if>
 			<if test="addImgs != null">
 				add_imgs,
 			</if>
 			<if test="status != null">
 				status,
 			</if>
-
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="projectId != null">
@@ -222,6 +229,12 @@
 			</if>
 			<if test="region != null">
 				#{region,jdbcType=VARCHAR},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=INTEGER},
+			</if>
+			<if test="link != null">
+				#{link,jdbcType=VARCHAR},
 			</if>
 			<if test="addImgs != null">
 				#{addImgs,jdbcType=VARCHAR},
@@ -375,6 +388,10 @@
 			and
 			up_user_id = #{upUserId,jdbcType=VARCHAR} 
 		</if> 
+		<if test="status !=null">
+			and
+			status = #{status,jdbcType=INTEGER} 
+		</if> 
 		order by
 		create_time DESC
 		<if test="limit !=null and offset !=null">
@@ -390,6 +407,17 @@
 		collect
 		<where>
 		project_id = #{projectId,jdbcType=VARCHAR} 
+		</where> 
+	</select>
+	
+	<select id="getCollectCountsByStatus" resultType="java.lang.Integer" flushCache="true" useCache="false">
+		select
+		count(*)
+		from
+		collect
+		<where>
+		project_id = #{projectId,jdbcType=VARCHAR} 
+		and status = #{status,jdbcType=INTEGER} 
 		</where> 
 	</select>
 	

@@ -85,7 +85,7 @@
     
   </view>
 
-  <view class="submit-declare " wx:elif="{{info.status==1 && info.type==1 }} " bindtap="onCancel ">
+  <view class="submit-declare " wx:elif="{{info.status == 1 && info.type==1}}" bindtap="onCancel">
     <text>取消提交</text>
   </view>
 

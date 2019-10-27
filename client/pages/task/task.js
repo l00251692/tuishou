@@ -50,6 +50,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    console.log("task on show:" + JSON.stringify(getApp().globalData))
     if (getApp().globalData.task_refresh == true) {
       this.initData()
       this.getProjectList()
@@ -76,7 +77,7 @@ Page({
       page: 0,
       hasMore: true,
       loading: false,
-      projectList: null
+      task_list: null
     })
   },
 

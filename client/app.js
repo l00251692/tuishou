@@ -150,5 +150,7 @@ App({
       haslogin: 0,
       userInfo:null
     },
+    index_refresh:false,
+    task_refresh:false
   }
 })

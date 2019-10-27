@@ -38,11 +38,12 @@ Page({
   },
   //下拉更新
   onPullDownRefresh: function() {
-
+    this.initData()
+    this.getMyTask(0)
   },
 
   onShow: function() {
-    console.log("index on show")
+    console.log("index on show:" + JSON.stringify(getApp().globalData))
     if (getApp().globalData.index_refresh == true)
     {
       this.initData()

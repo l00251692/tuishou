@@ -113,6 +113,10 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectMapper.getCollectCounts(paramMap);
 	}
 	
+	public int getCollectCountsByStatus(Map<String, Object> paramMap){
+		return projectMapper.getCollectCountsByStatus(paramMap);
+	}
+	
 	public List<Followers> getFollowers(Map<String, Object> paramMap){
 		return projectMapper.getFollowers(paramMap);
 	}

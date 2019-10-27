@@ -9,6 +9,10 @@
   <view class="banner">
     <view class="banner-img">
       <image src="{{info.task_head || '/images/task/default-task-head.png'}}" />
+      <text class="num" wx:if="{{info.state == 2}}" style="background:#888">已结束</text>
+      <text class="num" wx:elif="{{info.state == 1}}">进行中</text>
+      <text class="num" wx:elif="{{info.state == 0}}" style="background:#888">未开始</text>
+      <text class="num" wx:else>审核中</text>
     </view>
     <text class="banner-title">{{info.task_name}}</text>
     <view class="share" bindtap='onShare'>
@@ -95,10 +99,25 @@
             {{info.contact}}
           </view>
         </view>
-        <view class="reporter-address reporter-detail-item">
+        <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">任务区域</text>
           <view class="reporter-detail-input">
             {{info.region}}
+          </view>
+        </view>
+        <view class="reporter-tel reporter-detail-item">
+          <text class="reporter-detail-name">任务总数</text>
+          <view class="reporter-detail-input" wx:if="{{info.count > 0}}">
+            {{info.count}}
+          </view>
+          <view class="reporter-detail-input" wx:else>
+            无限制
+          </view>
+        </view>
+        <view class="reporter-address reporter-detail-item">
+          <text class="reporter-detail-name">推广链接</text>
+          <view class="reporter-detail-input">
+            {{info.link}}
           </view>
         </view>
       </view>

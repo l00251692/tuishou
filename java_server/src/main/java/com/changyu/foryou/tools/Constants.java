@@ -8,8 +8,8 @@ public  class Constants {
 	public static final String MESSAGE = "message";
 	
 	public static final String localIp = "https://localhost/Image"; //存放上传的图片的服务器JiMuImage为上传图片时创建的目录
-    public static final String appId="wx7b7aabca0fc1737d";
-    public static final String apiKey="2b2d0bf304e8dbeadc144db3b872ab12";
+    public static final String appId="wxd2b50636c6d640a8";
+    public static final String apiKey="fdb78e04cbe5b4ff7779a9d940c957b1";
     public static final String mchId="1508584831";
     public static final String mchKey="LiuJingTao2333KEY251692111111111";//自己设置的秘钥
     //public static final String notifyUrl = "https://www.mingjing.tech/pay/payNotify";
@@ -32,7 +32,8 @@ public  class Constants {
     public  static final String QINIU_BUCKET = "tuishou";
     //public static final String QINIU_IP = "https://img.ailogic.xin/"; //采用绑定的域名，否则真机上不显示
     
-    public static final String QINIU_IP = "http://pz5gehtkk.bkt.clouddn.com/";
+    //public static final String QINIU_IP = "http://pz5gehtkk.bkt.clouddn.com/";
+    public static final String QINIU_IP = "https://wtoer.com/";
  
     public static final short STATUS_CANCEL=0;
     public static final short STATUS_CREATE=1;  //创建

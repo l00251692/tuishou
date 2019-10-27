@@ -33,6 +33,8 @@ Page({
       detail: '',
       selectUniv: '不限',
       uploadimgs: [], //上传图片列表
+      count:0,
+      link:''
     },
     onLoad: function (options) {
       this.callback = options.callback || 'callback'
@@ -150,6 +152,18 @@ Page({
       region: e.detail.value
     });
   },
+
+  listenerCount: function (e) {
+    this.setData({
+      count: e.detail.value
+    });
+  },
+
+  listenerLink: function (e) {
+    this.setData({
+      link: e.detail.value
+    });
+  },
   
   listenerTitle: function (e) {
     this.setData({
@@ -165,7 +179,7 @@ Page({
     onSubmit: function () {
       var that = this
       var {
-        tempFilePaths, title, start_date, end_date, rule, salary, contact, region, detail , uploadimgs
+        tempFilePaths, title, start_date, end_date, rule, salary, contact, region, count, link, detail , uploadimgs
       } = this.data
       var type = '推广任务'
       if (title == null) {
@@ -198,7 +212,7 @@ Page({
       })
 
       createProject({
-        type, title, start_date, end_date, rule, salary, contact, region, detail,
+        type, title, start_date, end_date, rule, salary, contact, region, count, link, detail,
         success(data)
         {
           //获取上传七牛云的token

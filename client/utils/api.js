@@ -347,7 +347,7 @@ export function paySuccess(options) {
 //获取发布的项目列表
 export function createProject(options) {
   var {
-    type, title, start_date, end_date, rule, salary, contact, region, detail, success, error
+    type, title, start_date, end_date, rule, salary, contact, region, count, link, detail, success, error
   } = options
   console.log(JSON.stringify(getApp().globalData.loginInfo))
   var { user_id, user_token } = wx.getStorageSync("userInfo")
@@ -363,6 +363,8 @@ export function createProject(options) {
       salary,
       contact,
       region,
+      count,
+      link,
       detail
     },
     success,
@@ -559,6 +561,20 @@ export function getCollects(options) {
   })
 }
 
+export function getTaskCollectSummary(options) {
+  var { project_id, success, error } = options
+
+  var { user_id, user_token } = wx.getStorageSync("userInfo")
+  fetch({
+    url: 'project/getTaskCollectSummaryWx',
+    data: {
+      project_id
+    },
+    success,
+    error
+  })
+}
+
 export function selectCollectsByuserId(options) {
   var { project_id, user_id, page, success, error } = options
 
@@ -575,12 +591,13 @@ export function selectCollectsByuserId(options) {
 }
 
 export function getTaskCollects(options) {
-  var { project_id, page, success, error } = options
+  var { project_id,type, page, success, error } = options
 
   fetch({
     url: 'project/getTaskCollectsWx',
     data: {
       project_id,
+      type,
       page,
     },
     success,

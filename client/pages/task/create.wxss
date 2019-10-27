@@ -131,7 +131,7 @@
     align-items: center;
     justify-content: flex-end;
     padding-right: 30rpx;
-    padding-left: 45rpx;
+    padding-left: 30rpx;
 }
 .reporter-detail-input input{
     font-size: 10pt;

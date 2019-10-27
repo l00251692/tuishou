@@ -1,52 +1,83 @@
 <import src="/templates/load-more.wxml" />
 
 <view class="wrapper">
-   <view class="tap">
-			<text class="item">采集数据记录</text>
-	</view>
-  <block wx:for="{{list}}" wx:key="{{order_id}}">
-  <view class="process review-process">
-    <view class="process-hd">
-      <image class="review-process-icon" src="../../images/order/order_{{item.status}}.png"></image>
-      <view class="order-number-name">
-        <text>数据编码:{{item.id}}</text>
-      </view>
-      <view class="process-state">
-        <text class="process-state-name process-state-{{item.status}}">{{ORDER_STATES[item.status]}}</text>
+  <view class="user-jy">
+    <view class="user-jy-item user-jy-num" bindtap="getAll">
+      <text class="user-jy-hd">总条数</text>
+      <view class="user-jy-bd">
+        <text class="user-jy-value_hard" wx:if="{{type == 0}}">{{all}}</text>
+        <text class="user-jy-value" wx:else>{{all}}</text>
+        <text class="user-jy-text">条</text>
       </view>
     </view>
-    <view class="process-bd">
-      <view class="process-item">
-        <view class="process-item-bd">
-          <text class="process-item-name">任务名称</text>
-        </view>
-        <view class="process-item-ft">
-          <text class="process-item-info">{{item.task_name}}</text>
-        </view>
-      </view>
-      <view class="process-item">
-        <view class="process-item-bd">
-          <text class="process-item-name">提交时间</text>
-        </view>
-        <view class="process-item-ft">
-          <text class="process-item-info">{{item.create_time}}</text>
-        </view>
-      </view>
-      <view class="process-item">
-        <view class="process-item-bd">
-          <text class="process-item-name">用户昵称</text>
-        </view>
-        <view class="process-item-ft">
-          <text class="process-item-info">{{item.nickName}}</text>
-        </view>
+    <view class="user-jy-item user-jy-num" bindtap="getPass">
+      <text class="user-jy-hd">审核通过</text>
+      <view class="user-jy-bd">
+        <text class="user-jy-value_hard" wx:if="{{type == 2}}">{{pass}}</text>
+        <text class="user-jy-value" wx:else>{{pass}}</text>
+        <text class="user-jy-text">条</text>
       </view>
     </view>
-    <navigator url="/pages/collect/detail?callback=callback&&id={{item.id}}">
-      <view class="service-detail-open">
-        <text>详情</text>
+    <view class="user-jy-item user-jy-history" bindtap="getToCheck">
+      <text class="user-jy-hd">待审核</text>
+      <view class="user-jy-bd">
+        <text class="user-jy-value_hard" wx:if="{{type == 1}}">{{toCheck}}</text>
+        <text class="user-jy-value" wx:else>{{toCheck}}</text>
+        <text class="user-jy-text">条</text>
       </view>
-    </navigator>
+    </view>
+    <view class="user-jy-item user-jy-dbet" bindtap="getReject">
+      <text class="user-jy-hd">被打回</text>
+      <view class="user-jy-bd">
+        <text class="user-jy-value_hard" wx:if="{{type == 3}}">{{toCheck}}</text>
+        <text class="user-jy-value" wx:else>{{reject}}</text>
+        <text class="user-jy-text">条</text>
+      </view>
+    </view>
   </view>
-</block>
+  <block wx:for="{{list}}" wx:key="{{order_id}}">
+    <view class="process review-process">
+      <view class="process-hd">
+        <image class="review-process-icon" src="../../images/order/order_{{item.status}}.png"></image>
+        <view class="order-number-name">
+          <text>数据编码:{{item.id}}</text>
+        </view>
+        <view class="process-state">
+          <text class="process-state-name process-state-{{item.status}}">{{ORDER_STATES[item.status]}}</text>
+        </view>
+      </view>
+      <view class="process-bd">
+        <view class="process-item">
+          <view class="process-item-bd">
+            <text class="process-item-name">任务名称</text>
+          </view>
+          <view class="process-item-ft">
+            <text class="process-item-info">{{item.task_name}}</text>
+          </view>
+        </view>
+        <view class="process-item">
+          <view class="process-item-bd">
+            <text class="process-item-name">提交时间</text>
+          </view>
+          <view class="process-item-ft">
+            <text class="process-item-info">{{item.create_time}}</text>
+          </view>
+        </view>
+        <view class="process-item">
+          <view class="process-item-bd">
+            <text class="process-item-name">用户昵称</text>
+          </view>
+          <view class="process-item-ft">
+            <text class="process-item-info">{{item.nickName}}</text>
+          </view>
+        </view>
+      </view>
+      <navigator url="/pages/collect/detail?callback=callback&&id={{item.id}}">
+        <view class="service-detail-open">
+          <text>详情</text>
+        </view>
+      </navigator>
+    </view>
+  </block>
   <template is="load-more" data="{{hasMore: hasMore, loading: loading}}"></template>
 </view>

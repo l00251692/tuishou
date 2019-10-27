@@ -58,9 +58,10 @@
         <view class="item_info">
           <!-- <text class="tip">{{item.subtitle}}</text> -->
           <image class="pro_img" src="{{item.task_head || '/images/index/default-task-head.png'}}" mode="aspectFill"></image>
-          <text class="num" wx:if="{{item.remain_days > 0}}">进行中</text>
-          <text class="num" wx:elif="{{item.remain_days < 0}}" style="background:#888" >未开始</text>
-          <text class="num" wx:else>已结束</text>
+          <text class="num" wx:if="{{item.state == 2}}" style="background:#888" >已结束</text>
+          <text class="num" wx:elif="{{item.state == 1}}">进行中</text>
+          <text class="num" wx:elif="{{item.state == 0}}" style="background:#888" >未开始</text>
+          <text class="num" wx:else>审核中</text>
         </view>
         <view class="detail">
           <text class="item_detail">{{item.detail}}</text>

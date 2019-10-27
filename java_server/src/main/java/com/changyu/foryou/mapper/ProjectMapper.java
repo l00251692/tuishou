@@ -52,6 +52,8 @@ public interface ProjectMapper {
 	
 	public int getCollectCounts(Map<String, Object> paramMap);
 	
+	public int getCollectCountsByStatus(Map<String, Object> paramMap);
+	
 	public List<Followers> getFollowers(Map<String, Object> paramMap);
 	
 }

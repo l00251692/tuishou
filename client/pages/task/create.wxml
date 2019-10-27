@@ -57,60 +57,43 @@
           </view>
         </view>
       </view>
-      <!-- 
-            <view class="repair-detail-item">
-                <view class="repair-detail-item-hd">
-                    <text class="repair-detail-name">服务项目</text>
-                    <view class="repair-detail-item-ft">
-                        <picker class="repair-detail-picker" bindchange="listenerServiceObject" value="{{serviceObjectValue}}" range="{{serviceObjectRange}}">  
-                            <view class="repair-detail-content">
-                                <text wx:if="{{serviceObjectValue === false}}" class="repair-detail-info">请选择服务项目</text>
-                                <text wx:else class="repair-detail-info">{{serviceObjectRange[serviceObjectValue]}}</text>   
-                                <image class="more-icon" src="/images/more/enter.png"></image>
-                            </view>
-                        </picker>
-                    </view>
-                </view>
-            </view>
-            <view class="repair-detail-item">
-                <view class="repair-detail-item-hd">
-                    <text class="repair-detail-name">服务区域</text>
-                    <view class="repair-detail-item-ft">
-                        <picker class="repair-detail-picker" bindchange="listenerServiceArea" value="{{serviceAreaValue}}" range="{{serviceAreaRange}}">  
-                            <view class="repair-detail-content">
-                                <text wx:if="{{serviceAreaValue === false}}" class="repair-detail-info">请选择服务区域</text>
-                                <text wx:else class="repair-detail-info">{{serviceAreaRange[serviceAreaValue]}}</text>   
-                                <image class="more-icon" src="/images/more/enter.png"></image>
-                            </view>
-                        </picker>
-                    </view>
-                </view>
-            </view>-->
     </view>
 
     <view class="reporter-detail">
       <view class="reporter-user reporter-detail-item">
-        <text class="reporter-detail-name">验收规范</text>
+        <text class="reporter-detail-name">验收规范*</text>
         <view class="reporter-detail-input">
           <input type="text" placeholder="请简要输入验收规范" bindinput="listenerRule" />
         </view>
       </view>
       <view class="reporter-tel reporter-detail-item">
-        <text class="reporter-detail-name">佣金结算</text>
+        <text class="reporter-detail-name">佣金结算*</text>
         <view class="reporter-detail-input">
           <input type="text"  placeholder="请输入佣金结算规则" bindinput="listenerSalary" />
         </view>
       </view>
       <view class="reporter-tel reporter-detail-item">
-        <text class="reporter-detail-name">联系微信</text>
+        <text class="reporter-detail-name">联系微信*</text>
         <view class="reporter-detail-input">
           <input type="text"  placeholder="请输入佣金结算联系微信号" bindinput="listenerContact" />
         </view>
       </view>
-      <view class="reporter-address reporter-detail-item">
-        <text class="reporter-detail-name">任务区域</text>
+      <view class="reporter-tel reporter-detail-item">
+        <text class="reporter-detail-name">任务区域*</text>
         <view class="reporter-detail-input">
           <input type="text" placeholder="请输入任务区域，如:全国" bindinput="listenerAddress" />
+        </view>
+      </view>
+      <view class="reporter-tel reporter-detail-item">
+        <text class="reporter-detail-name">总任务数</text>
+        <view class="reporter-detail-input">
+          <input type="number" placeholder="默认无限制,当提交数量达到时任务将锁定" bindinput="listenerCount" />
+        </view>
+      </view>
+      <view class="reporter-address reporter-detail-item">
+        <text class="reporter-detail-name">推广链接</text>
+        <view class="reporter-detail-input">
+          <input type="text" placeholder="推广链接，用户扫码后会收到此链接" bindinput="listenerLink" />
         </view>
       </view>
     </view>

@@ -35,6 +35,16 @@
   font-size: .4rem;
 }
 
+.num{
+    position:absolute;
+    left:40rpx;
+    top:40rpx;
+    background:#1e8cd4;
+    color:#ffffff;
+    font-size:10pt;
+    padding:6rpx 20rpx;
+}
+
 .share{
   position:absolute;
   right:0;
