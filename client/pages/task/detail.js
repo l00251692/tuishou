@@ -22,9 +22,26 @@ Page({
     title: ''//页面标题,
   },
   onLoad: function (options) {
+    if (options.scene) {
+      console.log("has scene");
+      var scene = decodeURIComponent(options.scene);
+      console.log("scene is ", scene);
+      var arrPara = scene.split("&");
+      var arr = [];
+      for (var i in arrPara) {
+        arr = arrPara[i].split("=");
+        console.log("log:", arr[0], "=", arr[1]);
+        if (arr[0] == 'id')
+        {
+          this.id = arr[1]
+        }
+      }
+    } else {
+      console.log("no scene");
+      this.id = options.id
+    }
+ 
     // 页面初始化 options为页面跳转所带来的参数
-    var obj = wx.getLaunchOptionsSync()
-    this.id = options.id || obj.query.id
     this.callback = options.callback || 'callback'
     this.loadData()
     //this.loadReview()   
@@ -80,7 +97,7 @@ Page({
     var { info } = this.data
     return {
       title: info.item_title,
-      path: '/pages/project/detail'
+      path: '/pages/project/detail?id=' + info.task_id
     }
   },
 

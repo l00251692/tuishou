@@ -7,7 +7,7 @@
   background-position: bottom center;
   /*background-image: url('/images/index/tri.png');*/
   /*微信暂不支持静态bgimg文件，改用服务器url*/
-  background-image: url('https://wtoer.com/background.png');
+  /*background-image: url('https://wtoer.com/background.png');*/
   min-height: 100%;
 }
 
@@ -113,10 +113,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom:200rpx;
+  flex:1;
+  width:100%;
+  background: #fff;
 }
 .page-empty__img {
-  width: 360rpx;
+  width: 660rpx;
+  margin-top:100rpx;
 }
 
 .page-empty__text {
@@ -130,7 +133,7 @@
     background:#e8e8e8;
     width: 100%;
     margin-top:20rpx;
-    margin-bottom:100rpx;
+    margin-bottom:20rpx;
 }
 .list_wrap .detail{
     display:block;

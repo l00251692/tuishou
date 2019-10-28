@@ -16,6 +16,12 @@ Page({
 
   },
   onLoad: function() {
+    if (wx.getStorageSync('haslogin')) {
+      this.setData({
+        haslogin: true,
+        userInfo: wx.getStorageSync('userInfo')
+      })
+    }
     this.getRegisterInfo()
   },
   onReady: function() {
@@ -23,6 +29,10 @@ Page({
   },
 
   getRegisterInfo(){
+    if (this.data.haslogin == false)
+    {
+      return;
+    }
     var that = this
     getRegisterInfo({
       success(data){
@@ -43,6 +53,10 @@ Page({
     if (e.detail.errMsg !== "getPhoneNumber:ok") {
       // 拒绝授权
       return;
+    }
+
+    if (this.data.haslogin != true) {
+      return alert("请先登录");
     }
 
     var that = this
@@ -76,6 +90,10 @@ Page({
   onChooseLocation: function() {
     console.log("onChooseLocation")
     var that = this
+
+    if (this.data.haslogin != true) {
+      return alert("请先登录");
+    }
 
     wx.authorize({
       scope: 'scope.userLocation',

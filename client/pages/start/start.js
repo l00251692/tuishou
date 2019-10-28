@@ -27,7 +27,19 @@ Page({
     }
   },
 
+  onShow:function(options) {
+    //5s等待时间，如果5s用户不点击授权就直接进入
+    console.log("onshow")
+
+    this.timer = setTimeout(function () {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }, 5000)
+  },
+
   onLogin(e) {
+    clearTimeout(this.timer)
     console.log("to login")
     console.log(e.detail.errMsg)
     if (e.detail.errMsg == 'getUserInfo:ok') {

@@ -17,21 +17,35 @@ Page({
     disabled:true
   },
   onLoad: function(options) {
-    var obj = wx.getLaunchOptionsSync()
-    console.log('启动小程序的 query 参数:', JSON.stringify(obj.query))
-    if (obj.query)
-    {
-      this.setData({
-        project_id: obj.query.id,
-        from_user_id: obj.query.from_user_id
-      })
-    }
-    else{
+    
+    if (options.scene) {
+      console.log("has scene");
+      var scene = decodeURIComponent(options.scene);
+      console.log("scene is ", scene);
+      var arrPara = scene.split("&");
+      var arr = [];
+      for (var i in arrPara) {
+        arr = arrPara[i].split("=");
+        console.log("log:", arr[0], "=", arr[1]);
+        if (arr[0] == 'id') {
+          this.setData({
+            project_id: arr[1]
+          })
+        }
+        if (arr[0] == 'from_user_id')
+        {
+          this.setData({
+            from_user_id: arr[1]
+          })
+        }
+      }
+    } else {
+      console.log("no scene");
       this.setData({
         project_id: ''
       })
     }
-    
+
   },
   onReady: function() {
 

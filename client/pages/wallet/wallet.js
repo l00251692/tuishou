@@ -16,6 +16,7 @@ import {
 
 Page({
   data: {
+
     page: 0,
     withdraw: null,
     ORDER_STATES
@@ -47,10 +48,7 @@ Page({
 
   loadData(cb) {
     var that = this
-    var {
-      loading,
-      page
-    } = this.data
+    var { loading, page } = this.data
 
     if (loading) {
       return
@@ -59,14 +57,6 @@ Page({
     this.setData({
       loading: true,
       balance: this.balance
-    })
-
-    getWithDraw({
-      success(data) {
-        that.setData({
-          withdraw: data
-        })
-      }
     })
 
     getCollects({
@@ -90,7 +80,8 @@ Page({
       },
       error(data) {
         that.setData({
-          loading: false
+          loading: false,
+          hasMore: false
         })
       }
     })

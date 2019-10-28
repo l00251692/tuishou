@@ -24,16 +24,6 @@ Page({
         userInfo:wx.getStorageSync('userInfo')
       })
     }
-    var that = this
-    getApp().getLoginInfo(loginInfo => {
-      console.log("login")
-      that.setData({
-        userInfo: loginInfo.userInfo,
-        haslogin: true,
-        phone: loginInfo.userInfo.phone,
-        balance: loginInfo.userInfo.balance
-      });
-    })
     
   },
   onReady: function() {
@@ -57,14 +47,24 @@ Page({
     {
       return
     }
-
+    var that = this
     if (e.detail.errMsg == 'getUserInfo:ok') {
-      wx.showToast({
-        title: '登录中...',
-      })
 
       getApp().getLoginInfo(loginInfo => {
-       console.log("login success")
+        console.log("login success" + JSON.stringify(loginInfo))
+        if (loginInfo == undefined || loginInfo == null)
+        {
+          return alert("登录失败，请稍候")
+        }
+        else{
+          that.setData({
+            userInfo: loginInfo.userInfo,
+            haslogin: true,
+            phone: loginInfo.userInfo.phone,
+            balance: loginInfo.userInfo.balance
+          });
+        }
+        
       })
     }
   },

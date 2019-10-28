@@ -58,10 +58,9 @@ Page({
         userInfo: userInfo,
         haslogin: true
       });
-
+      this.initData()
+      this.getMyTask(0)
     }
-    this.initData()
-    this.getMyTask(0)
   },
 
   initData() {
@@ -130,6 +129,16 @@ Page({
   callback() {
     this.initData()
     this.getMyTask(0)
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: '推手号',
+      path: '/pages/index/index'
+    }
   }
 
 });

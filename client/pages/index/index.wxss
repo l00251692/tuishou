@@ -5,8 +5,8 @@
   background-repeat: no-repeat;
   background-size: 100% auto; 
   background-position: bottom center;
-  background-image: url('https://wtoer.com/background.png');
   min-height: 100%;
+  /*background-image: url('https://wtoer.com/background.png');*/
 }
 
 .banner {
@@ -28,7 +28,7 @@
   flex-flow: row wrap;
   align-content: flex-start;
   background: #fff;
-  border-bottom: 1rpx solid #e5e5e5;
+  border-bottom: 4rpx solid #e5e5e5;
   padding: 15rpx 10rpx 10rpx;
   margin-bottom: 20rpx;
   overflow: hidden;
@@ -70,10 +70,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom:200rpx;
+  flex:1;
+  width:100%;
+  background: #fff;
 }
 .page-empty__img {
-  width: 360rpx;
+  width: 660rpx;
+  margin-top:200rpx;
 }
 
 .page-empty__text {
@@ -159,7 +162,7 @@
 }
 
 .page-list{
-  margin-bottom:100rpx;
+  margin-bottom:20rpx;
   width:100%;
 }
 .bottom-bg{

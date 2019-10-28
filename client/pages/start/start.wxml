@@ -12,7 +12,7 @@
   </div>
   <div class="row footer">
     <button bindgetuserinfo="onLogin" open-type="getUserInfo" class="start">
-      开启小程序
+      点我开启小程序
     </button>
   </div>
 </div>
