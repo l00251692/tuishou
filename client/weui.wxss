@@ -4,6 +4,7 @@ page {
 }
 icon {
   vertical-align: middle;
+  margin-top:10rpx;
 }
 .weui-cells {
   position: relative;

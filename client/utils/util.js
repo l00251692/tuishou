@@ -240,7 +240,8 @@ export function fetch(options) {
       options.complete && options.complete()
     },
     fail:function(res){
-      console.log("wx.request fail")
+      console.log(`https://${host}/${options.url}`)
+      console.log("wx.request fail" + JSON.stringify(res) +":;;;" + JSON.stringify(options))
       options.error && options.error()
     }
   })

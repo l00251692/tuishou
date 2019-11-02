@@ -32,10 +32,18 @@
   padding-left:20rpx;
 }
 
+.group{
+  display: flex;
+  width: 90%;
+  height:80rpx;
+}
+
 .icon_phone{
-  line-height: 60rpx;
+  display:flex;
+  line-height: 80rpx;
   background: #1e8cd4;
   color:#fff;
-  min-width:180rpx;
-  font-size: 11pt;
+  width:80%;
+  font-size: 13pt;
+  height:80rpx;
 }

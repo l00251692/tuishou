@@ -13,7 +13,7 @@ Page({
     loading: false,
     phone:'',
     addr_string:'',
-    nickNmae:'',
+    nickName:'',
     disabled:true
   },
   onLoad: function(options) {
@@ -59,7 +59,8 @@ Page({
 
       getApp().getLoginInfo(loginInfo => {
         that.setData({
-          nickName: loginInfo.userInfo.nickName
+          nickName: loginInfo.userInfo.nickName,
+          haslogin:true
         })
       })
     }
@@ -75,7 +76,7 @@ Page({
     var that = this
     var nickName = this.data.nickName
     if (nickName == '') {
-      alert("请先授权获取昵称信息")
+      return alert("请先授权微信登录")
     }
 
     var addr_string = this.data.addr_string
@@ -119,8 +120,9 @@ Page({
     var that = this
 
     var nickName = this.data.nickName
+    var phone = this.data.phone
     if (nickName == '') {
-      alert("请先授权获取昵称信息")
+      return alert("请先授权微信登录")
     }
 
     var phone = this.data.phone
@@ -155,12 +157,35 @@ Page({
                   addr_string: data.city + data.district,
                 })
 
-                if (phone != "") {
-                  that.setData({
-                    disabled: false
-                  })
-                }
-                console.log(JSON.stringify(that.data.location))
+                updateLocation({
+                  longitude: location.longitude,
+                  latitude: location.latitude,
+                  province: data.province,
+                  city: data.city,
+                  district: data.district,
+                  name: name,
+                  success(data) {
+                    if (phone != "") {
+                      that.setData({
+                        disabled: false
+                      })
+                    }
+                    console.log("update location success")
+                    var userInfo = wx.getStorageSync("userInfo")
+                    console.log("userinf1:" + JSON.stringify(userInfo))
+                    userInfo.phone = phone
+                    userInfo.city = location.city
+                    userInfo.province = location.province
+                    console.log("userinf2:" + JSON.stringify(userInfo))
+                    wx.setStorageSync("userInfo", userInfo)
+                  },
+                  error(res) {
+                    console.log("update location fail")
+                    wx.showToast({
+                      title: '保存失败',
+                    })
+                  }
+                })
               }
             })
           },

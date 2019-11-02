@@ -253,7 +253,7 @@ Page({
                       },
                         {
                           region: 'ECN', //华东
-                          domain: 'pz5gehtkk.bkt.clouddn.com', //
+                          domain: 'wtoer.com', //
                           key: 'prj_' + project_id + '_' + filePath_tmp.substr(30,50),
                           uptoken: token
                         }, (res) => {
@@ -297,7 +297,7 @@ Page({
                   })
                 }, {
                   region: 'ECN', //华东
-                  domain: 'pz5gehtkk.bkt.clouddn.com', // // bucket 域名，下载资源时用到。如果设置，会在 success callback 的 res 参数加上可以直接使用的 ImageURL 字段。否则需要自己拼接
+                  domain: 'wtoer.com', // // bucket 域名，下载资源时用到。如果设置，会在 success callback 的 res 参数加上可以直接使用的 ImageURL 字段。否则需要自己拼接
                   //key: 'customFileName.jpg', // [非必须]自定义文件 key。如果不设置，默认为使用微信小程序 API 的临时文件名
                   key: 'prj_' + project_id , //项目ID不重复
                   // 以下方法三选一即可，优先级为：uptoken > uptokenURL > uptokenFunc

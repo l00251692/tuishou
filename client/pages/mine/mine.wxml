@@ -54,11 +54,12 @@
       <!-- 
       <view class="weui-cell__ft weui-cell__ft_in-access">余额:{{balance}}</view>-->
     </navigator>
+    <!-- 
     <navigator url="/pages/mine/append" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <image class="btn-icon" src="/images/user/mobile.png"></image>
         <view class="weui-cell__bd kefu">完善信息</view>
       <view class="weui-cell__ft phone weui-cell__ft_in-access"></view>
-    </navigator>
+    </navigator>-->
 
 
     <navigator url="/pages/feedback/feedback" class="weui-cell weui-cell_access" hover-class="weui-cell_active">

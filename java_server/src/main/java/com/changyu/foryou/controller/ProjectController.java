@@ -502,7 +502,7 @@ public class ProjectController {
         
         Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("projectId", project_id);
-		paramMap.put("headImg", "http://" + head_img);
+		paramMap.put("headImg", "https://" + head_img);
         int flag = projectService.updateProjectHeadImg(paramMap);
         
         if(flag != -1 && flag !=0)

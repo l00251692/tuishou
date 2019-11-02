@@ -14,42 +14,32 @@
       <view class="bd">
         <text class="append-title">填写信息</text>
         <form class="append-form">
-          <view class="input-group {{room_focus ? 'active' : ''}}">
-            <text class="input-label">昵称</text>
-            <view class="weui-cell__bd">
-              <view class="weui-input">{{nickName}}</view>
-            </view>
-            <view class="weui-cell__ft">
+          <view class="input-group ">
+            <view class="group">
               <button open-type="getUserInfo" class="icon_phone" bindgetuserinfo="onLogin">
-                <view class="weui-cell__bd ">获取昵称</view>
+                <view class="weui-cell__bd ">授权微信登录</view>
               </button>
+              <icon type="{{nickName == '' ? 'waiting' : 'success'}}" size="28"></icon>
             </view>
-
           </view>
-          <view class="input-group {{room_focus ? 'active' : ''}}">
-            <text class="input-label">手机</text>
-            <view class="weui-cell__bd">
-              <view class="weui-input">{{phone}}</view>
-            </view>
-            <view class="weui-cell__ft">
-              <button open-type="getPhoneNumber" class="icon_phone" bindgetphonenumber="bindPhoneNumber">
-                <view class="weui-cell__bd ">绑定</view>
-              </button>
-            </view>
 
-          </view>
           <view class="input-group">
-            <text class="input-label">区域</text>
-            <view class="weui-cell__bd">
-              <view class="weui-input">{{addr_string}}</view>
-            </view>
-            <view class="weui-cell__ft">
-              <button class="icon_phone" bindtap="onChooseLocation">
-                <view class="weui-cell__bd ">获取位置</view>
+            <view class="group">
+              <button open-type="getPhoneNumber" class="icon_phone" bindgetphonenumber="bindPhoneNumber">
+                <view class="weui-cell__bd ">获取绑定手机号</view>
               </button>
+              <icon type="{{phone =='' ? 'waiting' : 'success'}}" size="28"></icon>
             </view>
           </view>
 
+          <view class="input-group">
+            <view class="group">
+              <button class="icon_phone" class="icon_phone" bindtap="onChooseLocation">
+                <view class="weui-cell__bd ">选择地理位置</view>
+              </button>
+              <icon type="{{addr_string =='' ? 'waiting' : 'success'}}" size="28"></icon>
+            </view>
+          </view>
         </form>
         <view class="contact" >
           <button class="confirm-btn" disabled="{{disabled}}"open-type="contact" session-from="{{project_id}}" bindcontact="confirm">

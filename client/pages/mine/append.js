@@ -11,9 +11,9 @@ var app = getApp();
 Page({
   data: {
     loading: false,
+    haslogin:false,
     phone:'',
     addr_string:'',
-
   },
   onLoad: function() {
     if (wx.getStorageSync('haslogin')) {
@@ -21,18 +21,14 @@ Page({
         haslogin: true,
         userInfo: wx.getStorageSync('userInfo')
       })
+      this.getRegisterInfo()
     }
-    this.getRegisterInfo()
   },
   onReady: function() {
 
   },
 
   getRegisterInfo(){
-    if (this.data.haslogin == false)
-    {
-      return;
-    }
     var that = this
     getRegisterInfo({
       success(data){
@@ -46,6 +42,33 @@ Page({
         console.log("get registerinfo fail")
       }
     })
+  },
+
+  onLogin(e) {
+
+    var that = this
+    if (e.detail.errMsg == 'getUserInfo:ok') {
+
+      getApp().getLoginInfo(loginInfo => {
+        console.log("login success" + JSON.stringify(loginInfo))
+        if (loginInfo == undefined || loginInfo == null) {
+          return alert("登录失败，请稍候")
+        }
+        else {
+          that.setData({
+            haslogin: true,
+            phone: loginInfo.userInfo.phone,
+            addr_string: loginInfo.userInfo.district
+          });
+          
+          if (loginInfo.userInfo.phone != '' && loginInfo.userInfo.district != '')
+          {
+            wx.navigateBack({})
+          }
+        }
+
+      })
+    }
   },
 
   bindPhoneNumber: function(e) {
@@ -95,6 +118,10 @@ Page({
       return alert("请先登录");
     }
 
+    if (this.data.phone == '') {
+      return alert("请先绑定手机号信息");
+    }
+
     wx.authorize({
       scope: 'scope.userLocation',
       success() {
@@ -125,6 +152,34 @@ Page({
                   addr_string: data.city + data.district,
                 })
                 console.log(JSON.stringify(that.data.location))
+                updateLocation({
+                  longitude: location.longitude,
+                  latitude: location.latitude,
+                  province: data.province,
+                  city: data.city,
+                  district: data.district,
+                  name: name,
+                  success(data) {
+                    console.log("update location success")
+                    var userInfo = wx.getStorageSync("userInfo")
+                    console.log("userinf1:" + JSON.stringify(userInfo))
+                    userInfo.phone = phone
+                    userInfo.city = location.city
+                    userInfo.province = location.province
+                    console.log("userinf2:" + JSON.stringify(userInfo))
+                    wx.setStorageSync("userInfo", userInfo)
+                    wx.showToast({
+                      title: '注册成功',
+                    })
+                    wx.navigateBack({})
+                  },
+                  error(res) {
+                    console.log("update location fail")
+                    wx.showToast({
+                      title: '保存失败',
+                    })
+                  }
+                })
               }
             })
           },
@@ -136,46 +191,4 @@ Page({
     })
   },
 
-  confirm: function() {
-    var that = this;
-    var { phone, addr_string, location} = this.data
-
-    if(phone == '')
-    {
-      alert("请先授权绑定手机")
-    }
-
-    if (addr_string == '')
-    {
-      alert("请选择区域信息")
-    }
-
-    updateLocation({
-      longitude: location.location.longitude,
-      latitude: location.location.latitude,
-      province: location.province,
-      city: location.city,
-      district: location.district,
-      name:location.name,
-      success(data) {
-        console.log("update location success")
-        var userInfo = wx.getStorageSync("userInfo")
-        console.log("userinf1:" +JSON.stringify(userInfo))
-        userInfo.phone = phone
-        userInfo.city = location.city
-        userInfo.province = location.province
-        console.log("userinf2:" + JSON.stringify(userInfo))
-        wx.setStorageSync("userInfo", userInfo)
-        wx.showToast({
-          title: '保存成功',
-        })
-      },
-      error(res) {
-        console.log("update location fail")
-        wx.showToast({
-          title: '保存失败',
-        })
-      }
-    })
-  }
 });

@@ -2,7 +2,7 @@
 <view class="container">
 
   <!--<text class="task-list-title">任务列表</text>-->
-  <view wx:if="{{!list}}" class="page-empty">
+  <view wx:if="{{list == null || list.length == 0}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/index/no_data.png"></image>
     <view class="page-empty__text" wx:if="{{type == 2}}">当前没有参与任何任务，先去领取任务吧</view>
     <view class="page-empty__text" wx:elif="{{type == 1}}">当前未发布任何任务</view>

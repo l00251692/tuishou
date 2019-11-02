@@ -1,7 +1,7 @@
 <view class="container">
   <view class="datepick" style="dispplay" bindtap="onChooseDate">
    <image mode="widthFix" src="/images/task/calendar.png"></image>
-    <text class="data_text">日期过滤 : </text>
+    <text class="data_text">选择日期 : </text>
     <text class="data">{{start_date}} 至 {{end_date}}</text>
   </view>
   <view style="display:{{hidden ? 'none' : 'block'}}" class="picker">

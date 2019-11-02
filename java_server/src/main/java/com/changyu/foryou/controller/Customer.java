@@ -195,7 +195,7 @@ public class Customer {
              
             //https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
             JSONObject json = new JSONObject();
-            json.put("touser", toUserName);
+            json.put("touser", fromUserName);
             json.put("msgtype", "text");
             json.put("text", text);
             

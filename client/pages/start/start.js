@@ -35,7 +35,7 @@ Page({
       wx.switchTab({
         url: '/pages/index/index',
       })
-    }, 5000)
+    }, 2000)
   },
 
   onLogin(e) {

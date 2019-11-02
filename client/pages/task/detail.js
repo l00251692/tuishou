@@ -22,6 +22,8 @@ Page({
     title: ''//页面标题,
   },
   onLoad: function (options) {
+    this.callback = options.callback || 'callback'
+    console.log("onLoad");
     if (options.scene) {
       console.log("has scene");
       var scene = decodeURIComponent(options.scene);
@@ -36,15 +38,12 @@ Page({
           this.id = arr[1]
         }
       }
+      this.loadData()
     } else {
       console.log("no scene");
       this.id = options.id
-    }
- 
-    // 页面初始化 options为页面跳转所带来的参数
-    this.callback = options.callback || 'callback'
-    this.loadData()
-    //this.loadReview()   
+      this.loadData()
+    }  
   },
   onReady: function () {
     // 页面渲染完成
@@ -107,8 +106,10 @@ Page({
 
     var userInfo = wx.getStorageSync("userInfo")
 
-    if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length == 0) {
-      return alert("请前往“我的”--“完善信息”进行授权，以便平台更好为您服务")
+    if (userInfo == null || userInfo.phone == null || userInfo.district == null || userInfo.phone.length == 0 || userInfo.district.length == 0) {
+      wx.navigateTo({
+        url: '/pages/mine/append',
+      })
     }
     
     setProjectFollowStatus({
@@ -334,5 +335,12 @@ Page({
       }
     })
   },
+
+  cancelSharePic: function (e) {
+    console.log("cancel share")
+    that.setData({
+      hidden: true
+    })
+  }
 
 })

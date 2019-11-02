@@ -63,6 +63,17 @@ Page({
     }
   },
 
+  onPullDownRefresh: function () {
+    if (wx.getStorageSync('haslogin') == true){
+      this.initData()
+      this.getMyTask(0)
+    }
+  },
+
+  onReachBottom: function () {
+    //this.getMyTask(0)
+  },
+
   initData() {
     this.setData({
       page: 0,
@@ -117,8 +128,10 @@ Page({
   createTask: function () {
     var userInfo = wx.getStorageSync("userInfo")
 
-    if (userInfo == null || userInfo.phone == null || userInfo.city == null || userInfo.phone.length == 0 || userInfo.city.length ==0) {
-      return alert("请前往“我的”--“完善信息”进行授权，以便平台更好为您服务")
+    if (userInfo == null || userInfo.phone == null || userInfo.district == null || userInfo.phone.length == 0 || userInfo.district.length ==0) {
+      wx.navigateTo({
+        url: '/pages/mine/append',
+      })
     }
 
     wx.navigateTo({

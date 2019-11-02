@@ -58,9 +58,6 @@ Page({
       return
     }
 
-    this.setData({
-      loading: true
-    })
 
     getProjectInfo({
       project_id: id,
@@ -110,58 +107,13 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: ['camera'],
       success: function(res) {
-        console.log("chooseImage:" + JSON.stringify(res))
-        var time = dateFormat(new Date(), "yyyy-mm-dd HH:MM")
-        var originPath = res.tempFilePaths[0]
-        //获取图片详细信息
-        wx.getImageInfo({
-          src: originPath,
-          success: (ress) => {
-            let ctx = wx.createCanvasContext('firstCanvas')
-
-            that.setData({
-              canvasHeight: ress.height,
-              canvasWidth: ress.width
-            })
-
-            //将图片src放到cancas内，宽高为图片大小
-            ctx.drawImage(originPath, 0, 0, ress.width, ress.height)
-            //将声明的时间放入canvas
-            ctx.setFontSize(15) //注意：设置文字大小必须放在填充文字之前，否则不生效
-            ctx.setFillStyle('blue')
-            ctx.fillText("推手号", 10, ress.height - 50)
-            ctx.strokeText("推手号", 10, ress.height - 50)
-            ctx.fillText(nickName, 10, ress.height - 30)
-            ctx.strokeText(nickName, 10, ress.height - 30)
-            ctx.fillText(time, 10, ress.height - 10)
-            ctx.strokeText(time, 10, ress.height - 10)
-
-            ctx.draw(false, function() {
-              wx.canvasToTempFilePath({
-                canvasId: 'firstCanvas',
-                success: (res) => {
-                  console.log("save cavas to temp path" + res.tempFilePath)
-                  that.setData({
-                    files: that.data.files.concat(res.tempFilePath),
-                    fileTimes: that.data.fileTimes.concat(time)
-                  });
-                },
-                fail: (e) => {
-                  console.log(e)
-                  that.setData({
-                    files: that.data.files.concat(originPath),
-                    fileTimes: that.data.fileTimes.concat(time)
-                  });
-                }
-              })
-            })
-          },
-          fail: (e) => {
-            console.log(e)
-            alert("图片上传错误")
-          }
+        that.setData({
+          files: that.data.files.concat(res.tempFilePaths)
         })
-
+      },
+      fail: (e) => {
+        console.log(e)
+        alert("图片上传错误")
       }
     })
   },
@@ -188,13 +140,10 @@ Page({
       return alert('当前任务还未开始，请耐心等待')
     }
 
-    this.setData({
-      loading: true
-    })
-
     if (phone == null) {
       return alert('请输入联系电话')
     }
+    console.log("continue?")
 
     if (files.length == 0) {
       return alert('请上传照片信息')
@@ -206,6 +155,11 @@ Page({
       phone,
       content,
       success(data) {
+        wx.showToast({
+          title: '提交数据中...',
+          duration: 8000,
+        })
+
         //获取上传七牛云的token
         var token = ''
         var collect_id = data.collectId
@@ -214,6 +168,7 @@ Page({
             token = data.upToken;
             //逐张内容图片上传
             var fail_num = 0;
+            var success_num = 0
             for (var i = 0; i < files.length; i++) {
               var filePath_tmp = files[i]
               console.log("url:" + filePath_tmp)
@@ -223,14 +178,32 @@ Page({
                 uploadCollectFile({
                   collect_id,
                   file: res.imageURL,
+                  success(res){
+                    success_num++
+                    if (success_num == files.length) {
+                      that.setData({
+                        loading: false
+                      })
+                      wx.hideToast()
+                      setTimeout(function () {
+                        wx.hideToast()
+                        console.log("navegitate to /pages/collect/detail")
+                        wx.navigateTo({
+                          url: '/pages/collect/detail?id=' + collect_id,
+                        })
+                      }, 1000)
+                    }
+
+                  }
                 })
+                
 
               }, (error) => {
                 fail_num++
                 console.log('error: ' + error);
               }, {
                 region: 'ECN', //华东
-                domain: 'pz5gehtkk.bkt.clouddn.com', //
+                domain: 'wtoer.com', //
                 key: 'prj_' + project_id + 'collect_' + collect_id + '_' + filePath_tmp.substr(30, 50),
                 uptoken: token
               }, (res) => {
@@ -240,23 +213,13 @@ Page({
               });
             }
 
-            if (fail_num == 0) {
+            if (fail_num >0)
+            {
+              wx.showToast({
+                title: '上传照片失败',
+              })
               that.setData({
                 loading: false
-              })
-
-              wx.showToast({
-                title: '提交数据中...',
-                duration: 5000,
-                success: function() {
-                  setTimeout(function() {
-                    wx.hideToast()
-                    wx.navigateTo({
-                      url: '/pages/collect/detail?id=' + collect_id,
-                    })
-                  }, 5000)
-
-                }
               })
             }
           },

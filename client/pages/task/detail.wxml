@@ -142,7 +142,7 @@
   <view class="share-cavas">
     <canvas canvas-id="shareCanvas"></canvas>
     <view style="display:{{hidden ? 'none' : 'block'}}" class='preview'>
-      <image src='{{shareImgSrc}}' mode='widthFix'></image>
+      <image src='{{shareImgSrc}}' mode='widthFix'></image>z
       <button type='primary' bindtap='saveSharePic'>保存分享图</button>
     </view>
   </view>

@@ -108,6 +108,7 @@ public class UserController {
 				{
 					userInfo.put("phone", users.getPhone());
 					userInfo.put("balance", users.getBalance());
+					userInfo.put("district", users.getDistrict());
 					
 					users.setImgUrl(userInfoJSON.get("avatarUrl").toString());
 					users.setNickname(userInfoJSON.get("nickName").toString());
