@@ -15,7 +15,6 @@ Page({
     phone:"未绑定"
   },
   onLoad: function(options) {
-    // 页面初始化 options为页面跳转所带来的参数
     //获取用户的登录信息
     if (wx.getStorageSync('haslogin'))
     {
@@ -24,7 +23,6 @@ Page({
         userInfo:wx.getStorageSync('userInfo')
       })
     }
-    
   },
   onReady: function() {
 
@@ -45,13 +43,15 @@ Page({
 
     if(this.data.haslogin == true)
     {
+      wx.showToast({
+        title: '用户已登录',
+      })
       return
     }
     var that = this
     if (e.detail.errMsg == 'getUserInfo:ok') {
 
       getApp().getLoginInfo(loginInfo => {
-        console.log("login success" + JSON.stringify(loginInfo))
         if (loginInfo == undefined || loginInfo == null)
         {
           return alert("登录失败，请稍候")
@@ -63,6 +63,7 @@ Page({
             phone: loginInfo.userInfo.phone,
             balance: loginInfo.userInfo.balance
           });
+          getApp().globalData.index_refresh = true
         }
         
       })

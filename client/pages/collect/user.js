@@ -21,9 +21,8 @@ Page({
   onLoad: function (optisons) {
     this.project_id = optisons.id
     this.user_id = optisons.user_id
-
-    console.log("user:" + this.project_id)
     this.initData()
+    this.loadData()
   },
   onShow: function () {
     // 页面显示
@@ -35,15 +34,16 @@ Page({
     // 页面关闭
   },
 
-  initData(cb) {
+  initData() {
     this.setData({
       page: 0,
       hasMore: true,
       loading: false,
       list: null
-    })
-    this.loadData(cb)
+    }) 
   },
+
+
 
   loadData(cb) {
     var that = this
@@ -88,8 +88,8 @@ Page({
   },
 
   onPullDownRefresh() {
-    console.log("onPullDownRefresh")
     wx.showNavigationBarLoading()
+    this.initData()
     this.loadData(() => {
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
@@ -138,6 +138,6 @@ Page({
 
   callback() {
     this.initData()
+    this.loadData()
   }
-
 });

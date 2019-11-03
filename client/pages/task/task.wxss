@@ -236,7 +236,7 @@
 .list .item .item_info .pro_img{
      width:100%;
      min-height:200rpx; 
-     max-height:260rpx;
+     max-height:320rpx;
 }
 
 .list .item .item_info .num{

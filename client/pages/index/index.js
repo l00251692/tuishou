@@ -14,43 +14,9 @@ Page({
     hasMore: true,
     loading: false,
     type: 0,
-    banner_arr: [{
-        banner_id: 1,
-        carousel_img: '/images/tmp/banner1.png'
-      },
-      {
-        banner_id: 2,
-        carousel_img: '/images/tmp/banner2.png'
-      },
-      {
-        banner_id: 3,
-        carousel_img: '/images/tmp/banner3.png'
-      }
-    ],
     list: null
-    /*
-    list:[
-      { task_id: 1, task_name: 'ETC推广服务', task_type: 'my_create', standard: '照片清晰，用户激活', salary: '15', end_date: '2019-11-23', next_step: '任务管理' },
-      { task_id: 1, task_name: '小程序推广', task_type: '我参与的', standard: '用户完成注册登录', salary: '15', end_date: '2019-11-23', next_step: '数据采集' },
-      { task_id: 1, task_name: 'ETC推广服务', task_type: '我参与的', standard: '照片清晰，用户激活', salary: '10', end_date: '2019-11-23', next_step: '数据采集' }
-      
-    ]*/
-  },
-  //下拉更新
-  onPullDownRefresh: function() {
-    this.initData()
-    this.getMyTask(0)
   },
 
-  onShow: function() {
-    console.log("index on show:" + JSON.stringify(getApp().globalData))
-    if (getApp().globalData.index_refresh == true)
-    {
-      this.initData()
-      this.getMyTask(0)
-      getApp().globalData.index_refresh == false
-    }
-  },
   onLoad: function() {
     if (wx.getStorageSync('haslogin') == true) {
       let userInfo = wx.getStorageSync('userInfo');
@@ -63,6 +29,14 @@ Page({
     }
   },
 
+  onShow: function () {
+    if (getApp().globalData.index_refresh == true) {
+      this.initData()
+      this.getMyTask(0)
+      getApp().globalData.index_refresh == false
+    }
+  },
+
   onPullDownRefresh: function () {
     if (wx.getStorageSync('haslogin') == true){
       this.initData()
@@ -71,7 +45,7 @@ Page({
   },
 
   onReachBottom: function () {
-    //this.getMyTask(0)
+    this.getMyTask(0)
   },
 
   initData() {
@@ -84,7 +58,6 @@ Page({
   },
 
   getMyTask: function(type) {
-    console.log("getMyTask:" + JSON.stringify(this.data.haslogin))
 
     if (this.data.loading) {
       return;
@@ -110,7 +83,9 @@ Page({
         })
       },
       error(res){
-        console.log("getMyProjectList fail")
+        wx.showToast({
+          title: '连接失败，请稍候再试',
+        })
         that.setData({
           loading:false
         })

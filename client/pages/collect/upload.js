@@ -1,6 +1,7 @@
 // pages/order/pay.js
 const qiniuUploader = require("../../utils/qiniuUploader")
 import dateFormat from '../../utils/dateformat'
+import WxValidate from '../../utils/WxValidate'
 import {
   getProjectInfo,
   getTuiguangQr,
@@ -26,7 +27,8 @@ Page({
     hidden: true,
     content: '',
     files: [],
-    fileTimes: []
+    fileTimes: [],
+    top: "0px"
   },
 
   /**
@@ -62,7 +64,6 @@ Page({
     getProjectInfo({
       project_id: id,
       success(data) {
-        console.log(JSON.stringify(data))
         that.setData({
           info: data,
           loading: false
@@ -140,10 +141,10 @@ Page({
       return alert('当前任务还未开始，请耐心等待')
     }
 
-    if (phone == null) {
-      return alert('请输入联系电话')
+    if (!/^1[3456789]\d{9}$/.test(phone))
+    {
+      return alert("请填写正确的联系电话")
     }
-    console.log("continue?")
 
     if (files.length == 0) {
       return alert('请上传照片信息')
@@ -365,7 +366,8 @@ Page({
                   wx.hideToast()
                   that.setData({
                     shareImgSrc: res.tempFilePath,
-                    hidden: false
+                    hidden: false,
+                    top: "1000px"
                   })
                 },
                 fail: function(res) {
@@ -378,8 +380,7 @@ Page({
             }, 2000)
           },
           fail: function(res) {
-            console.log("333333")
-            console.log(JSON.stringify(res))
+            alert("对不起我生成失败了")
           }
         })
       }
@@ -389,7 +390,6 @@ Page({
   saveSharePic: function(e) {
     var that = this
     //4. 当用户点击分享到朋友圈时，将图片保存到相册
-    console.log("saveSharePic:" + that.data.shareImgSrc)
     wx.showToast({
       title: '图片保存中中...',
       icon: 'loading',
@@ -400,7 +400,7 @@ Page({
       success(res) {
         wx.showModal({
           title: '存图成功',
-          content: '图片成功保存到相册了，快去推广吧~',
+          content: '图片成功保存到相册了，快去分享吧~',
           showCancel: false,
           confirmText: '好的',
           confirmColor: '#1e8cd4',
@@ -409,13 +409,17 @@ Page({
               console.log('用户点击确定');
             }
             that.setData({
-              hidden: true
+              hidden: true,
+              top: "0px"
             })
           }
         })
       },
       fail(res) {
-        console.log("save fail:" + JSON.stringify(res))
+        that.setData({
+          hidden: true,
+          top: "0px"
+        })
         wx.showToast({
           title: '图片保存失败' + res,
           icon: 'loading',

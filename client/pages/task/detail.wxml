@@ -19,7 +19,7 @@
       <image src='/images/task/share.png'></image>
     </view>
   </view>
-
+  <view class=" tip"> 点击右上角生成任务专属二维码</view>
 
   <view class="content">
     <view class="repair-detail">

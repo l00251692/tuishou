@@ -11,7 +11,7 @@
     <view class="version">
       <view class="version-title">
         <text class="title-name">推手号</text>
-        <text class="version-text">v2.0.1</text>
+        <text class="version-text">v2.0.3</text>
         <text class="version-text">公测</text>
       </view>
       <!-- <view bindtap="toggleLog">

@@ -29,18 +29,6 @@
         <image class='user_column_item_image' src='/images/user/receive.png'></image>
         <view class='user_column_item_text'>我发布的</view>
       </view>
-      <!--
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='3' data-route='/pages/ucenter/order/order'>
-        <text class="user_column_item_badge" wx:if="{{order.unrecv != 0}}">{{order.unrecv}}</text>
-        <image class='user_column_item_image' src='/images/user/send.png'></image>
-        <view class='user_column_item_text'>我的关注</view>
-      </view>
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='4' data-route='/pages/ucenter/order/order'>
-        <text class="user_column_item_badge" wx:if="{{order.uncomment != 0}}">{{order.uncomment}}</text>
-        <image class='user_column_item_image' src='/images/user/comment.png'></image>
-        <view class='user_column_item_text'>我的收藏</view>
-      </view>
-      -->
     </view>
   </view>
 
@@ -60,8 +48,6 @@
         <view class="weui-cell__bd kefu">完善信息</view>
       <view class="weui-cell__ft phone weui-cell__ft_in-access"></view>
     </navigator>-->
-
-
     <navigator url="/pages/feedback/feedback" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <image class="btn-icon" src="/images/user/feedback.png"></image>
       <view class="weui-cell__bd">意见反馈</view>
@@ -80,6 +66,6 @@
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
   </view>
-
-  <view class="logout" wx:if="{{hasLogin}}" bindtap="exitLogin">退出登录</view>
+  <!-- 
+  <view class="logout" wx:if="{{hasLogin}}" bindtap="exitLogin">退出登录</view>-->
 </view>

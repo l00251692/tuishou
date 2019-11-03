@@ -1,22 +1,12 @@
 <!--index.wxml-->
 <view class="container">
-  <!--<view class="banner">
-    <swiper autoplay="true" indicator-dots="true" interval="5000" duration="1000" circular="true">
-      <block wx:for="{{banner_arr}}" wx:key="{{banner_id}}">
-        <swiper-item>
-          <image src="{{item.carousel_img}}" class="slide-image" mode="aspectFill" />
-        </swiper-item>
-      </block>
-    </swiper>
-  </view>-->
-
   <view class="main-core">
     <view class="main-core-item" bindtap='findTask'>
       <image class="core-item-icon" src="/images/task/find.png"></image>
       <text class="core-item-name">找任务</text>
     </view>
 
-    <view class="main-core-item"  bindtap='createTask'>
+    <view class="main-core-item" bindtap='createTask'>
       <image class="core-item-icon" src="/images/task/create.png"></image>
       <text class="core-item-name">找推手</text>
     </view>
@@ -30,7 +20,6 @@
     <image class="remind-img" src="/images/index/loading.gif"></image>
     <text class="remind-text">加载中...</text>
   </view>
-  <!--<text class="task-list-title">任务列表</text>-->
   <view wx:elif="{{!list || list.length == 0}}" class="page-empty">
     <image class="page-empty__img" mode="aspectFit" src="/images/index/no_data.png"></image>
     <view class="page-empty__text">还没有发布或领取任务哦</view>
@@ -87,12 +76,5 @@
         </navigator>
       </view>
     </block>
-
   </view>
-  <!-- 
-  <view class='bottom-bg'>
-    <image src='/images/index/bg.png'></image>
-  </view>
-  -->
-
 </view>

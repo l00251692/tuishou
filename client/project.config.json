@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -31,9 +31,35 @@
 			"current": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"plugin": {
 			"current": -1,
 			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/customer/qrIn",
+					"query": "scene=id%3D1572622753367",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/task/detail",
+					"pathName": "pages/task/detail",
+					"query": "scene=id%3D1572622753367",
+					"scene": null
+				}
+			]
 		}
 	}
 }

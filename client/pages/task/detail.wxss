@@ -42,6 +42,16 @@
     padding:6rpx 20rpx;
 }
 
+.tip{
+  width: 100%;
+  padding-left:30rpx;
+  padding-right:30rpx;
+  color:#1e8cd4;
+  padding-top:20rpx;
+  height:50rpx;
+  font-size: 30rpx;
+}
+
 /*content  */
 .content{
     padding:0 0 0 0;
@@ -93,7 +103,6 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid #eee;
-    margin-top: 30rpx;
     overflow: hidden;
 }
 .repair-detail-item{
@@ -177,7 +186,7 @@
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    /*justify-content: flex-end;*/
     padding-right: 30rpx;
     padding-left: 45rpx;
 }

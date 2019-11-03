@@ -15,18 +15,6 @@ Page({
 
     data:{
       tempFilePaths:null,
-      // provinceList: [
-      //   { "proviceId": "1", "name": "江苏" }
-      // ],
-      // univList: [
-      //   {
-      //     "provinceId": "1",
-      //     "univs": [
-      //       { "id": "1", "name": "南京林业大学" },
-      //       { "id": "2", "name": "河海大学" }
-      //     ]
-      //   },
-      // ],
       serviceTypeList: {},
       serviceTypeValue: 0,  //服务类型picker-value
       serviceTypeRange: [ "推广任务" ],     //服务类型picker-range
@@ -183,7 +171,7 @@ Page({
       } = this.data
       var type = '推广任务'
       if (title == null) {
-        return alert('请输入标题')
+        return alert('请输入任务标题')
       }
 
       if (rule == null) {
@@ -195,7 +183,7 @@ Page({
       }
 
       if (contact == null) {
-        return alert('请输入佣联系微信')
+        return alert('请输入联系微信')
       }
 
       if (region == null) {

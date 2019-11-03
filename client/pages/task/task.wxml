@@ -1,11 +1,4 @@
 <view class="container">
-  <!--功能导航
-  <view class="topbar" >
-  <view  class="address" bindtap="onChooseLocation">
-        <image class="location_icon" src="/images/task/location.png"></image>
-        <text class="address_title">当前城市：{{addr_titile}}</text>
-  </view>
-  </view>-->
   <view class="banner">
     <swiper autoplay="true" indicator-dots="true" interval="5000" duration="1000" circular="true">
       <block wx:for="{{banner_arr}}" wx:key="{{banner_id}}">

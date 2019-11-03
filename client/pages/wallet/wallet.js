@@ -16,7 +16,6 @@ import {
 
 Page({
   data: {
-
     page: 0,
     withdraw: null,
     ORDER_STATES
@@ -48,7 +47,18 @@ Page({
 
   loadData(cb) {
     var that = this
-    var { loading, page } = this.data
+    var {
+      loading,
+      page
+    } = this.data
+
+    if (wx.getStorageSync('haslogin') != true) {
+      this.setData({
+        hasMore: false,
+        loading: false,
+      })
+      return
+    }
 
     if (loading) {
       return

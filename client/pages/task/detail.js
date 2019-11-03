@@ -9,12 +9,7 @@ import {
 
 Page({
   data: {
-    art: {},
     info:{},
-    /*
-    info:{task_head: '/images/tmp/task1.jpg', task_name:'ETC推广', region:'全国', start_date:'2019-09-23', remain_days:5, salary:'￥15元/单', detail:'在全国小区内进行ETC推广，每单衔接，需要上传推广照片，照片清晰以及用户完成办理' },*/
-    tabs: ["项目详情"],
-    activeIndex: 0,
     hasMore: true,
     loading: false,
     page: 0,
@@ -62,7 +57,6 @@ Page({
     var that = this
     var id = this.id;
     console.log("loadData:" + id)
-    
     var loading = this.data.loading
     if(loading){
       return
@@ -83,6 +77,7 @@ Page({
           })
         },
         error(res){
+          console.log("fail:" + JSON.stringify(res))
           that.setData({
             loading: false
           })
@@ -254,7 +249,7 @@ Page({
                     ctx.fillText("联系方式: " + that.data.info.contact, 30, 630, 300)
 
                     
-                    ctx.fillText('长按扫码查看详情', 340, 770)
+                    ctx.fillText('扫码查看详情', 340, 770)
 
                     console.log("121212")
                     ctx.draw()
@@ -289,8 +284,7 @@ Page({
             }, 2000)
           },
           fail: function (res) {
-            console.log("333333")
-            console.log(JSON.stringify(res))
+            alert("对不起我生成失败了")
           }
         })
       }

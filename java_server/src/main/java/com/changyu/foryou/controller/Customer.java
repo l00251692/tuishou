@@ -155,16 +155,15 @@ public class Customer {
     @RequestMapping(value = "/checkToken", method = RequestMethod.POST)
     @ResponseBody
     public String receiveMessage(@RequestBody Map<String, Object> msg) throws Exception {
-    	logger.info("receiveMessage");
         //获取token
     	String access_token = (String)PayUtil.getAccessToken().get("access_token");
-        System.out.println("access_token:--------" + access_token);
 
         //用户openId
         String fromUserName = msg.get("FromUserName").toString();
         String createTime = msg.get("CreateTime").toString();
         String toUserName = msg.get("ToUserName").toString();
         String msgType = msg.get("MsgType").toString();
+        
         if (msgType.equals("text")) { //收到的是文本消息,并将消息返回给客服
             HashMap<String, Object> resultMap = new HashMap<>();
             resultMap.put("ToUserName", fromUserName);
@@ -178,7 +177,6 @@ public class Customer {
         else if(msgType.equals("event")){
         	
         	String sessionFrom = msg.get("SessionFrom").toString();
-        	logger.info("receive customer msg:" + sessionFrom);
         	
         	Map<String, Object> paramMap = new HashMap<String, Object>();
     		paramMap.put("projectId", sessionFrom);
@@ -190,7 +188,7 @@ public class Customer {
     		}
     		else
     		{
-    			text.put("content", "欢迎使用小程序，请回复数字查看具体内容");
+    			text.put("content", "欢迎使用推手号，上推手号，携手共同成长");
     		}
              
             //https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
@@ -198,13 +196,12 @@ public class Customer {
             json.put("touser", fromUserName);
             json.put("msgtype", "text");
             json.put("text", text);
-            
             //发送aip
             sendMsToCustomer(access_token, json);
+            return "success";
         	
         }
         
-        logger.info("receive customer service msg, send to user");
         //客服方面,也回复一个文本消息
         JSONObject text = new JSONObject();
         text.put("content", msg.get("MsgType"));

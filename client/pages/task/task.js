@@ -23,11 +23,6 @@ Page({
       { banner_id: 2, carousel_img: '/images/task/banner2.jpg' },
       { banner_id: 3, carousel_img: '/images/task/banner3.jpg' }
     ],
-    /*
-    task_list:[
-      { task_id: 1, task_auth: '/images/tmp/user.png', task_name: 'ETC推广服务', region: '全国', task_head: '/images/tmp/task1.jpg', task_detail: 'ETC推广，方便，给用户最大实惠', remain_days: 5},
-      { task_id: 2, task_auth: '/images/tmp/user.png', task_name: 'ETC推广服务', region: '全国', task_head: '/images/tmp/task2.jpg', task_detail: 'ETC推广，方便，给用户最大实惠', remain_days: 5 }
-    ]*/
   },
 
   /**
@@ -50,27 +45,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    console.log("task on show:" + JSON.stringify(getApp().globalData))
     if (getApp().globalData.task_refresh == true) {
       this.initData()
       this.getProjectList()
       getApp().globalData.task_refresh == false
     }
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-    this.initData()
-    this.getProjectList()
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-    this.getProjectList()
   },
 
   initData() {
@@ -87,9 +66,7 @@ Page({
       return;
     }
     var that = this;
-    var {
-      page
-    } = this.data
+    var { page } = this.data
 
     this.setData({
       loading: true
@@ -98,7 +75,6 @@ Page({
     getProjectList({
       page,
       success(data) {
-        console.log("get proj list success")
         var list = data.list
         var {
           task_list
@@ -119,8 +95,22 @@ Page({
     })
   },
 
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    this.initData()
+    this.getProjectList()
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    this.getProjectList()
+  },
+
   onChooseLocation: function() {
-    console.log("onChooseLocation")
     var that = this
 
     wx.authorize({
@@ -163,7 +153,6 @@ Page({
       }
 
     })
-
   },
 
   updateLocation: function(){

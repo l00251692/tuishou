@@ -125,10 +125,10 @@
 }
 
 .note{
-  width:100%;
+  width: 100%;
   padding-left:30rpx;
-  line-height: 60rpx;
-  font-size: 12pt;
-  margin-bottom:20rpx;
-  border-bottom: 1px solid #fff;
+  margin-top:20rpx;
+  color:#1e8cd4;
+  height:50rpx;
+  font-size: 30rpx;
 }

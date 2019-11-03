@@ -185,35 +185,6 @@ Page({
         })
       }
     })
-
-    //   var balance = this.ballance
-
-    //   console.log("tixianjie:" + balance)
-
-    //   if (parseFloat(balance) > 0.0){
-    //     confirm({
-    //       content: '将提现所有余额到微信零钱',
-    //       cancelText: '取消',
-    //       confirmText: '确定',
-    //       ok() {
-    //         getBalanceToWx({
-    //           money: balance,
-    //           success(data){
-    //             wx.showToast({
-    //               title: '提现申请成功',
-    //             })
-    //           },
-    //           error(data){}
-    //         })
-    //         wx.showToast({
-    //           title: '提现申请失败，请联系客服',
-    //         })
-    //       }
-    //     })
-    //   }
-    //   else{
-    //     alert("余额大于0才可以提现")
-    //   }
   }
 
 });

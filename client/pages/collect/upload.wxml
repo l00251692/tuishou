@@ -22,16 +22,16 @@
     <view class="reporter-user reporter-detail-item">
       <text class="reporter-detail-name" decode="{{true}}">用户姓名&emsp;</text>
       <view class="reporter-detail-input">
-        <input type="text" value="{{name}}" placeholder="(选填)" name="name" maxlength="12" bindinput="listenerName" />
+        <input type="text" value="{{name}}" placeholder="(选填)" name="name" maxlength="12" bindinput="listenerName" style="margin-top:{{top}}" />
       </view>
     </view>
     <view class="reporter-user reporter-detail-item">
       <text class="reporter-detail-name" decode="{{true}}">联系电话&emsp;</text>
       <view class="reporter-detail-input">
-        <input type="number" value="{{phone}}" placeholder="*必填*,请填写推广对象的联系方式" name="phone" maxlength="11" bindinput="listenerPhone" />
+        <input type="number" value="{{phone}}" placeholder="*必填*,请填写推广对象的联系方式" name="phone" maxlength="11" bindinput="listenerPhone"  style="margin-top:{{top}}" />
       </view>
     </view>
-    <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" auto-focus="true" value="{{content}}" />
+    <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" auto-focus="true" value="{{content}}" style="margin-top:{{top}}" />
     <view class="reporter-img-name">
       <text>上传照片(最多5张,长按照片预览)</text>
     </view>

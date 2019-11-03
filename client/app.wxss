@@ -107,11 +107,12 @@ button[type="primary"][disabled], button[loading][type="primary"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 300rpx;
+  width:100%;
+  height:100%;
+  background: #fff;
 }
 .remind-img {
-  width: 250rpx;
-  height: 250rpx;
+  width: 600rpx;
   padding-bottom: 25rpx;
 }
 .remind-text {
