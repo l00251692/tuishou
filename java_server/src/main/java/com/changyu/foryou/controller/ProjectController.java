@@ -23,6 +23,7 @@ import com.changyu.foryou.model.Banner;
 import com.changyu.foryou.model.Collect;
 import com.changyu.foryou.model.Follow;
 import com.changyu.foryou.model.Followers;
+import com.changyu.foryou.model.LocationDTO;
 import com.changyu.foryou.model.Order;
 import com.changyu.foryou.model.Project;
 import com.changyu.foryou.model.Users;
@@ -272,7 +273,7 @@ public class ProjectController {
         if(project == null)
         {
         	data.put("State", "Fail");
-    		data.put("data", null);
+    		data.put("info", null);
     		return data;
         }
 
@@ -927,6 +928,68 @@ public class ProjectController {
 		
 	}
 	
+	@RequestMapping("/getImgDetailInfoWx")
+    public @ResponseBody Map<String,Object> getImgDetailInfoWx(@RequestParam String collect_id, @RequestParam String img_url) {
+		Map<String,Object> data = new HashMap<String, Object>();
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("id", collect_id);
+		
+		Collect collect = projectService.getCollect(paramMap);
+		
+		if (collect == null)
+		{
+			data.put("State", "Fail");
+			data.put("info", "查询采集信息失败");	
+			return data;
+		}
+		
+		JSONObject obj = new JSONObject();
+		
+		Users user = userService.selectByUserId(collect.getUpUserId());
+		if (user == null)
+		{
+			data.put("State", "Fail");
+			data.put("info", "查询上传用户信息失败");	
+			return data;
+		}
+		else{
+			obj.put("upUser_name", user.getNickname());
+			obj.put("upUser_head", user.getImgUrl());
+		};
+		
+		JSONObject etifInfo = etifUtil.getEtifInfoFromQiNiu(img_url);
+		
+		if(etifInfo.get("original_time") != null){
+			obj.put("time", etifInfo.get("original_time").toString());
+		}
+		else{
+			obj.put("time", "未知时间");
+		}
+		
+		logger.info(etifInfo.toString());
+		
+		if(etifInfo.get("location_info") != null){
+			AddressDTO addressDTO = JSONObject.toJavaObject((JSONObject)etifInfo.get("address_info"),AddressDTO.class);
+			LocationDTO locationDTO = JSONObject.toJavaObject((JSONObject)etifInfo.get("location_info"),LocationDTO.class);
+			
+			obj.put("latitude", locationDTO.getLat());
+			obj.put("longitude", locationDTO.getLng());
+			obj.put("address", addressDTO.getProvince()+addressDTO.getCity()+addressDTO.getDistrict());
+			obj.put("detail",addressDTO.getStreet()+addressDTO.getStreetNumber()+addressDTO.getAddress());
+		}
+		else{
+			obj.put("latitude", user.getLatitude());
+			obj.put("longitude",user.getLongitude());
+			obj.put("address", "未知地点");
+			obj.put("detail", "未知地点");
+		}
+		
+		data.put("State", "Success");
+		data.put("data", obj);				
+		return data;
+	}
+	
 	@RequestMapping("/getTaskCollectSummaryWx")
     public @ResponseBody Map<String,Object> getTaskCollectSummaryWx(@RequestParam String project_id) {
 		
@@ -1092,7 +1155,7 @@ public class ProjectController {
 			if (collect == null)
 			{
 				map.put("State", "Fail");
-				map.put("data", "查询详细信息失败");	
+				map.put("info", "查询详细信息失败");	
 				return map;
 			}
 			
@@ -1225,7 +1288,7 @@ public class ProjectController {
 			if (collect == null)
 			{
 				map.put("State", "Fail");
-				map.put("data", "查询详细信息失败");	
+				map.put("info", "查询详细信息失败");	
 				return map;
 			}
 			
@@ -1287,7 +1350,7 @@ public class ProjectController {
 			if (collect == null)
 			{
 				map.put("State", "Fail");
-				map.put("data", "查询详细信息失败");	
+				map.put("info", "查询详细信息失败");	
 				return map;
 			}
 			
@@ -1376,7 +1439,7 @@ public class ProjectController {
 			if (collect == null)
 			{
 				map.put("State", "Fail");
-				map.put("data", "查询详细信息失败");	
+				map.put("info", "查询详细信息失败");	
 				return map;
 			}
 			

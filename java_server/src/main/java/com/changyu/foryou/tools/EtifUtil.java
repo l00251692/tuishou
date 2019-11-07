@@ -32,6 +32,8 @@ public class EtifUtil {
 	
 	private static final String ORIGINAL_TIME = "original_time";
 	
+	private static final String LOCATION_INFO = "location_info";
+	
 	private static final String ADDRESS_INFO = "address_info";
 
 	public static LocationDTO getLocation(File imgFile) {
@@ -69,6 +71,8 @@ public class EtifUtil {
 			
 			AddressDTO addressDTO = qqMapUtil.geocoder(locationDTO);
 			etifInfo.put(ADDRESS_INFO, JSONObject.toJSON(addressDTO));
+			
+			etifInfo.put(LOCATION_INFO, JSONObject.toJSON(locationDTO));
 		}
 		return etifInfo;
 	}

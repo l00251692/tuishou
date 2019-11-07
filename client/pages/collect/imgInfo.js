@@ -5,7 +5,7 @@ var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: qqmapKey
 });
-import { bindPhone } from '../../utils/api'
+import { bindPhone, getImgDetailInfo } from '../../utils/api'
 
 import { alert, datetimeFormat, getPrevPage } from '../../utils/util'
 
@@ -17,7 +17,12 @@ Page({
   },
   onLoad: function (options) {
     this.id = options.id
+    this.img = options.img
     this.callback = options.callback || 'callback'
+    this.setData({
+      collect_id: this.id,
+      img_url: this.img
+    })
     this.loadData()
   },
 
@@ -36,56 +41,56 @@ Page({
 
   loadData() {
     var that = this
-    var order_id = this.id
+    var collect_id = this.id
+    var img = this.img
 
     this.setData({
       hiddenLoading: true
     })
 
-    return
-
-    getOrderInfo({
-      order_id,
+    getImgDetailInfo({
+      collect_id,
+      img_url: img,
       success(data) {
-
-        var order = data.order
-
-        order.createTime = datetimeFormat(order.createTime)
+        console.log(JSON.stringify(data))
         that.setData({
           markers: [{
             iconPath: "../../images/assets/str.png",
             id: 0,
-            latitude: data.order.strLatitude,
-            longitude: data.order.strLongitude,
+            latitude: data.latitude,
+            longitude: data.longitude,
             width: 30,
             height: 30
           }, {
             iconPath: "../../images/assets/end.png",
             id: 0,
-            latitude: data.order.endLatitude,
-            longitude: data.order.endLongitude,
+            latitude: data.latitude,
+            longitude: data.longitude,
             width: 30,
             height: 30
           }],
           polyline: [{
             points: [{
-              longitude: data.order.strLongitude,
-              latitude: data.order.strLatitude
+              longitude: data.longitude,
+              latitude: data.latitude
             }, {
-              longitude: data.order.endLongitude,
-              latitude: data.order.endLatitude
+              longitude: data.longitude,
+              latitude: data.latitude
             }],
             color: "#FF0000DD",
             width: 4,
             dottedLine: true
           }],
-          passenger: data.passenger,
-          order: order,
+          time: data.time,
+          upUser_name: data.upUser_name,
+          upUser_head: data.upUser_head,
+          address:data.address,
+          detail: data.detail,
           hiddenLoading: true
         });
       },
       error(data) {
-        alert("查看详细信息失败，请联系客服")
+        alert("网络错误")
       }
     })
   },
@@ -131,7 +136,7 @@ Page({
   
   toCheckImg() {
     wx.previewImage({
-      urls: ["https://wx.qlogo.cn/mmhead/Yr1LMYX6KTaOlic5qThibhniaX1T6hiciaLYsFhy1tIC8UQw/132" ]// 需要预览的图片http链接列表
+      urls: [].join(this.data.img_url)// 需要预览的图片http链接列表
     })
   }
 

@@ -84,8 +84,14 @@ Page({
 
   detailImgInfo: function (e) {
     console.log("detailImg:" + e.currentTarget.dataset.index)
+    var collect_id = this.id
     var imgs = this.data.info.files
     var img = imgs[e.currentTarget.dataset.index]
+    wx.navigateTo({
+      url: '/pages/collect/imgInfo?id=' + collect_id + "&img=" + img,
+    })
+
+    
 
   },
 

@@ -715,3 +715,17 @@ export function postFeedback(options) {
     error
   })
 }
+
+export function getImgDetailInfo(options) {
+  var { collect_id, img_url, success, error } = options
+
+  fetch({
+    url: 'project/getImgDetailInfoWx',
+    data: {
+      collect_id,
+      img_url
+    },
+    success,
+    error
+  })
+}
