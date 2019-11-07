@@ -68,6 +68,7 @@ Page({
       },
       error(){
         wx.showToast({
+          icon: 'loading',
           title: '查看详情失败',
         })
       }
@@ -79,6 +80,13 @@ Page({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.info.files // 需要预览的图片http链接列表
     })
+  },
+
+  detailImgInfo: function (e) {
+    console.log("detailImg:" + e.currentTarget.dataset.index)
+    var imgs = this.data.info.files
+    var img = imgs[e.currentTarget.dataset.index]
+
   },
 
   onPass: function (e) {

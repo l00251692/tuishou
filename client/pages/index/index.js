@@ -84,6 +84,7 @@ Page({
       },
       error(res){
         wx.showToast({
+		  icon: 'loading',
           title: '连接失败，请稍候再试',
         })
         that.setData({

@@ -1,0 +1,42 @@
+<loading hidden="{{hiddenLoading}}">数据加载中</loading>
+<view class="container">
+  <map class="didiMap" id="didiMap" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap" bindcontroltap="bindcontroltap"
+    show-location>
+    <cover-view class="total">
+
+    <cover-view class="total-driver">
+            <cover-view class="driver-info">
+                <cover-view class="driver-img">
+                    <cover-image style="width: 80rpx;height: 80rpx;"src="https://wx.qlogo.cn/mmhead/Yr1LMYX6KTaOlic5qThibhniaX1T6hiciaLYsFhy1tIC8UQw/132"/>
+                </cover-view>
+                <cover-view class="driver-detailed" >
+                    <cover-view class="detailed-name">xxxdefind
+                    </cover-view>
+                    <cover-view class="detailed-cart" ></cover-view>
+                </cover-view>
+            </cover-view>
+          
+        </cover-view>
+      <cover-view class="total-info">
+        <cover-view class="total-info-from">
+          <cover-view class="circle-str"></cover-view>
+          <cover-view class="info-from">江苏省南京市江宁区</cover-view>
+          <cover-view class="info-from-detail">凤翔新城1期243号</cover-view>
+        </cover-view>
+      </cover-view>
+      <cover-view class="total-prompt">图片上传于 2019-12-23 32:23:12</cover-view>
+    </cover-view>
+    <cover-view class="sacle-plus">
+      <cover-image bindtap='onScalePlus' style="width: 80rpx;height: 80rpx;" src="../../images/assets/plus.png" />
+    </cover-view>
+    <cover-view class="sacle-sub">
+      <cover-image bindtap='onScaleSub' style="width: 80rpx;height: 80rpx;" src="../../images/assets/sub.png" />
+    </cover-view>
+    <cover-view class="revert">
+      <cover-image bindtap='onRevert' style="width: 80rpx;height: 80rpx;" src="../../images/assets/location.png" />
+    </cover-view>
+    <cover-view class="ft">
+      <cover-view class="ft-app" bindtap="toCheckImg">查看图片</cover-view>
+    </cover-view>
+  </map>
+</view>

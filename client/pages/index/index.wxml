@@ -1,5 +1,9 @@
 <!--index.wxml-->
 <view class="container">
+  <view  class="gongzhonghao">
+    <official-account style=""></official-account>
+  </view>
+  
   <view class="main-core">
     <view class="main-core-item" bindtap='findTask'>
       <image class="core-item-icon" src="/images/task/find.png"></image>
@@ -16,6 +20,7 @@
       <text class="core-item-name">找推点</text>
     </navigator>
   </view>
+  
   <view wx:if="{{loading == true}}" class="remind-box">
     <image class="remind-img" src="/images/index/loading.gif"></image>
     <text class="remind-text">加载中...</text>

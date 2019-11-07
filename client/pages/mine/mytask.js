@@ -76,6 +76,7 @@ Page({
       })
     } else {
       wx.showToast({
+		icon: 'loading',
         title: '用户未登录，请先登录',
       })
     }

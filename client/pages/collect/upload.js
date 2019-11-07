@@ -157,6 +157,7 @@ Page({
       content,
       success(data) {
         wx.showToast({
+		  icon: 'loading',
           title: '提交数据中...',
           duration: 8000,
         })
@@ -217,6 +218,7 @@ Page({
             if (fail_num >0)
             {
               wx.showToast({
+				icon: 'loading',
                 title: '上传照片失败',
               })
               that.setData({
@@ -373,6 +375,7 @@ Page({
                 fail: function(res) {
                   console.log(res)
                   wx.showToast({
+					icon: 'loading',
                     title: '生成二维码失败，请联系客服',
                   })
                 }

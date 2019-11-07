@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/start/start",
     "pages/index/index",
     "pages/task/task",
@@ -10,6 +9,7 @@
     "pages/task/followers",
     "pages/collect/upload",
     "pages/collect/detail",
+    "pages/collect/imgInfo",
     "pages/collect/user",
     "pages/mine/mine",
     "pages/mine/mytask",

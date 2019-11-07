@@ -176,6 +176,7 @@ Page({
                   error(res) {
                     console.log("update location fail")
                     wx.showToast({
+					  icon: 'loading',
                       title: '保存失败',
                     })
                   }

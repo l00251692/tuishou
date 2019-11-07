@@ -17,7 +17,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.2",
+	"libVersion": "2.3.0",
 	"appid": "wxd2b50636c6d640a8",
 	"projectname": "tuishou",
 	"simulatorType": "wechat",
@@ -58,6 +58,12 @@
 					"pathName": "pages/task/detail",
 					"query": "scene=id%3D1572622753367",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "公众号组件",
+					"pathName": "pages/index/index",
+					"scene": 1011
 				}
 			]
 		}

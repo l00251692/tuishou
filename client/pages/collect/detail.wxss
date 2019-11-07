@@ -239,3 +239,9 @@
 .collect_img_title{
   width:100%;
 }
+
+.icon-del{
+	position: absolute;
+	right: -12rpx;
+	top: -12rpx;
+}

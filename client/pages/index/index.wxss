@@ -59,6 +59,11 @@
   margin: 5rpx;
 }
 
+.gongzhonghao{
+  width:100%;
+  position:relative;
+  margin-bottom:20rpx;
+}
 .task-list-title{
     color: #888;
     padding: 15rpx 20rpx;
