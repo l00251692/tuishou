@@ -8,6 +8,7 @@ import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.lang.GeoLocation;
 import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 
 public class EtifUtil {
@@ -26,6 +27,19 @@ public class EtifUtil {
 		}
 		
 		return locationDTO;
+	}
+
+	public static Object getPhotoTime(File imgFile) {
+		String originalTime = null;
+		try {
+			Metadata metadata = JpegMetadataReader.readMetadata(imgFile);
+			ExifSubIFDDirectory exifSubIFDDirectory = metadata.getDirectory(ExifSubIFDDirectory.class);
+	        originalTime = exifSubIFDDirectory.getDescription(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+			
+		} catch (JpegProcessingException e) {
+		} catch (IOException e) {
+		}
+		return originalTime;
 	}
 	
 }
