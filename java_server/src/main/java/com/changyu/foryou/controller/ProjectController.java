@@ -44,7 +44,7 @@ public class ProjectController {
 	private UserService userService;
 	
 	@Autowired
-	QQMapUtil qqMapUtil;
+	EtifUtil etifUtil;
 	
 	private static final Logger logger = Logger.getLogger(ProjectController.class);
 
@@ -177,7 +177,7 @@ public class ProjectController {
     public @ResponseBody Map<String,Object> getMyProjectListWx(@RequestParam String user_id, @RequestParam Integer type, @RequestParam Integer page) {
 
 		//:TODO  测试 ，删除
-		//AddressDTO addressDTO = qqMapUtil.geocoder(EtifUtil.getLocation(new File("C:/Users/xueyuyang/Desktop/正.JPG")));
+		//JSONObject jo = etifUtil.getEtifInfoFromQiNiu("http://pz8njmvtg.bkt.clouddn.com/paascloud/file/735227650246755328.jpg");
 		
 		
 		Map<String,Object> data = new HashMap<String, Object>();
