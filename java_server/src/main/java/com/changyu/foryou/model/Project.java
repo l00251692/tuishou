@@ -40,6 +40,8 @@ public class Project {
 	
 	private int status;
 	
+	private String qrCode;
+	
 	public String getProjectId() {
 		return projectId;
 	}
@@ -182,6 +184,14 @@ public class Project {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
 	}
 	
 }

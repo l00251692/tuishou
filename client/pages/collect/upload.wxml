@@ -31,7 +31,7 @@
         <input type="number" value="{{phone}}" placeholder="*必填*,请填写推广对象的联系方式" name="phone" maxlength="11" bindinput="listenerPhone"  style="margin-top:{{top}}" />
       </view>
     </view>
-    <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" auto-focus="true" value="{{content}}" style="margin-top:{{top}}" />
+    <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" auto-focus="false" value="{{content}}" style="margin-top:{{top}}" />
     <view class="reporter-img-name">
       <text>上传照片(最多5张,长按照片预览)</text>
     </view>

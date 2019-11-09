@@ -26,6 +26,8 @@ public interface ProjectMapper {
 	
 	public int updateProjectHeadImg(Map<String, Object> paramMap);
 	
+	public int updateProjectQrCode(Map<String, Object> paramMap);
+	
 	public int updateProjectAddImgs(Map<String, Object> paramMap);
 	
 	public int commitComment(Map<String, Object> paramMap);

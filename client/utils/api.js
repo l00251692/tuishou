@@ -482,7 +482,8 @@ export function deleteProject(options) {
 }
 
 export function uploadCollectData(options) {
-  var { project_id, name, phone, content, success } = options
+  var { project_id, name, phone, content, latitude,
+    longitude, address, detail,success } = options
 
   var { user_id, user_token } = wx.getStorageSync("userInfo")
   fetch({
@@ -492,6 +493,10 @@ export function uploadCollectData(options) {
       user_id,
       name,
       phone,
+      latitude,
+      longitude,
+      address,
+      detail,
       content
     },
     success

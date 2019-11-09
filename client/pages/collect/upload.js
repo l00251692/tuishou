@@ -16,6 +16,12 @@ import {
   requestPayment,
   randomString
 } from '../../utils/util'
+
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+import { qqmapKey } from '../../config'
+var qqmap = new QQMapWX({
+  key: qqmapKey
+});
 Page({
 
   /**
@@ -26,6 +32,7 @@ Page({
     canClick: true,
     hidden: true,
     content: '',
+    name:'',
     files: [],
     fileTimes: [],
     top: "0px"
@@ -150,96 +157,122 @@ Page({
       return alert('请上传照片信息')
     }
 
-    uploadCollectData({
-      project_id,
-      name,
-      phone,
-      content,
-      success(data) {
-        wx.showToast({
-		  icon: 'loading',
-          title: '提交数据中...',
-          duration: 8000,
-        })
+    wx.getLocation({
+      type: 'gcj02',
+      success(res) {
+        qqmap.reverseGeocoder({
+          location: {
+            longitude: res.longitude,
+            latitude: res.latitude
+          },
+          success: function (res) {
+            console.log(JSON.stringify(res))
+            var latitude = res.result.location.lat
+            var longitude = res.result.location.lng
+            var address = res.result.address
+            var detail = res.result.formatted_addresses.recommend
 
-        //获取上传七牛云的token
-        var token = ''
-        var collect_id = data.collectId
-        getQiniuToken({
-          success(data) {
-            token = data.upToken;
-            //逐张内容图片上传
-            var fail_num = 0;
-            var success_num = 0
-            for (var i = 0; i < files.length; i++) {
-              var filePath_tmp = files[i]
-              console.log("url:" + filePath_tmp)
-              qiniuUploader.upload(filePath_tmp, (res) => {
-                //成功后将地址更新到服务器
-                console.log("res.imageURL:" + res.imageURL)
-                uploadCollectFile({
-                  collect_id,
-                  file: res.imageURL,
-                  success(res){
-                    success_num++
-                    if (success_num == files.length) {
+            uploadCollectData({
+              project_id,
+              name,
+              phone,
+              content,
+              latitude,
+              longitude,
+              address,
+              detail,
+              success(data) {
+                wx.showToast({
+                  icon: 'loading',
+                  title: '提交数据中...',
+                  duration: 8000,
+                })
+
+                //获取上传七牛云的token
+                var token = ''
+                var collect_id = data.collectId
+                getQiniuToken({
+                  success(data) {
+                    token = data.upToken;
+                    //逐张内容图片上传
+                    var fail_num = 0;
+                    var success_num = 0
+                    for (var i = 0; i < files.length; i++) {
+                      var filePath_tmp = files[i]
+                      console.log("url:" + filePath_tmp)
+                      qiniuUploader.upload(filePath_tmp, (res) => {
+                        //成功后将地址更新到服务器
+                        console.log("res.imageURL:" + res.imageURL)
+                        uploadCollectFile({
+                          collect_id,
+                          file: res.imageURL,
+                          success(res) {
+                            success_num++
+                            if (success_num == files.length) {
+                              that.setData({
+                                loading: false
+                              })
+                              wx.hideToast()
+                              setTimeout(function () {
+                                wx.hideToast()
+                                console.log("navegitate to /pages/collect/detail")
+                                wx.navigateTo({
+                                  url: '/pages/collect/detail?id=' + collect_id,
+                                })
+                              }, 1000)
+                            }
+
+                          }
+                        })
+
+
+                      }, (error) => {
+                        fail_num++
+                        console.log('error: ' + error);
+                      }, {
+                          region: 'ECN', //华东
+                          domain: 'wtoer.com', //
+                          key: 'prj_' + project_id + 'collect_' + collect_id + '_' + filePath_tmp.substr(30, 50),
+                          uptoken: token
+                        }, (res) => {
+                          console.log('上传进度', res.progress)
+                          console.log('已经上传的数据长度', res.totalBytesSent)
+                          console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+                        });
+                    }
+
+                    if (fail_num > 0) {
+                      wx.showToast({
+                        icon: 'loading',
+                        title: '上传照片失败',
+                      })
                       that.setData({
                         loading: false
                       })
-                      wx.hideToast()
-                      setTimeout(function () {
-                        wx.hideToast()
-                        console.log("navegitate to /pages/collect/detail")
-                        wx.navigateTo({
-                          url: '/pages/collect/detail?id=' + collect_id,
-                        })
-                      }, 1000)
                     }
-
+                  },
+                  error(res) {
+                    console.log("get Qiniu token fail")
+                    that.setData({
+                      loading: false
+                    })
                   }
                 })
-                
 
-              }, (error) => {
-                fail_num++
-                console.log('error: ' + error);
-              }, {
-                region: 'ECN', //华东
-                domain: 'wtoer.com', //
-                key: 'prj_' + project_id + 'collect_' + collect_id + '_' + filePath_tmp.substr(30, 50),
-                uptoken: token
-              }, (res) => {
-                console.log('上传进度', res.progress)
-                console.log('已经上传的数据长度', res.totalBytesSent)
-                console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
-              });
-            }
-
-            if (fail_num >0)
-            {
-              wx.showToast({
-				icon: 'loading',
-                title: '上传照片失败',
-              })
-              that.setData({
-                loading: false
-              })
-            }
-          },
-          error(res) {
-            console.log("get Qiniu token fail")
-            that.setData({
-              loading: false
+              },
+              error(data) {
+                alert('提交数据失败，请稍后')
+                that.setData({
+                  loading: false
+                })
+              }
             })
           }
         })
-
       },
-      error(data) {
-        alert('提交数据失败，请稍后')
-        that.setData({
-          loading: false
-        })
+      fail(res) {
+        console.log(res.errMsg)
+        alert('获取信息失败')
       }
     })
 

@@ -23,6 +23,14 @@ public class Collect {
 	private String files;
 	
 	private String record;
+	
+	private String latitude;
+	
+	private String longitude;
+	
+	private String address;
+	
+	private String adDetail;
 
 	public String getProjectId() {
 		return projectId;
@@ -102,5 +110,37 @@ public class Collect {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAdDetail() {
+		return adDetail;
+	}
+
+	public void setAdDetail(String adDetail) {
+		this.adDetail = adDetail;
 	}
 }

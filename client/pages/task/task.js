@@ -48,7 +48,7 @@ Page({
     if (getApp().globalData.task_refresh == true) {
       this.initData()
       this.getProjectList()
-      getApp().globalData.task_refresh == false
+      getApp().globalData.task_refresh = false
     }
   },
 

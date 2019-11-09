@@ -90,9 +90,6 @@ Page({
     wx.navigateTo({
       url: '/pages/collect/imgInfo?id=' + collect_id + "&img=" + img,
     })
-
-    
-
   },
 
   onPass: function (e) {

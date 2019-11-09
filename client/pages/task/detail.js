@@ -105,6 +105,7 @@ Page({
       wx.navigateTo({
         url: '/pages/mine/append',
       })
+      return
     }
     
     setProjectFollowStatus({

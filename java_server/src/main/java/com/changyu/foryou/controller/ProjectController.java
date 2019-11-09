@@ -697,40 +697,66 @@ public class ProjectController {
 	@RequestMapping("/getShareQrWx")
     public @ResponseBody Map<String,Object> getShareQrWx(@RequestParam String project_id, HttpServletRequest request) throws Exception {
 		Map<String,Object> data = new HashMap<String, Object>();
-		//接口B：生成无限制但需要先发布的小程序
-		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
 		
-		//接口C：调试用
-		//String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
-
-		String access_token = (String) PayUtil.getAccessToken().get("access_token");
-		//取access_token
-    
-		url = url + "?access_token=" + access_token;
 		
-		Map<String, Object> params = new HashMap<>();
-        params.put("scene", "id=" + project_id);
-        params.put("page", "pages/task/detail");
-        //params.put("path", "pages/task/detail?id=" + project_id);
-        params.put("width", 160);
-        String body = JSON.toJSONString(params);
-           
-        String resultstr = HttpRequest.httpPostWithJSONQr(url,body, project_id);
-        if(resultstr == null)
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", project_id);
+        Project project = projectService.getProjectInfo(paramMap);
+        
+        if(project == null)
         {
         	data.put("State", "Fail");
     		data.put("info", "生成二维码失败");				
     		return data;
         }
         
-        JSONObject rtn = new JSONObject();
-        String putpath = Constants.QINIU_IP + resultstr;
-        rtn.put("path", putpath);
+        if(project.getQrCode() != null && project.getQrCode().length() > 0)
+        {
+        	JSONObject rtn = new JSONObject();
+            rtn.put("path", project.getQrCode());
+    		data.put("State", "Success");
+    		data.put("data", rtn);				
+    		return data;
+        }
+        else
+        {
+        	//接口B：生成无限制但需要先发布的小程序
+    		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
+    		
+    		//接口C：调试用
+    		//String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
+
+    		String access_token = (String) PayUtil.getAccessToken().get("access_token");
+    		//取access_token
         
-        
-		data.put("State", "Success");
-		data.put("data", rtn);				
-		return data;
+    		url = url + "?access_token=" + access_token;
+    		
+    		Map<String, Object> params = new HashMap<>();
+            params.put("scene", "id=" + project_id);
+            params.put("page", "pages/task/detail");
+            //params.put("path", "pages/task/detail?id=" + project_id);
+            params.put("width", 160);
+            String body = JSON.toJSONString(params);
+               
+            String resultstr = HttpRequest.httpPostWithJSONQr(url,body, project_id);
+            if(resultstr == null)
+            {
+            	data.put("State", "Fail");
+        		data.put("info", "生成二维码失败");				
+        		return data;
+            }
+            
+            JSONObject rtn = new JSONObject();
+            String putpath = Constants.QINIU_IP + resultstr;
+            rtn.put("path", putpath);
+            
+            paramMap.put("qrCode", putpath);
+            projectService.updateProjectQrCode(paramMap);
+            
+    		data.put("State", "Success");
+    		data.put("data", rtn);				
+    		return data;
+        }
 	}
 	
 	
@@ -794,7 +820,8 @@ public class ProjectController {
 	
 	@RequestMapping("/uploadCollectWx")
     public @ResponseBody Map<String,Object> uploadCollectWx(@RequestParam String project_id,@RequestParam String user_id,@RequestParam String name,
-    		@RequestParam String phone, @RequestParam String content) {
+    		@RequestParam String phone, @RequestParam String content, @RequestParam String latitude, @RequestParam String longitude
+    		, @RequestParam String address, @RequestParam String detail) {
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -809,7 +836,13 @@ public class ProjectController {
 		paramMap.put("name", name);
 		paramMap.put("phone", phone);
 		paramMap.put("content", content);
+		paramMap.put("latitude", latitude);
+		paramMap.put("longitude", longitude);
 		
+		address = address.replaceAll("&#40;", "(");
+		detail = detail.replaceAll("&#40;", "(");
+		paramMap.put("address", address);
+		paramMap.put("adDetail", detail);
 		paramMap.put("createTime", new Date());
 		
 		paramMap.put("status", 1);
@@ -958,25 +991,15 @@ public class ProjectController {
 			obj.put("upUser_head", user.getImgUrl());
 		};
 		
-		JSONObject etifInfo = etifUtil.getEtifInfoFromQiNiu(img_url);
-		
-		if(etifInfo.get("original_time") != null){
-			obj.put("time", etifInfo.get("original_time").toString());
-		}
-		else{
-			obj.put("time", "未知时间");
-		}
-		
-		logger.info(etifInfo.toString());
-		
-		if(etifInfo.get("location_info") != null){
-			AddressDTO addressDTO = JSONObject.toJavaObject((JSONObject)etifInfo.get("address_info"),AddressDTO.class);
-			LocationDTO locationDTO = JSONObject.toJavaObject((JSONObject)etifInfo.get("location_info"),LocationDTO.class);
-			
-			obj.put("latitude", locationDTO.getLat());
-			obj.put("longitude", locationDTO.getLng());
-			obj.put("address", addressDTO.getProvince()+addressDTO.getCity()+addressDTO.getDistrict());
-			obj.put("detail",addressDTO.getStreet()+addressDTO.getStreetNumber()+addressDTO.getAddress());
+		obj.put("files", JSONObject.parse(collect.getFiles()));
+		obj.put("time", collect.getCreateTime());
+		if(collect.getAddress() != "" && collect.getAddress().length() > 0)
+		{
+			//AddressDTO addressDTO = JSONObject.toJavaObject((JSONObject)etifInfo.get("address_info"),AddressDTO.class);
+			obj.put("latitude", collect.getLatitude());
+			obj.put("longitude", collect.getLongitude());
+			obj.put("address", collect.getAddress());
+			obj.put("detail",collect.getAdDetail());
 		}
 		else{
 			obj.put("latitude", user.getLatitude());

@@ -33,7 +33,7 @@ Page({
     if (getApp().globalData.index_refresh == true) {
       this.initData()
       this.getMyTask(0)
-      getApp().globalData.index_refresh == false
+      getApp().globalData.index_refresh = false
     }
   },
 
@@ -108,6 +108,7 @@ Page({
       wx.navigateTo({
         url: '/pages/mine/append',
       })
+	  return
     }
 
     wx.navigateTo({

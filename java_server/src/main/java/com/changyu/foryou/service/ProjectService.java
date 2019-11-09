@@ -25,6 +25,8 @@ public interface ProjectService {
 	
 	public int updateProjectHeadImg(Map<String, Object> paramMap);
 	
+	public int updateProjectQrCode(Map<String, Object> paramMap);
+	
 	public int updateProjectAddImgs(Map<String, Object> paramMap);
 	
 	public int commitProjectComment(Map<String, Object> paramMap);

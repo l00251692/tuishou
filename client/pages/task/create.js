@@ -15,7 +15,6 @@ Page({
 
     data:{
       tempFilePaths:null,
-      serviceTypeList: {},
       serviceTypeValue: 0,  //服务类型picker-value
       serviceTypeRange: [ "推广任务" ],     //服务类型picker-range
       detail: '',
@@ -103,14 +102,8 @@ Page({
 
   listenerServiceType: function (e) {
     var index = e.detail.value;
-    var theServiceTypeList = this.data.serviceTypeList[this.data.serviceTypeRange[index]];
-    var serviceObjectRange = theServiceTypeList.map(function (e, i) {
-      return e.Name;
-    });
     this.setData({
       serviceTypeValue: index,
-      serviceObjectValue: false,
-      serviceObjectRange: serviceObjectRange
     });
   },
 
@@ -261,7 +254,8 @@ Page({
                         duration: 2000
                       })
                       //刷新项目列表
-                      getPrevPage()[that.callback]()
+                      getApp().globalData.index_refresh = true
+                      getApp().globalData.task_refresh = true
 
                       wx.redirectTo({
                         url: '/pages/task/detail?id=' + project_id,

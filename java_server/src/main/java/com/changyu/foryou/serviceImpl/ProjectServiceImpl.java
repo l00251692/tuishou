@@ -54,6 +54,11 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectMapper.updateProjectHeadImg(paramMap);
 	}
 	
+	public int updateProjectQrCode(Map<String, Object> paramMap)
+	{
+		return projectMapper.updateProjectQrCode(paramMap);
+	}
+	
 	public int updateProjectAddImgs(Map<String, Object> paramMap)
 	{
 		return projectMapper.updateProjectAddImgs(paramMap);

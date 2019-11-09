@@ -55,14 +55,7 @@ Page({
         console.log(JSON.stringify(data))
         that.setData({
           markers: [{
-            iconPath: "../../images/assets/str.png",
-            id: 0,
-            latitude: data.latitude,
-            longitude: data.longitude,
-            width: 30,
-            height: 30
-          }, {
-            iconPath: "../../images/assets/end.png",
+            iconPath: "../../images/assets/marker.png",
             id: 0,
             latitude: data.latitude,
             longitude: data.longitude,
@@ -86,6 +79,7 @@ Page({
           upUser_head: data.upUser_head,
           address:data.address,
           detail: data.detail,
+          files:data.files,
           hiddenLoading: true
         });
       },
@@ -136,7 +130,7 @@ Page({
   
   toCheckImg() {
     wx.previewImage({
-      urls: [].join(this.data.img_url)// 需要预览的图片http链接列表
+      urls: this.data.files// 需要预览的图片http链接列表
     })
   }
 

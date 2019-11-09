@@ -198,6 +198,14 @@ public class UserController {
 	public @ResponseBody Map<String, Object> setProjectFollowStatusWx(@RequestParam Boolean status, @RequestParam String project_id,@RequestParam String user_id){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		if(project_id == "" || project_id.length() == 0 || user_id == "" || user_id.length() == 0)
+		{
+			map.put("State", "Fail"); 
+			map.put("info", "信息错误"); 
+			return map;
+		}
+
+		
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("followerId",user_id);
 		paramMap.put("projectId",project_id);

@@ -62,7 +62,7 @@
         </view>
 
         <view class="work-sheet-item">
-          <text class="work-sheet-bd collect_img_title">采集图片(长按图片预览)</text>
+          <text class="work-sheet-bd collect_img_title">采集图片(点击图片查看详情，长按预览)</text>
         </view>
         <view class="weui-uploader__files" id="uploaderFiles">
           <block wx:for="{{info.files}}" wx:key="{{index}}">

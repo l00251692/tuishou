@@ -22,6 +22,7 @@
 		<result column="link" property="link" jdbcType="VARCHAR" />
 		<result column="add_imgs" property="addImgs" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
 	</resultMap> 
 	
 	<resultMap id="BannerResultMap" type="com.changyu.foryou.model.Banner">
@@ -55,6 +56,10 @@
 		<result column="content" property="content" jdbcType="VARCHAR" />
 		<result column="files" property="files" jdbcType="VARCHAR" />
 		<result column="record" property="record" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="ad_detail" property="adDetail" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<resultMap id="FollowersResultMap" type="com.changyu.foryou.model.Followers">
@@ -114,7 +119,7 @@
 		follower_project
 		where follower_id = #{followerId,jdbcType=VARCHAR} 
 		order by
-		deadline_time ASC
+		create_time DESC
 		<if test="limit !=null and offset !=null">
 			LIMIT #{limit,jdbcType=INTEGER} OFFSET
 			#{offset,jdbcType=INTEGER}
@@ -252,6 +257,13 @@
 		where project_id = #{projectId,jdbcType=VARCHAR} 
 	</update>
 	
+	<update id="updateProjectQrCode">
+		update project
+		set
+		qr_code = #{qrCode,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
 	<update id="updateProjectAddImgs">
 		update project
 		set
@@ -300,6 +312,18 @@
 			<if test="record != null">
 				record,
 			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="adDetail != null">
+				ad_detail,
+			</if>
 
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -333,6 +357,18 @@
 			</if>
 			<if test="record != null">
 				#{record,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="adDetail != null">
+				#{adDetail,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
