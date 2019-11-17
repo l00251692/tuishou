@@ -57,11 +57,52 @@ Page({
     console.log(e.detail.errMsg)
     if (e.detail.errMsg == 'getUserInfo:ok') {
 
+      wx.showToast({
+        title: '登录中...',
+        icon:'loading',
+        duration:5000,
+      })
+
       getApp().getLoginInfo(loginInfo => {
-        that.setData({
-          nickName: loginInfo.userInfo.nickName,
-          haslogin:true
-        })
+        var user_id = loginInfo.userInfo.user_id
+
+        if(user_id != null && user_id != ''){
+          getRegisterInfo({
+            user_id,
+            success(data){
+              that.setData({
+                phone:data.phone,
+                addr_string: data.location.city + data.location.district,
+                location:data.location,
+              })
+              if (data.phone != "" && data.location.district != "")
+              {
+                that.setData({
+                  disabled: false
+                })
+              }
+              that.setData({
+                nickName: loginInfo.userInfo.nickName,
+                haslogin: true
+              })
+              wx.hideToast()
+            },
+            error(res){
+              that.setData({
+                nickName: loginInfo.userInfo.nickName,
+                haslogin: true
+              })
+              wx.hideToast()
+            }
+          })
+        }
+        else{
+          that.setData({
+            nickName: loginInfo.userInfo.nickName,
+            haslogin: true
+          })
+          wx.hideToast()
+        }
       })
     }
   },
@@ -83,6 +124,7 @@ Page({
 
     var ency = e.detail.encryptedData;
     var iv = e.detail.iv;
+
     getApp().getLoginInfo(loginInfo => {
       var {
         session_key
@@ -157,36 +199,11 @@ Page({
                   addr_string: data.city + data.district,
                 })
 
-                updateLocation({
-                  longitude: location.longitude,
-                  latitude: location.latitude,
-                  province: data.province,
-                  city: data.city,
-                  district: data.district,
-                  name: name,
-                  success(data) {
-                    if (phone != "") {
-                      that.setData({
-                        disabled: false
-                      })
-                    }
-                    console.log("update location success")
-                    var userInfo = wx.getStorageSync("userInfo")
-                    console.log("userinf1:" + JSON.stringify(userInfo))
-                    userInfo.phone = phone
-                    userInfo.city = location.city
-                    userInfo.province = location.province
-                    console.log("userinf2:" + JSON.stringify(userInfo))
-                    wx.setStorageSync("userInfo", userInfo)
-                  },
-                  error(res) {
-                    console.log("update location fail")
-                    wx.showToast({
-					  icon: 'loading',
-                      title: '保存失败',
-                    })
-                  }
-                })
+                if (phone != "") {
+                  that.setData({
+                    disabled: false
+                  })
+                }
               }
             })
           },
@@ -224,22 +241,18 @@ Page({
       district: location.district,
       name:location.name,
       success(data) {
-        console.log("update location success")
         var userInfo = wx.getStorageSync("userInfo")
-        console.log("userinf1:" +JSON.stringify(userInfo))
         userInfo.phone = phone
         userInfo.city = location.city
         userInfo.province = location.province
-        console.log("userinf2:" + JSON.stringify(userInfo))
         wx.setStorageSync("userInfo", userInfo)
         wx.showToast({
           title: '保存成功',
         })
       },
       error(res) {
-        console.log("update location fail")
         wx.showToast({
-		  icon: 'loading',
+		      icon: 'loading',
           title: '保存失败',
         })
       }

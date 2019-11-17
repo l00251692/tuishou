@@ -538,9 +538,13 @@ export function updateLocation(options) {
 }
 
 export function getRegisterInfo(options) {
-  var {  success, error } = options
+  var { user_id, success, error } = options
 
-  var { user_id, user_token } = wx.getStorageSync("userInfo")
+  if (user_id == null || user_id == '' || user_id.length == 0)
+  {
+    user_id = wx.getStorageSync("userInfo").user_id
+  }
+  
   fetch({
     url: 'user/getRegisterInfoWx',
     data: {

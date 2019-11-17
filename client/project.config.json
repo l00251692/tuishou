@@ -47,13 +47,6 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "pages/index/index",
-					"pathName": "pages/customer/qrIn",
-					"query": "scene=id%3D1572622753367",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "pages/task/detail",
 					"pathName": "pages/task/detail",
 					"query": "scene=id%3D1572622753367",
@@ -63,7 +56,15 @@
 					"id": -1,
 					"name": "公众号组件",
 					"pathName": "pages/index/index",
+					"query": "",
 					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "pages/customer/qrIn",
+					"pathName": "pages/customer/qrIn",
+					"query": "scene=id%3D1573979712163",
+					"scene": null
 				}
 			]
 		}

@@ -196,6 +196,7 @@ public class Customer {
             json.put("touser", fromUserName);
             json.put("msgtype", "text");
             json.put("text", text);
+        	
             //发送aip
             sendMsToCustomer(access_token, json);
             return "success";
@@ -226,6 +227,11 @@ public class Customer {
         //access_token
         String result = restTemplate.postForEntity("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" +
                         access_token, json, String.class).getBody();
+        JSONObject obj = JSON.parseObject(result);
+        if(obj.getInteger("errcode") != 0)
+        {
+        	logger.info("sendMsToCustomer failed:" + result);
+        }
     }
 	
 	

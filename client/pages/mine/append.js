@@ -163,7 +163,7 @@ Page({
                     console.log("update location success")
                     var userInfo = wx.getStorageSync("userInfo")
                     console.log("userinf1:" + JSON.stringify(userInfo))
-                    userInfo.phone = phone
+                    userInfo.phone = that.data.phone
                     userInfo.city = location.city
                     userInfo.province = location.province
                     console.log("userinf2:" + JSON.stringify(userInfo))
@@ -176,7 +176,7 @@ Page({
                   error(res) {
                     console.log("update location fail")
                     wx.showToast({
-					  icon: 'loading',
+					            icon: 'loading',
                       title: '保存失败',
                     })
                   }
