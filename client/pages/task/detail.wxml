@@ -84,31 +84,31 @@
         <view class="reporter-user reporter-detail-item">
           <text class="reporter-detail-name">验收规范</text>
           <view class="reporter-detail-input">
-            {{info.rule}}
+            <text selectable="true">{{info.rule}}</text>
           </view>
         </view>
         <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">佣金结算</text>
           <view class="reporter-detail-input">
-            {{info.salary}}
+            <text selectable="true">{{info.salary}}</text>
           </view>
         </view>
         <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">联系微信</text>
           <view class="reporter-detail-input">
-            {{info.contact}}
+            <text selectable="true">{{info.contact}}</text>
           </view>
         </view>
         <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">任务区域</text>
           <view class="reporter-detail-input">
-            {{info.region}}
+            <text selectable="true">{{info.region}}</text>
           </view>
         </view>
         <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">任务总数</text>
           <view class="reporter-detail-input" wx:if="{{info.count > 0}}">
-            {{info.count}}
+            <text selectable="true">{{info.count}}</text>
           </view>
           <view class="reporter-detail-input" wx:else>
             无限制
@@ -117,7 +117,7 @@
         <view class="reporter-address reporter-detail-item">
           <text class="reporter-detail-name">推广链接</text>
           <view class="reporter-detail-input">
-            {{info.link}}
+            <text selectable="true">{{info.link}}</text>
           </view>
         </view>
       </view>
@@ -125,7 +125,9 @@
       <view class="declare-context">
         <text class="declare-context-title">任务内容</text>
         <view class="declare-context-panel">
-          <view class="declare-context-textarea"> {{info.detail}}</view>
+          <view class="declare-context-textarea">
+            <text selectable="true"> {{info.detail}}</text>
+          </view>
         </view>
       </view>
 
