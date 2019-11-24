@@ -60,12 +60,6 @@
     </view>
 
     <view class="reporter-detail">
-      <view class="reporter-user reporter-detail-item">
-        <text class="reporter-detail-name">验收规范*</text>
-        <view class="reporter-detail-input">
-          <input type="text" placeholder="请简要输入验收规范" bindinput="listenerRule" />
-        </view>
-      </view>
       <view class="reporter-tel reporter-detail-item">
         <text class="reporter-detail-name">佣金结算*</text>
         <view class="reporter-detail-input">
@@ -102,9 +96,48 @@
       <text class="declare-context-title">任务内容</text>
       <view class="declare-context-panel">
         <input class="declare-context-input" placeholder="请输入任务标题" bindinput="listenerTitle" />
-        <textarea class="declare-context-textarea" placeholder="请输入具体内容" bindblur="listenerDetail" auto-height></textarea>
+        <textarea class="declare-context-textarea" placeholder="请输入任务具体内容，包括推广步骤，验收规范" bindblur="listenerDetail" auto-height bindlongtap="chooseUpload"></textarea>
       </view>
     </view>
+
+    <view class="upload-img">
+      <text class="upload-img_inf">上传验收规范示例图（最多5张，长按预览）</text> 
+    </view> 
+    <view class="img-upload">
+      <view class="img-add" bindtap="chooseImage4Spec">
+        <image src="/images/add.png"></image>
+      </view>
+      <view class="img-item"  wx:for="{{uploadSpecImgs}}" wx:key="{{index}}">
+        <icon type="clear" size="20" color="red" style="display:{{specEditable?'block':'none'}}" bindtap="deleteImg4Spec" data-index="{{index}}"/>
+        <image src="{{item}}" mode="aspectFill" bindlongtap="preview4Spec"></image>
+      </view>
+    </view>
+
+    <view class="upload-img">
+      <text class="upload-img_inf">上传用户操作示例图（最多5张，长按预览）</text> 
+    </view> 
+    <view class="img-upload">
+      <view class="img-add" bindtap="chooseImage4Oper">
+        <image src="/images/add.png"></image>
+      </view>
+      <view class="img-item" bindlongtap="preview4Oper" wx:for="{{uploadOperImgs}}" wx:key="{{index}}">
+        <icon type="clear" size="20" color="red" style="display:{{operEditable?'block':'none'}}" bindtap="deleteImg4Oper" data-index="{{index}}"/>
+        <image src="{{item}}" mode="aspectFill"></image>
+      </view>
+    </view>
+
+    <!--<view class="upload-img">
+      <text class="upload-img_inf">上传视频</text> 
+    </view> 
+    <view class="img-upload">
+      <view class="img-add" bindtap="chooseVideo">
+        <image src="/images/add.png"></image>
+      </view>
+      <view class="img-item" bindlongtap="editVideo" wx:for="{{uploadvideos}}" wx:key="{{index}}">
+        <icon type="clear" size="20" color="red" bindtap="deleteImg2" data-index="{{index}}"/>
+        <video src="{{item}}"  muted="{{videoMuted}}" bindplay="bindplay"></video>
+      </view>
+    </view> -->
 
     <view class="submit-declare" bindtap="onSubmit">
       <text>发布任务</text>

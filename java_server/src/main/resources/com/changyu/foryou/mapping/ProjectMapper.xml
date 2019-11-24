@@ -21,8 +21,11 @@
 		<result column="count" property="count" jdbcType="INTEGER" />
 		<result column="link" property="link" jdbcType="VARCHAR" />
 		<result column="add_imgs" property="addImgs" jdbcType="VARCHAR" />
+		<result column="add_videos" property="addVideos" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="INTEGER" />
 		<result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+		<result column="spec_imgs" property="specImgs" jdbcType="VARCHAR" />
+		<result column="oper_imgs" property="operImgs" jdbcType="VARCHAR" />
 	</resultMap> 
 	
 	<resultMap id="BannerResultMap" type="com.changyu.foryou.model.Banner">
@@ -188,6 +191,10 @@
 			<if test="addImgs != null">
 				add_imgs,
 			</if>
+			<if test="addVideos != null">
+				add_videos,
+			</if>
+			
 			<if test="status != null">
 				status,
 			</if>
@@ -244,6 +251,9 @@
 			<if test="addImgs != null">
 				#{addImgs,jdbcType=VARCHAR},
 			</if>
+			<if test="addVideos != null">
+				#{addVideos,jdbcType=VARCHAR},
+			</if>
 			<if test="status != null">
 				#{status,jdbcType=INTEGER},
 			</if>
@@ -268,6 +278,27 @@
 		update project
 		set
 		add_imgs = #{addImgs,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="updateProjectAddVideos">
+		update project
+		set
+		add_videos = #{addVideos,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="updateProjectSpecImgs">
+		update project
+		set
+		spec_imgs = #{specImgs,jdbcType=VARCHAR} 
+		where project_id = #{projectId,jdbcType=VARCHAR} 
+	</update>
+	
+	<update id="updateProjectOperImgs">
+		update project
+		set
+		oper_imgs = #{operImgs,jdbcType=VARCHAR} 
 		where project_id = #{projectId,jdbcType=VARCHAR} 
 	</update>
 	

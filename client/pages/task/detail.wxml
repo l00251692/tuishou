@@ -81,12 +81,6 @@
       </view>
 
       <view class="reporter-detail">
-        <view class="reporter-user reporter-detail-item">
-          <text class="reporter-detail-name">验收规范</text>
-          <view class="reporter-detail-input">
-            <text selectable="true">{{info.rule}}</text>
-          </view>
-        </view>
         <view class="reporter-tel reporter-detail-item">
           <text class="reporter-detail-name">佣金结算</text>
           <view class="reporter-detail-input">
@@ -129,8 +123,31 @@
             <text selectable="true"> {{info.detail}}</text>
           </view>
         </view>
+        
+        <!-- <view class="img-upload">
+          <view class="img-item"  wx:for="{{info.addVideoarr}}" wx:key="{{index}}">
+            <video src="{{item.url}}" ></video>
+          </view>
+        </view> -->
       </view>
-
+      <view class="declare-context">
+        <text class="declare-context-title">验收规范示例图</text>
+        <view class="declare-context-panel">
+          <view class="img-upload">
+            <view class="img-item"  wx:for="{{info.specImgarr}}" wx:key="{{index}}">
+              <image src="{{item.url}}" mode="aspectFill"></image>
+            </view>
+          </view>
+        </view>
+        <text class="declare-context-title">用户操作示例图</text>
+        <view class="declare-context-panel">
+          <view class="img-upload">
+            <view class="img-item"  wx:for="{{info.operImgarr}}" wx:key="{{index}}">
+              <image src="{{item.url}}" mode="aspectFill"></image>
+            </view>
+          </view>
+        </view>
+      </view>
       <view class="submit-declare" bindtap="onDelete" wx:if="{{info.my_create}}">
         <text>删除任务</text>
       </view>

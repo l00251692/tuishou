@@ -64,6 +64,21 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectMapper.updateProjectAddImgs(paramMap);
 	}
 	
+	public int updateProjectSpecImgs(Map<String, Object> paramMap)
+	{
+		return projectMapper.updateProjectSpecImgs(paramMap);
+	}
+	
+	public int updateProjectOperImgs(Map<String, Object> paramMap)
+	{
+		return projectMapper.updateProjectOperImgs(paramMap);
+	}
+	
+	public int updateProjectAddVideos(Map<String, Object> paramMap)
+	{
+		return projectMapper.updateProjectAddVideos(paramMap);
+	}
+	
 	public int commitProjectComment(Map<String, Object> paramMap)
 	{
 		return projectMapper.commitComment(paramMap);

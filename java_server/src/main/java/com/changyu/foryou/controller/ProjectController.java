@@ -344,8 +344,11 @@ public class ProjectController {
 		node.put("create_userName", user.getNickname());
 		node.put("create_userHead", user.getImgUrl());
 		
-		JSONArray arr = JSON.parseArray(project.getAddImgs());
-		node.put("addImgarr", arr);
+		JSONArray specArr = JSON.parseArray(project.getSpecImgs());
+		node.put("specImgarr", specArr);
+		JSONArray operArr = JSON.parseArray(project.getOperImgs());
+		node.put("operImgarr", operArr);
+		node.put("addVideoarr", JSON.parseArray(project.getAddVideos()));
 		
 		if(user_id.equals("0"))//用户未登录
 		{
@@ -553,6 +556,150 @@ public class ProjectController {
         {
         	map.put("State", "False");
         	map.put("info", "上传图片失败");	
+        }
+    	return map;	
+	}
+	
+	@RequestMapping("/updateProjectInfoOperImgWx")
+    public @ResponseBody Map<String,String> updateProjectInfoOperImgWx(@RequestParam String project_id,@RequestParam String info_img_urls)throws Exception{
+		
+		Map<String,String> map = new HashMap<String, String>();
+		 
+        
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", project_id);
+		
+		Project project = projectService.getProjectInfo(paramMap);
+		
+		JSONArray arr;
+		
+		if(project.getOperImgs() != null && !project.getOperImgs().isEmpty())
+		{
+			arr = JSON.parseArray(project.getAddImgs());
+		}
+		else
+		{
+			arr = new JSONArray();
+		}
+		
+		for (String infoImgUrl : info_img_urls.split(",")) {
+			JSONObject obj = new JSONObject();
+			obj.put("url","https://" + infoImgUrl);
+			arr.add(obj);
+		}
+		
+		if (arr.size() > 5) {
+			map.put("State", "False");
+        	map.put("info", "最多上传5张照片");	
+        	return map;
+		}
+		
+		paramMap.put("operImgs", arr.toJSONString());
+        int flag = projectService.updateProjectOperImgs(paramMap);
+        
+        if(flag != -1 && flag !=0)
+        {       	
+        	map.put("State", "Success");
+        	map.put("data", "上传图片成功");	
+        }
+        else
+        {
+        	map.put("State", "False");
+        	map.put("info", "上传图片失败");	
+        }
+    	return map;	
+	}
+	
+	@RequestMapping("/updateProjectInfoSpecImgWx")
+    public @ResponseBody Map<String,String> updateProjectInfoSpecImgWx(@RequestParam String project_id,@RequestParam String info_img_urls)throws Exception{
+		
+		Map<String,String> map = new HashMap<String, String>();
+		 
+        
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", project_id);
+		
+		Project project = projectService.getProjectInfo(paramMap);
+		
+		JSONArray arr;
+		
+		if(project.getSpecImgs() != null && !project.getSpecImgs().isEmpty())
+		{
+			arr = JSON.parseArray(project.getSpecImgs());
+		}
+		else
+		{
+			arr = new JSONArray();
+		}
+		
+		
+		
+		for (String infoImgUrl : info_img_urls.split(",")) {
+			JSONObject obj = new JSONObject();
+			obj.put("url","https://" + infoImgUrl);
+			arr.add(obj);
+		}
+		
+		if (arr.size() > 5) {
+			map.put("State", "False");
+        	map.put("info", "最多上传5张照片");	
+        	return map;
+		}
+		
+		paramMap.put("specImgs", arr.toJSONString());
+        int flag = projectService.updateProjectSpecImgs(paramMap);
+        
+        if(flag != -1 && flag !=0)
+        {       	
+        	map.put("State", "Success");
+        	map.put("data", "上传图片成功");	
+        }
+        else
+        {
+        	map.put("State", "False");
+        	map.put("info", "上传图片失败");	
+        }
+    	return map;	
+	}
+	
+	@RequestMapping("/updateProjectInfoVideoWx")
+    public @ResponseBody Map<String,String> updateProjectInfoVideoWx(@RequestParam String project_id,@RequestParam String info_video_url)throws Exception{
+		
+		Map<String,String> map = new HashMap<String, String>();
+		 
+        
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", project_id);
+		
+		Project project = projectService.getProjectInfo(paramMap);
+		
+		JSONArray arr;
+		
+		if(project.getAddVideos() != null && !project.getAddVideos().isEmpty())
+		{
+			arr = JSON.parseArray(project.getAddVideos());
+		}
+		else
+		{
+			arr = new JSONArray();
+		}
+		
+		
+		JSONObject obj = new JSONObject();
+		obj.put("url","https://" + info_video_url);
+		arr.add(obj);
+		paramMap.put("addVideos", arr.toJSONString());
+        int flag = projectService.updateProjectAddVideos(paramMap);
+        
+        if(flag != -1 && flag !=0)
+        {       	
+        	map.put("State", "Success");
+        	map.put("data", "上传视频成功");	
+        }
+        else
+        {
+        	map.put("State", "False");
+        	map.put("info", "上传视频失败");	
         }
     	return map;	
 	}

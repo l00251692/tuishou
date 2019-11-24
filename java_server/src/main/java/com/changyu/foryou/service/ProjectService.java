@@ -29,6 +29,12 @@ public interface ProjectService {
 	
 	public int updateProjectAddImgs(Map<String, Object> paramMap);
 	
+	public int updateProjectSpecImgs(Map<String, Object> paramMap);
+	
+	public int updateProjectOperImgs(Map<String, Object> paramMap);
+	
+	public int updateProjectAddVideos(Map<String, Object> paramMap);
+	
 	public int commitProjectComment(Map<String, Object> paramMap);
 	
 	public int getCommentCount(Map<String, Object> paramMap);

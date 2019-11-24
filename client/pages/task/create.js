@@ -1,5 +1,5 @@
 import {
-  createProject, updateProjectImg, updateProjectInfoImg, getQiniuToken
+  createProject, updateProjectImg, updateProjectInfoImg, updateProjectInfoSpecImg,    updateProjectInfoOperImg, updateProjectInfoVideo, getQiniuToken
 } from '../../utils/api'
 import {
   uploadFile,alert, getPrevPage
@@ -20,8 +20,14 @@ Page({
       detail: '',
       selectUniv: '不限',
       uploadimgs: [], //上传图片列表
+      uploadSpecImgs: [], 
+      uploadOperImgs: [], 
+      uploadvideos: [],
       count:0,
-      link:''
+      link:'',
+      videoMuted: false,
+      specEditable:true,
+      operEditable:true
     },
     onLoad: function (options) {
       this.callback = options.callback || 'callback'
@@ -49,32 +55,171 @@ Page({
       })
     },
 
-    chooseImage2: function ()  {
-      console.log("chooseImage2")
+    chooseImage4Spec: function ()  {
+      console.log("chooseImage4Spec")
+      if (!this.checkUploadLimit("SPEC")) {
+        return;
+      }
       var that = this;
       wx.chooseImage({
+        count: 5,
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: function (res) {
-          that.setData({
-            uploadimgs: that.data.uploadimgs.concat(res.tempFilePaths)
-          })
+            that.setData({
+              uploadSpecImgs: that.data.uploadSpecImgs.concat(res.tempFilePaths)
+            })
         }
       })
     },
 
-    editImage2: function () {
-      this.setData({
-        editable: !this.data.editable
-      })
+    editImage4Spec: function () { 
+        that.setData({
+          specEditable: !this.data.specEditable
+        })
     },
 
-    deleteImg2: function (e) {
-      const imgs = this.data.uploadimgs
-      this.setData({
-        uploadimgs: imgs.remove(e.currentTarget.dataset.index)
-      })
+    deleteImg4Spec: function (e) {
+        const imgs = this.data.uploadSpecImgs;
+        imgs.splice(e.currentTarget.dataset.index, 1)
+        this.setData({
+          uploadSpecImgs: imgs
+        })
     },
+
+  preview4Spec: function (e) {
+    var current = e.currentTarget.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接  
+      urls: this.data.uploadSpecImgs // 需要预览的图片http链接列表  
+    })
+    
+  },
+
+  chooseImage4Oper: function () {
+    console.log("chooseImage4Oper")
+    if (!this.checkUploadLimit("OPER")) {
+      return;
+    }
+    var that = this;
+    wx.chooseImage({
+      count: 5,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        that.setData({
+          uploadOperImgs: that.data.uploadOperImgs.concat(res.tempFilePaths)
+        })
+      }
+    })
+  },
+
+  editImage4Oper: function () {
+    that.setData({
+      operEditable: !this.data.operEditable
+    })
+  },
+
+  deleteImg4Oper: function (e) {
+    const imgs = this.data.uploadOperImgs;
+    imgs.splice(e.currentTarget.dataset.index, 1)
+    this.setData({
+      uploadOperImgs: imgs
+    })
+  },
+
+  preview4Oper:function(e) {
+    var current = e.currentTarget.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接  
+      urls: this.data.uploadOperImgs // 需要预览的图片http链接列表  
+    })
+  },
+
+  chooseVideo: function () {
+    console.log("chooseVideo")
+
+    if (!this.checkUploadLimit()) {
+      return;
+    }
+  
+    var that = this;
+    wx.chooseVideo({
+      maxDuration: 60,
+      compressed: true,
+      sourceType: ['album', 'camera'],
+      camera: 'back',
+      success: function (res) {
+        var filePath = res.tempFilePath;
+        that.setData({
+          uploadvideos: that.data.uploadvideos.concat(res.tempFilePath)
+        })
+      }
+    })
+  },
+
+  checkUploadLimit: function (type) {
+    if (type == 'SPEC') {
+      if ((this.data.uploadSpecImgs.length) >= 5) {
+        alert("验收规范示例图不能超过5个")
+        return false;
+      }
+    } else if (type == 'OPER') {
+      if ((this.data.uploadOperImgs.length) >= 5) {
+        alert("用户操作示例图不能超过5个")
+        return false;
+      }
+    }
+
+    // if ((this.data.uploadimgs.length + this.data.uploadvideos.length) >= 5) {
+    //   alert("内容图片加上视频不能超过5个")
+    //   return false;
+    // }
+    return true;
+  }, 
+
+  editVideo: function () {
+    this.setData({
+      videoEditable: !this.data.videoEditable
+    })
+  },
+
+  deleteVideo: function (e) {
+    const videos = this.data.uploadvideos;
+    videos.splice(e.currentTarget.dataset.index, 1)
+    this.setData({
+      uploadvideos: videos
+    })
+  },
+
+  chooseUpload: function() {
+    var _this = this;
+    wx.showActionSheet({
+      itemList: ['上传图片', '上传视频'],
+      success: function (res) {
+        //   console.log(res.tapIndex)
+        let xindex = res.tapIndex;
+        if (xindex == 0) {
+          _this.chooseImage2();
+        } else if (xindex == 1) {
+          _this.chooseVideo();
+        }
+
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+
+  bindplay:function(e) {
+    var type = e.type;
+    
+    this.setData({
+        videoMuted: type == "play" 
+    });
+   
+  },
 
     bindStartDateChange: function (e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -160,16 +305,16 @@ Page({
     onSubmit: function () {
       var that = this
       var {
-        tempFilePaths, title, start_date, end_date, rule, salary, contact, region, count, link, detail , uploadimgs
+        tempFilePaths, title, start_date, end_date, rule, salary, contact, region, count, link, detail , uploadimgs, uploadvideos, uploadSpecImgs, uploadOperImgs
       } = this.data
       var type = '推广任务'
       if (title == null) {
         return alert('请输入任务标题')
       }
 
-      if (rule == null) {
-        return alert('请输入验收规范')
-      }
+      // if (rule == null) {
+      //   return alert('请输入验收规范')
+      // }
 
       if (salary == null) {
         return alert('请输入佣金结算规则')
@@ -219,17 +364,26 @@ Page({
                   success(data) {
                     //逐张内容图片上传
                     var fail_num = 0;
-                    for (var i = 0; i < uploadimgs.length; i++) {
-                      var filePath_tmp = uploadimgs[i]
+                    var specUrls = [];
+                    var operUrls = [];
+                    var specSucc_num = 0;
+                    var specFail_num = 0;
+                    var operSucc_num = 0;
+                    var operFail_num = 0;
+                    for (var i = 0; i < uploadSpecImgs.length; i++) {
+                      var filePath_tmp = uploadSpecImgs[i]
                       qiniuUploader.upload(filePath_tmp, (res) => {
-                        //成功后将地址更新到服务器
-                        updateProjectInfoImg({
-                          project_id,
-                          info_img_url: res.imageURL,
-                        })
+                        specSucc_num++;
+                        specUrls.push(res.imageURL);
+                        if ((specSucc_num + specFail_num) == uploadSpecImgs.length) {
+                          updateProjectInfoSpecImg({
+                            project_id,
+                            info_img_urls: specUrls.join(','),
+                          })
+                        }
 
                       }, (error) => {
-                        fail_num++
+                        specFail_num++
                         console.log('error: ' + error);
                       },
                         {
@@ -243,6 +397,62 @@ Page({
                           console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
                         });
                     }
+
+                    
+
+                    for (var j = 0; j < uploadOperImgs.length; j++) {
+                      var filePath_tmp = uploadOperImgs[j]
+                      qiniuUploader.upload(filePath_tmp, (res) => {
+                        operSucc_num++;
+                        operUrls.push(res.imageURL);
+                        if ((operSucc_num + operFail_num) == uploadOperImgs.length) {
+                          updateProjectInfoOperImg({
+                            project_id,
+                            info_img_urls: operUrls.join(','),
+                          })
+                        }
+
+                      }, (error) => {
+                        operFail_num++
+                        console.log('error: ' + error);
+                      },
+                        {
+                          region: 'ECN', //华东
+                          domain: 'wtoer.com', //
+                          key: 'prj_' + project_id + '_' + filePath_tmp.substr(30, 50),
+                          uptoken: token
+                        }, (res) => {
+                          console.log('上传进度', res.progress)
+                          console.log('已经上传的数据长度', res.totalBytesSent)
+                          console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+                        });
+                    }   
+
+                    // 逐个上传内容视频
+                    // for (var i = 0; i < uploadvideos.length; i++) {
+                    //   var filePath_tmp = uploadvideos[i]
+                    //   qiniuUploader.upload(filePath_tmp, (res) => {
+                    //     //成功后将地址更新到服务器
+                    //     updateProjectInfoVideo({
+                    //       project_id,
+                    //       info_video_url: res.imageURL,
+                    //     })
+
+                    //   }, (error) => {
+                    //     fail_num++
+                    //     console.log('error: ' + error);
+                    //   },
+                    //     {
+                    //       region: 'ECN', //华东
+                    //       domain: 'wtoer.com', //
+                    //       key: 'prj_' + project_id + '_' + filePath_tmp.substr(30, 50),
+                    //       uptoken: token
+                    //     }, (res) => {
+                    //       console.log('上传进度', res.progress)
+                    //       console.log('已经上传的数据长度', res.totalBytesSent)
+                    //       console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+                    //     });
+                    // }
 
                     if (fail_num == 0){
                       that.setData({

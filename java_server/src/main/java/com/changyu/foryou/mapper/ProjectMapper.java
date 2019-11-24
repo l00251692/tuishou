@@ -30,6 +30,8 @@ public interface ProjectMapper {
 	
 	public int updateProjectAddImgs(Map<String, Object> paramMap);
 	
+	public int updateProjectAddVideos(Map<String, Object> paramMap);
+	
 	public int commitComment(Map<String, Object> paramMap);
 	
 	public int getCommentCount(Map<String, Object> paramMap);
@@ -57,5 +59,9 @@ public interface ProjectMapper {
 	public int getCollectCountsByStatus(Map<String, Object> paramMap);
 	
 	public List<Followers> getFollowers(Map<String, Object> paramMap);
+
+	public int updateProjectSpecImgs(Map<String, Object> paramMap);
+
+	public int updateProjectOperImgs(Map<String, Object> paramMap);
 	
 }

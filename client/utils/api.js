@@ -276,6 +276,42 @@ export function updateProjectInfoImg(options) {
   })
 }
 
+export function updateProjectInfoSpecImg(options) {
+  var { project_id, info_img_urls } = options
+
+  fetch({
+    url: 'project/updateProjectInfoSpecImgWx',
+    data: {
+      project_id,
+      info_img_urls
+    },
+  })
+}
+
+export function updateProjectInfoOperImg(options) {
+  var { project_id, info_img_urls } = options
+
+  fetch({
+    url: 'project/updateProjectInfoOperImgWx',
+    data: {
+      project_id,
+      info_img_urls
+    },
+  })
+}
+
+export function updateProjectInfoVideo(options) {
+  var { project_id, info_video_url } = options
+
+  fetch({
+    url: 'project/updateProjectInfoVideoWx',
+    data: {
+      project_id,
+      info_video_url
+    },
+  })
+}
+
 export function getQiniuToken(options) {
 
   var { success, error } = options

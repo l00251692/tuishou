@@ -286,3 +286,25 @@ canvas{
   left: 10%;
   z-index: 600;
 }
+
+.img-upload{
+  padding:10rpx;
+  overflow:hidden;
+  display:flex;
+  flex-flow:wrap;
+}
+
+.img-upload .img-item image{
+	width: 100rpx;
+	height: 100rpx;
+  display:inline-block;
+}
+.img-upload .img-item{
+	position: relative;
+  margin:10rpx;
+}
+.img-upload .img-item icon{
+	position: absolute;
+	right: -12rpx;
+	top: -12rpx;
+}

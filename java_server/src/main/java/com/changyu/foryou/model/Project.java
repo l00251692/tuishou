@@ -32,6 +32,8 @@ public class Project {
 	
 	private String addImgs;
 	
+	private String addVideos;
+	
 	private int count;
 	
 	private String link;
@@ -41,6 +43,10 @@ public class Project {
 	private int status;
 	
 	private String qrCode;
+	
+	private String specImgs;
+	
+	private String operImgs;
 	
 	public String getProjectId() {
 		return projectId;
@@ -193,5 +199,30 @@ public class Project {
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
 	}
+
+	public String getAddVideos() {
+		return addVideos;
+	}
+
+	public void setAddVideos(String addVideos) {
+		this.addVideos = addVideos;
+	}
+
+	public String getSpecImgs() {
+		return specImgs;
+	}
+
+	public void setSpecImgs(String specImgs) {
+		this.specImgs = specImgs;
+	}
+
+	public String getOperImgs() {
+		return operImgs;
+	}
+
+	public void setOperImgs(String operImgs) {
+		this.operImgs = operImgs;
+	}
+
 	
 }
