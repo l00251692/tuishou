@@ -27,6 +27,8 @@ public interface UserService {
 	
 	int updateLocation(Map<String, Object> paramMap);
 	
+	int updateFromInfo(Map<String, Object> paramMap);
+	
 	int updateBalance(Map<String, Object> paramMap);
 	
 	int createWithDraw(Map<String, Object> paramMap);

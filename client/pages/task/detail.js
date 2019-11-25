@@ -240,17 +240,18 @@ Page({
                     ctx.setFillStyle('#6F6F6F')
 
                     var create_userName = that.data.info.create_userName
+                    var create_time = that.data.info.create_time
       
-                    ctx.fillText(create_userName, 100, 450, 270)
+                    ctx.fillText(create_userName + "  创建于:" + create_time, 100, 450, 270)
                     ctx.setFontSize(24)
 
                     ctx.fillText("推广区域: " + that.data.info.region, 30, 510, 300)
 
                     ctx.fillText("结束日期: " + that.data.info.end_date, 30, 570, 300)
-                    ctx.fillText("联系方式: " + that.data.info.contact, 30, 630, 300)
+                    ctx.fillText("联系微信: " + that.data.info.contact, 30, 630, 300)
 
                     
-                    ctx.fillText('扫码查看详情', 340, 770)
+                    ctx.fillText('扫码领取推广任务,获取推广收益', 200, 770)
 
                     console.log("121212")
                     ctx.draw()

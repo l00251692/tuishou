@@ -277,6 +277,15 @@ Page({
     })
 
   },
+
+  onHead: function (e) {
+    var arr =  new Array()
+    arr[0] = this.data.info.task_head 
+    wx.previewImage({
+      urls: arr// 需要预览的图片http链接列表
+    })
+  },
+
   previewImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接

@@ -36,6 +36,8 @@ public interface UsersMapper {
 	
 	public int updateLocation(Map<String, Object> paramMap);
 	
+	public int updateFromInfo(Map<String, Object> paramMap);
+	
 	public int updateBalance(Map<String, Object> paramMap);
 	
 	public int createWithDraw(Map<String, Object> paramMap);

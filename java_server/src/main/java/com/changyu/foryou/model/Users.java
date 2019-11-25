@@ -32,6 +32,12 @@ public class Users {
     
     private float balance;
     
+    private String fromUserId;
+    
+    private String fromProjectId;
+    
+    private String fromRecords;
+    
     
 	public String getPhone() {
         return phone;
@@ -148,5 +154,29 @@ public class Users {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getFromUserId() {
+		return fromUserId;
+	}
+
+	public void setFromUserId(String fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+
+	public String getFromProjectId() {
+		return fromProjectId;
+	}
+
+	public void setFromProjectId(String fromProjectId) {
+		this.fromProjectId = fromProjectId;
+	}
+
+	public String getFromRecords() {
+		return fromRecords;
+	}
+
+	public void setFromRecords(String fromRecords) {
+		this.fromRecords = fromRecords;
 	}
 }

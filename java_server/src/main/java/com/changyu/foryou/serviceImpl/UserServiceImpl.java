@@ -68,6 +68,10 @@ public class UserServiceImpl implements UserService {
 		return usersMapper.updateLocation(paramMap);
 	}
 	
+	public int updateFromInfo(Map<String, Object> paramMap){
+		return usersMapper.updateFromInfo(paramMap);
+	}
+	
 	public int updateBalance(Map<String, Object> paramMap){
 		return usersMapper.updateBalance(paramMap);
 	}

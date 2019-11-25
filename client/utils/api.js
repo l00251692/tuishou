@@ -573,6 +573,23 @@ export function updateLocation(options) {
   })
 }
 
+
+export function bindUserFromInfo(options) {
+  var { from_user_id, project_id, success, error } = options
+
+  var { user_id, user_token } = wx.getStorageSync("userInfo")
+  fetch({
+    url: 'user/bindUserFromInfoWx',
+    data: {
+      user_id,
+      from_user_id,
+      project_id
+    },
+    success,
+    error
+  })
+}
+
 export function getRegisterInfo(options) {
   var { user_id, success, error } = options
 

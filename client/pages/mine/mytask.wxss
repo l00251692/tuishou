@@ -100,6 +100,7 @@
     height: 100rpx;
     font-size: 11pt;
     margin-left: 30rpx;
+    margin-right:30rpx;
     border-bottom: 1px solid #eee;
 }
 .review-process-icon{

@@ -1,5 +1,5 @@
 import {
-  getRegisterInfo, updateLocation, bindPhone
+  getRegisterInfo, updateLocation, bindPhone, bindUserFromInfo
 } from '../../utils/api'
 
 import {
@@ -17,7 +17,24 @@ Page({
     disabled:true
   },
   onLoad: function(options) {
-    
+    var obj = wx.getLaunchOptionsSync()
+    console.log('启动小程序的 query 参数:', JSON.stringify(obj.query))
+    if (obj.query) {
+      this.setData({
+        project_id: obj.query.id,
+        from_user_id: obj.query.from_user_id
+      })
+    }
+    else {
+      wx.showToast({
+        title: '二维码已过期',
+      })
+      this.setData({
+        project_id: '',
+        from_user_id: ''
+      })
+    }
+    /*
     if (options.scene) {
       console.log("has scene");
       var scene = decodeURIComponent(options.scene);
@@ -44,7 +61,7 @@ Page({
       this.setData({
         project_id: ''
       })
-    }
+    }*/
 
   },
   onReady: function() {
@@ -217,7 +234,7 @@ Page({
 
   confirm: function() {
     var that = this;
-    var { nickName, phone, addr_string, location} = this.data
+    var { nickName, phone, addr_string, location, project_id, from_user_id} = this.data
 
     if (nickName == '') {
       return alert("请先授权获得昵称信息")
@@ -241,19 +258,31 @@ Page({
       district: location.district,
       name:location.name,
       success(data) {
+        //bind user to project and from_user
+        bindUserFromInfo({
+          from_user_id,
+          project_id,
+          success(data){
+            //do nothing
+          },
+          error(data){
+            //do nothing
+          }
+        })
+
         var userInfo = wx.getStorageSync("userInfo")
         userInfo.phone = phone
         userInfo.city = location.city
         userInfo.province = location.province
         wx.setStorageSync("userInfo", userInfo)
         wx.showToast({
-          title: '保存成功',
+          title: '提交成功',
         })
       },
       error(res) {
         wx.showToast({
 		      icon: 'loading',
-          title: '保存失败',
+          title: '提交失败',
         })
       }
     })

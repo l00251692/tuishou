@@ -102,6 +102,33 @@ canvas{
   height:50rpx;
   font-size: 30rpx;
 }
+
+.operation{
+  width: 100%;
+  padding-left:10rpx;
+  padding-right:10rpx;
+  padding-top:16rpx;
+  height:60rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16rpx;
+}
+.operaton_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70rpx;
+    border-radius: 3px;
+    text-align: center;
+    background-color: #1e8cd4;
+    color: #fff;
+    font-size: 12pt;
+    width:325rpx;
+    margin-right:20rpx;
+    margin-left:20rpx;
+}
+
 .form_info{
   padding-bottom: 100rpx;
   height:100%;
@@ -322,6 +349,7 @@ canvas{
     width:100%;
     bottom:0;
 }
+
 .submit-declare:active{
     opacity: .8;
 }

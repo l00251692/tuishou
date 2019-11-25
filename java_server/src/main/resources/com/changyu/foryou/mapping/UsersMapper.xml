@@ -18,6 +18,9 @@
 		<result column="district" property="district" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="balance" property="balance" jdbcType="FLOAT" />
+		<result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+		<result column="from_project_id" property="fromProjectId" jdbcType="VARCHAR" />
+		<result column="from_records" property="fromRecords" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id,phone, type, nickname, img_url,
@@ -208,6 +211,22 @@
 			</if>
 			<if test="address != null">
 				address = #{address,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateFromInfo" parameterType="com.changyu.foryou.model.Users">
+		update users
+		<set>
+			<if test="fromUserId != null">
+				from_user_id = #{fromUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="fromProjectId != null">
+				from_project_id = #{fromProjectId,jdbcType=VARCHAR},
+			</if>
+			<if test="fromRecords != null">
+				from_records = #{fromRecords,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where user_id = #{userId,jdbcType=VARCHAR}

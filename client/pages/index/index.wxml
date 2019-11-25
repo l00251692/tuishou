@@ -38,7 +38,7 @@
           <view class="order-number-name">
             <text>{{item.task_name}}</text>
           </view>
-          <view class="process-state">
+          <view class="process-state weui-cell__ft_in-access">
             <text class="process-state-name process-state-waited" wx:if="{{item.task_type == 'my_create'}}">我发布的</text>
             <text class="process-state-name process-state-accepted" wx:else>我参与的</text>
           </view>
@@ -46,10 +46,10 @@
         <view class="process-bd">
           <view class="process-item">
             <view class="process-item-bd">
-              <text class="process-item-name">采集规范</text>
+              <text class="process-item-name">任务类型</text>
             </view>
             <view class="process-item-ft">
-              <text class="process-item-info">{{item.rule}}</text>
+              <text class="process-item-info">推广任务</text>
             </view>
           </view>
           <view class="process-item">

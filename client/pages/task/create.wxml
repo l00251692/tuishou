@@ -105,7 +105,7 @@
     </view> 
     <view class="img-upload">
       <view class="img-add" bindtap="chooseImage4Spec">
-        <image src="/images/add.png"></image>
+        <image src="/images/task/add.png"></image>
       </view>
       <view class="img-item"  wx:for="{{uploadSpecImgs}}" wx:key="{{index}}">
         <icon type="clear" size="20" color="red" style="display:{{specEditable?'block':'none'}}" bindtap="deleteImg4Spec" data-index="{{index}}"/>
@@ -118,7 +118,7 @@
     </view> 
     <view class="img-upload">
       <view class="img-add" bindtap="chooseImage4Oper">
-        <image src="/images/add.png"></image>
+        <image src="/images/task/add.png"></image>
       </view>
       <view class="img-item" bindlongtap="preview4Oper" wx:for="{{uploadOperImgs}}" wx:key="{{index}}">
         <icon type="clear" size="20" color="red" style="display:{{operEditable?'block':'none'}}" bindtap="deleteImg4Oper" data-index="{{index}}"/>

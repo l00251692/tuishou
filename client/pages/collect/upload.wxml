@@ -4,7 +4,7 @@
 </view>
 <view wx:else class="parent">
   <view class="banner">
-    <view class="banner-img">
+    <view class="banner-img" bindtap='onHead'>
       <image src="{{info.task_head || '/images/task/default-task-head.png'}}" />
       <text class="num" wx:if="{{info.state == 2}}" style="background:#888">已结束</text>
       <text class="num" wx:elif="{{info.state == 1}}">进行中</text>
@@ -16,7 +16,15 @@
       <image src='/images/task/qr.png'></image>
     </view>
   </view>
-  <view class=" tip"> 点击右上角生成专属推广二维码</view>
+  <view class=" operation">
+    <view class="operaton_btn" bindtap="onShare">
+      <text>生成专属推广二维码</text>
+    </view>
+
+    <view class="operaton_btn" bindtap='onHead'>
+      <text>查看任务图片详情</text>
+    </view>
+  </view>
   <view class="reporter-detail">
 
     <view class="reporter-user reporter-detail-item">
@@ -28,7 +36,7 @@
     <view class="reporter-user reporter-detail-item">
       <text class="reporter-detail-name" decode="{{true}}">联系电话&emsp;</text>
       <view class="reporter-detail-input">
-        <input type="number" value="{{phone}}" placeholder="*必填*,请填写推广对象的联系方式" name="phone" maxlength="11" bindinput="listenerPhone"  style="margin-top:{{top}}" />
+        <input type="number" value="{{phone}}" placeholder="*必填*,请填写推广对象的联系方式" name="phone" maxlength="11" bindinput="listenerPhone" style="margin-top:{{top}}" />
       </view>
     </view>
     <textarea class="content" placeholder="其他说明" bindblur="listenerOther" maxlength="200" value="{{content}}" style="margin-top:{{top}}" />

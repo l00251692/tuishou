@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.changyu.foryou.model.Users;
 import com.changyu.foryou.model.WithDraw;
@@ -299,6 +301,49 @@ public class UserController {
 		paramMap.put("address",name);
 		
 		userService.updateLocation(paramMap);
+		
+			
+		map.put("State", "Success"); 
+		map.put("data", ""); 
+		return map;
+	}
+	
+	/**
+	 * 获取我的用户总信息
+	 * @param phone 用户id
+	 * @return
+	 */
+	@RequestMapping(value="bindUserFromInfoWx")
+	public @ResponseBody Map<String, Object> bindUserFromInfoWx(@RequestParam String user_id, @RequestParam String from_user_id, 
+			@RequestParam String project_id){
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		Users users=userService.selectByUserId(user_id);
+		if(users == null)
+		{
+			map.put("State", "Fail"); 
+			map.put("info", "获得我的信息失败"); 
+			return map; 
+		}
+		
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		paramMap.put("userId",user_id);
+		paramMap.put("fromUserId",from_user_id);
+		paramMap.put("fromProjectId",project_id);
+		
+		JSONArray records = JSON.parseArray(users.getFromRecords());
+		if(records == null){
+			records = new JSONArray();
+		}
+		JSONObject record = new JSONObject();
+		record.put("fromUserId", from_user_id);
+		record.put("fromProjectId", project_id);
+		record.put("time", new Date());
+		records.add(record);
+		
+		paramMap.put("fromRecords",records.toString());
+		
+		userService.updateFromInfo(paramMap);
 		
 			
 		map.put("State", "Success"); 

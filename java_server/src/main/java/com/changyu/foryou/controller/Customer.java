@@ -1,5 +1,6 @@
 package com.changyu.foryou.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.changyu.foryou.model.Project;
+import com.changyu.foryou.model.Users;
 import com.changyu.foryou.service.ProjectService;
 import com.changyu.foryou.service.UserService;
+import com.changyu.foryou.tools.HttpRequest;
 import com.changyu.foryou.tools.PayUtil;
 
 
@@ -163,16 +167,46 @@ public class Customer {
         String createTime = msg.get("CreateTime").toString();
         String toUserName = msg.get("ToUserName").toString();
         String msgType = msg.get("MsgType").toString();
+        logger.info("receiveMessage:fromUserName=" + fromUserName + ",msgType=" + msgType);
+        //限制
+        //https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/customer-message/send.html
         
         if (msgType.equals("text")) { //收到的是文本消息,并将消息返回给客服
-            HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("ToUserName", fromUserName);
-            resultMap.put("FromUserName", toUserName);
-            resultMap.put("CreateTime", Long.parseLong(createTime));
-            resultMap.put("MsgType", "transfer_customer_service");
-            String json = JSON.toJSONString(resultMap);
-            com.alibaba.fastjson.JSONObject result = com.alibaba.fastjson.JSONObject.parseObject(json);
-            return result.toString();
+        	
+        	String content = msg.get("Content") == null ? "" : msg.get("Content").toString();
+        	
+        	if (content.startsWith("查看")) {
+                Users user = userService.selectByUserId(fromUserName);
+                if(user == null || user.getFromProjectId() == null || user.getFromProjectId().length() == 0)
+                {
+                	JSONObject text = new JSONObject();
+            		text.put("content", "当前没有推广信息");
+                    JSONObject json = new JSONObject();
+                    json.put("touser", fromUserName);
+                    json.put("msgtype", "text");
+                    json.put("text", text);
+
+                    sendMsToCustomer(access_token, json);
+                    return "success";
+                }
+                else
+                {
+                	sendProjectMsg(access_token, user.getFromProjectId(), fromUserName);
+            		return "success";
+                }
+            }
+        	else
+        	{
+        		//推送到客服工具
+        		HashMap<String, Object> resultMap = new HashMap<>();
+                resultMap.put("ToUserName", fromUserName);
+                resultMap.put("FromUserName", toUserName);
+                resultMap.put("CreateTime", Long.parseLong(createTime));
+                resultMap.put("MsgType", "transfer_customer_service");
+                String json = JSON.toJSONString(resultMap);
+                com.alibaba.fastjson.JSONObject result = com.alibaba.fastjson.JSONObject.parseObject(json);
+                return result.toString();
+        	}  
         }
         else if(msgType.equals("event")){
         	
@@ -182,39 +216,114 @@ public class Customer {
     		paramMap.put("projectId", sessionFrom);
     		Project project = projectService.getProjectInfo(paramMap);
     		JSONObject text = new JSONObject();
-    		if(project != null && project.getLink()!= null && project.getLink().length()>0)
+    		if(project == null)
     		{
-    			text.put("content", project.getLink());
+    			text.put("content", "欢迎使用推手号，上推手号，携手共同成长\n回复“查看”，查询任务详细指导说明");
+    			//https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
+                JSONObject json = new JSONObject();
+                json.put("touser", fromUserName);
+                json.put("msgtype", "text");
+                json.put("text", text);
+            	
+                //发送aip
+                sendMsToCustomer(access_token, json);
+                return "success";
     		}
     		else
     		{
-    			text.put("content", "欢迎使用推手号，上推手号，携手共同成长");
+    			sendProjectMsg(access_token, sessionFrom, fromUserName);
+        		return "success";
     		}
-             
-            //https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
-            JSONObject json = new JSONObject();
-            json.put("touser", fromUserName);
-            json.put("msgtype", "text");
-            json.put("text", text);
-        	
-            //发送aip
-            sendMsToCustomer(access_token, json);
-            return "success";
-        	
+        }
+        else{
+        	//转发其他消息到客服工具
+        	logger.info("receive other msg type:" + msgType);
+        	HashMap<String, Object> resultMap = new HashMap<>();
+            resultMap.put("ToUserName", fromUserName);
+            resultMap.put("FromUserName", toUserName);
+            resultMap.put("CreateTime", Long.parseLong(createTime));
+            resultMap.put("MsgType", "transfer_customer_service");
+            String json = JSON.toJSONString(resultMap);
+            com.alibaba.fastjson.JSONObject result = com.alibaba.fastjson.JSONObject.parseObject(json);
+            return result.toString();
         }
         
         //客服方面,也回复一个文本消息
-        JSONObject text = new JSONObject();
-        text.put("content", msg.get("MsgType"));
-        JSONObject json = new JSONObject();
-        json.put("touser", toUserName);
-        json.put("text", text);
-        json.put("msgtype", "text");
+        //JSONObject text = new JSONObject();
+        //text.put("content", msg.get("MsgType"));
+        //JSONObject json = new JSONObject();
+        //json.put("touser", toUserName);
+        //json.put("text", text);
+        //json.put("msgtype", "text");
         //发送aip
-        sendMsToCustomer(access_token, json);
-        return "success";
+        //sendMsToCustomer(access_token, json);
+        //return "success";
     }
     
+    private void sendProjectMsg(String access_token, String projec_id, String touser){
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("projectId", projec_id);
+		Project project = projectService.getProjectInfo(paramMap);
+		JSONObject text = new JSONObject();
+		logger.info("sendProjectMsg:projec_id=" + projec_id);
+		if(project == null)
+		{
+            return;
+		}
+		
+		if(project.getLink()!= null && project.getLink().length()>0)
+		{
+			text.put("content", project.getLink());
+			//https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
+            JSONObject json = new JSONObject();
+            json.put("touser", touser);
+            json.put("msgtype", "text");
+            json.put("text", text);
+            //发送aip
+            sendMsToCustomer(access_token, json);
+		}
+		
+		if(project.getHeadImg() != null && project.getHeadImg().length()>0){
+			
+			File file = new File(project.getHeadImg());
+	        if (file.exists() || file.isFile()) {
+	        	logger.info("send project HeadImg");
+	        	String url = "https://api.weixin.qq.com/cgi-bin/media/upload?" + "access_token=" + access_token + "&type=image";
+	        	String mediaId = HttpRequest.httpRequest(url, file);
+	        	JSONObject image = new JSONObject();
+	        	image.put("media_id", mediaId);
+				//https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
+	            JSONObject json = new JSONObject();
+	            json.put("touser", touser);
+	            json.put("msgtype", "image"); 
+	            json.put("image", image);
+	            //发送aip
+	            sendMsToCustomer(access_token, json);
+	        }
+		}
+		
+		if(project.getOperImgs() != null && !project.getOperImgs().isEmpty()){
+			JSONArray arr = JSON.parseArray(project.getOperImgs());
+			for(int i=0;i<arr.size();i++) {
+	            String path = arr.getJSONObject(i).get("url").toString();
+	            File file = new File(path);
+		        if (file.exists() || file.isFile()) {
+		        	logger.info("send project operImg:" + path);
+		        	String url = "https://api.weixin.qq.com/cgi-bin/media/upload?" + "access_token=" + access_token + "&type=image";
+		        	String mediaId = HttpRequest.httpRequest(url, file);
+		        	JSONObject image = new JSONObject();
+		        	image.put("media_id", mediaId);
+					//https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
+		            JSONObject json = new JSONObject();
+		            json.put("touser", touser);
+		            json.put("msgtype", "image"); 
+		            json.put("image", image);
+		            //发送aip
+		            sendMsToCustomer(access_token, json);
+		        }
+	        }
+		}	
+    }
     /**
      * 用户发送消息给客服
      *
