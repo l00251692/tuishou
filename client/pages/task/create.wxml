@@ -101,7 +101,7 @@
     </view>
 
     <view class="upload-img">
-      <text class="upload-img_inf">上传验收规范示例图（最多5张，长按预览）</text> 
+      <text class="declare-context-title">上传验收规范示例图（最多5张，长按预览）</text> 
     </view> 
     <view class="img-upload">
       <view class="img-add" bindtap="chooseImage4Spec">
@@ -109,20 +109,20 @@
       </view>
       <view class="img-item"  wx:for="{{uploadSpecImgs}}" wx:key="{{index}}">
         <icon type="clear" size="20" color="red" style="display:{{specEditable?'block':'none'}}" bindtap="deleteImg4Spec" data-index="{{index}}"/>
-        <image src="{{item}}" mode="aspectFill" bindlongtap="preview4Spec"></image>
+        <image src="{{item}}" mode="aspectFill" bindlongtap="preview4Spec" data-imgsrc="{{item}}"></image>
       </view>
     </view>
 
     <view class="upload-img">
-      <text class="upload-img_inf">上传用户操作示例图（最多5张，长按预览）</text> 
+      <text class="declare-context-title">上传用户操作示例图（最多5张，长按预览）</text> 
     </view> 
     <view class="img-upload">
       <view class="img-add" bindtap="chooseImage4Oper">
         <image src="/images/add.png"></image>
       </view>
-      <view class="img-item" bindlongtap="preview4Oper" wx:for="{{uploadOperImgs}}" wx:key="{{index}}">
+      <view class="img-item" wx:for="{{uploadOperImgs}}" wx:key="{{index}}">
         <icon type="clear" size="20" color="red" style="display:{{operEditable?'block':'none'}}" bindtap="deleteImg4Oper" data-index="{{index}}"/>
-        <image src="{{item}}" mode="aspectFill"></image>
+        <image src="{{item}}" mode="aspectFill"  bindlongtap="preview4Oper" data-imgsrc="{{item}}"></image>
       </view>
     </view>
 
