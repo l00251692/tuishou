@@ -66,9 +66,13 @@ Page({
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: function (res) {
+          if (that.data.uploadSpecImgs.length + res.tempFilePaths.length > 5) {
+            alert("验收规范示例图不能超过5个")
+          } else {
             that.setData({
               uploadSpecImgs: that.data.uploadSpecImgs.concat(res.tempFilePaths)
             })
+          }
         }
       })
     },
@@ -88,7 +92,7 @@ Page({
     },
 
   preview4Spec: function (e) {
-    var current = e.currentTarget.dataset.src;
+    var current = e.currentTarget.dataset.imgsrc;
     wx.previewImage({
       current: current, // 当前显示图片的http链接  
       urls: this.data.uploadSpecImgs // 需要预览的图片http链接列表  
@@ -107,9 +111,13 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        that.setData({
-          uploadOperImgs: that.data.uploadOperImgs.concat(res.tempFilePaths)
-        })
+        if (that.data.uploadOperImgs.length + res.tempFilePaths.length > 5) {
+          alert("用户操作示例图不能超过5个")
+        } else {
+          that.setData({
+            uploadOperImgs: that.data.uploadOperImgs.concat(res.tempFilePaths)
+          })
+        }
       }
     })
   },
@@ -129,7 +137,7 @@ Page({
   },
 
   preview4Oper:function(e) {
-    var current = e.currentTarget.dataset.src;
+    var current = e.currentTarget.dataset.imgsrc;
     wx.previewImage({
       current: current, // 当前显示图片的http链接  
       urls: this.data.uploadOperImgs // 需要预览的图片http链接列表  

@@ -133,18 +133,24 @@
       <view class="declare-context">
         <text class="declare-context-title">验收规范示例图</text>
         <view class="declare-context-panel">
-          <view class="img-upload">
+          <view wx:if="{{info.specImgarr}}" class="img-upload">
             <view class="img-item"  wx:for="{{info.specImgarr}}" wx:key="{{index}}">
               <image src="{{item.url}}" mode="aspectFill"></image>
             </view>
           </view>
+          <view wx:else class="declare-context-textarea">
+              无上传
+          </view>
         </view>
         <text class="declare-context-title">用户操作示例图</text>
         <view class="declare-context-panel">
-          <view class="img-upload">
+          <view wx:if="{{info.operImgarr}}" class="img-upload">
             <view class="img-item"  wx:for="{{info.operImgarr}}" wx:key="{{index}}">
               <image src="{{item.url}}" mode="aspectFill"></image>
             </view>
+          </view>
+          <view wx:else class="declare-context-textarea">
+              无上传
           </view>
         </view>
       </view>
