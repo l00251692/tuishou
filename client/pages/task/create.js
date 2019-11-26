@@ -107,12 +107,12 @@ Page({
     }
     var that = this;
     wx.chooseImage({
-      count: 5,
+      count: 3,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        if (that.data.uploadOperImgs.length + res.tempFilePaths.length > 5) {
-          alert("用户操作示例图不能超过5个")
+        if (that.data.uploadOperImgs.length + res.tempFilePaths.length > 3) {
+          alert("用户操作示例图不能超过3个")
         } else {
           that.setData({
             uploadOperImgs: that.data.uploadOperImgs.concat(res.tempFilePaths)

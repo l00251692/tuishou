@@ -588,9 +588,9 @@ public class ProjectController {
 			arr.add(obj);
 		}
 		
-		if (arr.size() > 5) {
+		if (arr.size() > 3) {
 			map.put("State", "False");
-        	map.put("info", "最多上传5张照片");	
+        	map.put("info", "最多上传3张照片");	
         	return map;
 		}
 		

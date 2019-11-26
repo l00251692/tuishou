@@ -114,7 +114,7 @@
     </view>
 
     <view class="upload-img">
-      <text class="declare-context-title">上传用户操作示例图（最多5张，长按预览）</text> 
+      <text class="declare-context-title">上传用户操作示例图（最多3张，长按预览）</text> 
     </view> 
     <view class="img-upload">
       <view class="img-add" bindtap="chooseImage4Oper">
