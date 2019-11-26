@@ -575,7 +575,7 @@ public class ProjectController {
 		
 		if(project.getOperImgs() != null && !project.getOperImgs().isEmpty())
 		{
-			arr = JSON.parseArray(project.getAddImgs());
+			arr = JSON.parseArray(project.getOperImgs());
 		}
 		else
 		{
