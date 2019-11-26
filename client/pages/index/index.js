@@ -41,6 +41,7 @@ Page({
     if (wx.getStorageSync('haslogin') == true){
       this.initData()
       this.getMyTask(0)
+      wx.stopPullDownRefresh()
     }
   },
 

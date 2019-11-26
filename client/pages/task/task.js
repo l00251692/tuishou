@@ -101,6 +101,7 @@ Page({
   onPullDownRefresh: function () {
     this.initData()
     this.getProjectList()
+    wx.stopPullDownRefresh()
   },
 
   /**

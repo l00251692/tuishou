@@ -19,6 +19,7 @@
     "pages/feedback/feedback",
     "pages/about/about",
     "pages/customer/qrIn",
+    "pages/customer/qrPrjInfo",
     "pages/logs/logs"
   ],
   "window": {
@@ -53,7 +54,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示" 
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
   "sitemapLocation": "sitemap.json"

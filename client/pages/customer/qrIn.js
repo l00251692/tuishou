@@ -275,8 +275,8 @@ Page({
         userInfo.city = location.city
         userInfo.province = location.province
         wx.setStorageSync("userInfo", userInfo)
-        wx.showToast({
-          title: '提交成功',
+        wx.navigateTo({
+          url: '/pages/customer/qrPrjInfo?id=' + project_id,
         })
       },
       error(res) {

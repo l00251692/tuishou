@@ -1,0 +1,26 @@
+<view class="trip">
+  <view class="trip-top">
+    <image src=" {{info.task_head}} " class="task_head " mode="aspectFit "></image>
+  </view>
+  <view class="link" wx:if="{{info.link != null && info.link != ''}}">
+    <text class="link_tip">推广链接</text>
+    <text class="link_link" selectable="true">{{info.link}}</text>
+  </view>
+  <view class="title">
+    任务操作说明示例
+  </view>
+</view>
+<view class="trip-wps " wx:if="{{info.operImgarr}}">
+  <block wx:for="{{info.operImgarr}}" wx:key="{{index}}">
+    <view class="waypoint">
+      <image class="cover " mode="widthFix" src="{{item.url}}"></image>
+    </view>
+  </block>
+</view>
+<view class="trip-none " wx:else>
+  <text>暂未发布</text>
+</view>
+<view class="bottom">
+  <view class="leaveDate" bindtap='onIndex'>进入首页</view>
+  <view class="leaveDate0" bindtap='onTask'> 查看任务详情 </view>
+</view>
